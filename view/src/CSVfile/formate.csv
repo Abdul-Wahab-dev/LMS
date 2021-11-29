@@ -1,0 +1,2 @@
+role,enrollmentNo,name,fatherName,program,degreeDuration,batch,mobile,contact,personalEmail,universityEmail,permanentAddress,currentAddress,password,passwordConfirm
+student,test,test name,test father name,BS,4 year,BEE,3138900987,3138900987,test@gmail.com,test@gmil.com,Faisalabad,Faisalabad,123456,123456
