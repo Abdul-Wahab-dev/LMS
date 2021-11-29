@@ -421,6 +421,7 @@ ion-icon {
   border-top-right-radius: 6px;
   border-bottom-right-radius: 6px;
   color: #fff;
+  z-index: 1000;
 }
 .currently-active-user-effect {
   left: 0 !important;
