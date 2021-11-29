@@ -25,9 +25,6 @@ import { getPublicEvents } from "../actions/eventsAction";
 import { getQuotes } from "../actions/quoteAction";
 // component
 import MainFooter from "../components/layout/MainFooter";
-// image
-import profileThumbNail from "../images/profile-thumbnail.png";
-
 const Index = props => {
   const [eventModal, setEventModal] = useState(true);
   const [activeUserClass, setActiveUserClass] = useState(
@@ -52,12 +49,15 @@ const Index = props => {
     dispatch(getQuotes());
   }, []);
   useEffect(() => {
-    if (auth.isAuthenticated) {
+    setInterval(() => {
       setActiveUserClass("currently-active-user-effect currently-active-user");
       setTimeout(() => {
         setActiveUserClass("currently-active-user");
-      }, 3000);
-    }
+      }, 4000);
+    }, 10000);
+    // if (auth.isAuthenticated) {
+
+    // }
   }, []);
   // get formate date
   const getFullyFormateDate = fullDate => {
@@ -71,23 +71,23 @@ const Index = props => {
     <>
       <div className="position-relative" style={{ position: "relative" }}>
         <div className={activeUserClass}>
-          <img
-            className="user-avatar user-avatar-dropdown rounded-circle mr-3"
-            src={
-              // props.user.user.profile
-              //   ? `https://files-uni.s3.us-east-2.amazonaws.com/${props.user.user.profile}`
-              // :
-              profileThumbNail
-            }
-            alt="User Avatar"
-            style={{
-              width: "45px",
-              height: "45px",
-              maxWidth: "45px",
-              borderRadius: "50%"
-            }}
-          />
-          <div>{auth.user.name}</div>
+          <div>
+            <div style={{ lineHeight: "14px" }}>
+              <span>Engr. Maryam Iqbal</span>
+              <br />
+              <small>Supervisor</small>
+            </div>
+            <div style={{ lineHeight: "14px", marginTop: "10px" }}>
+              <span>Bilal Waris</span>
+              <br />
+              <small>Developer</small>
+            </div>
+            <div style={{ lineHeight: "14px", marginTop: "10px" }}>
+              <span>Farzeen Tariq</span>
+              <br />
+              <small>Developer</small>
+            </div>
+          </div>
         </div>
         {slides.length > 0 ? (
           <AnimatedSlider slides={slides} />
