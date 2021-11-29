@@ -25,16 +25,22 @@ import { getPublicEvents } from "../actions/eventsAction";
 import { getQuotes } from "../actions/quoteAction";
 // component
 import MainFooter from "../components/layout/MainFooter";
+// image
+import profileThumbNail from "../images/profile-thumbnail.png";
 
 const Index = props => {
   const [eventModal, setEventModal] = useState(true);
+  const [activeUserClass, setActiveUserClass] = useState(
+    "currently-active-user"
+  );
   // get state from store
   const slides = useSelector(state => state.slider.slides);
   const users = useSelector(state => state.auth.users);
+  const auth = useSelector(state => state.auth);
   const news = useSelector(state => state.news.news);
   const events = useSelector(state => state.events.privateEvents);
   const quotes = useSelector(state => state.quote.quotes);
-
+  console.log(auth);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // useEffect
@@ -44,6 +50,14 @@ const Index = props => {
     dispatch(getNews());
     dispatch(getPublicEvents());
     dispatch(getQuotes());
+  }, []);
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      setActiveUserClass("currently-active-user-effect currently-active-user");
+      setTimeout(() => {
+        setActiveUserClass("currently-active-user");
+      }, 3000);
+    }
   }, []);
   // get formate date
   const getFullyFormateDate = fullDate => {
@@ -55,7 +69,26 @@ const Index = props => {
   };
   return (
     <>
-      <div>
+      <div className="position-relative" style={{ position: "relative" }}>
+        <div className={activeUserClass}>
+          <img
+            className="user-avatar user-avatar-dropdown rounded-circle mr-3"
+            src={
+              // props.user.user.profile
+              //   ? `https://files-uni.s3.us-east-2.amazonaws.com/${props.user.user.profile}`
+              // :
+              profileThumbNail
+            }
+            alt="User Avatar"
+            style={{
+              width: "45px",
+              height: "45px",
+              maxWidth: "45px",
+              borderRadius: "50%"
+            }}
+          />
+          <div>{auth.user.name}</div>
+        </div>
         {slides.length > 0 ? (
           <AnimatedSlider slides={slides} />
         ) : (

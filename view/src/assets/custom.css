@@ -286,7 +286,7 @@ label {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.08) !important;
 }
-.dashboard-btn{
+.dashboard-btn {
   text-decoration: none !important;
   color: #fff !important;
   background-color: rgba(0, 0, 0, 0.08) !important;
@@ -355,21 +355,18 @@ ion-icon {
   }
 }
 
-
-
-
-.admin-dashboard-file-container .custom-file-label-for-admin-dashboard{
+.admin-dashboard-file-container .custom-file-label-for-admin-dashboard {
   width: 350px !important;
   height: 110px !important;
   display: flex;
   justify-content: center;
-  cursor: pointer; 
+  cursor: pointer;
   align-items: center;
   background-color: #17a2b8 !important;
   color: #fff !important;
-  font-size: 15px !important;  
+  font-size: 15px !important;
 }
-.admin-dashboard-file-container .custom-file-label-for-admin-dashboard::after{
+.admin-dashboard-file-container .custom-file-label-for-admin-dashboard::after {
   content: "Upload File" !important;
   text-align: center !important;
   font-size: 15px !important;
@@ -382,18 +379,50 @@ ion-icon {
   bottom: 10px !important;
   top: initial !important;
 }
-.admin-dashboard-file-container .custom-file-admin-dashboard{
+.admin-dashboard-file-container .custom-file-admin-dashboard {
   height: 120px !important;
   width: 350px !important;
 }
 
+.header-color-for-admin {
+  background: linear-gradient(
+    84deg,
+    rgba(252, 110, 81, 0.9780287114845938) 0%,
+    rgba(233, 87, 63, 1) 100%
+  ) !important;
+}
+.header-color-for-faculty {
+  background: linear-gradient(
+    84deg,
+    rgba(160, 212, 104, 1) 0%,
+    rgba(140, 193, 82, 1) 100%
+  ) !important;
+}
+.header-color-for-student {
+  background: linear-gradient(
+    73deg,
+    rgba(93, 156, 236, 1) 0%,
+    rgba(252, 110, 81, 1) 100%
+  ) !important;
+}
 
-.header-color-for-admin{
-  background:linear-gradient(84deg, rgba(252,110,81,0.9780287114845938) 0%, rgba(233,87,63,1) 100%) !important;
+/* Active User */
+.currently-active-user {
+  position: fixed;
+  top: 50%;
+  left: -200px;
+  background: #7e6eaf;
+  width: 200px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  opacity: 0;
+  transition: all 0.3s linear;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  color: #fff;
 }
-.header-color-for-faculty{
-  background: linear-gradient(84deg, rgba(160,212,104,1) 0%, rgba(140,193,82,1) 100%) !important;
-}
-.header-color-for-student{
-  background: linear-gradient(73deg, rgba(93,156,236,1) 0%, rgba(252,110,81,1) 100%) !important;
+.currently-active-user-effect {
+  left: 0 !important;
+  opacity: 1 !important;
 }
