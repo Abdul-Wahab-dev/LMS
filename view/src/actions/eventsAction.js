@@ -27,6 +27,7 @@ export const createEvent = (eve, file, clearState) => dispatch => {
   axios
     .post("/api/v1/event", formData, config)
     .then(res => {
+      clearState();
       dispatch({
         type: CREATE_EVENT,
         payload: res.data.data.event

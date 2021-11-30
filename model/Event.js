@@ -8,16 +8,13 @@ const eventSchema = Schema({
   },
   eventName: {
     type: String,
-    required: true,
   },
 
   eventType: {
     type: String,
-    required: true,
   },
   eventDate: {
     type: String,
-    required: true,
   },
   display: {
     type: Boolean,
@@ -27,7 +24,6 @@ const eventSchema = Schema({
   fileName: String,
   body: {
     type: String,
-    required: true,
   },
   createdAt: {
     type: Date,

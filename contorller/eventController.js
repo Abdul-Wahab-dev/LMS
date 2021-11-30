@@ -1,5 +1,4 @@
 const Events = require("../model/Event");
-const AppError = require("./../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 
 // @route         POST /api/v1/event
@@ -10,9 +9,7 @@ exports.create = catchAsync(async (req, res, next) => {
   const data = JSON.parse(req.body.event);
   // save fileName if file exist
   data.fileName = req.file ? req.file.key : "";
-
   const eve = await Events.create(data);
-
   if (!eve) {
     return res.status(400).json({
       status: "fail",

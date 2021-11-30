@@ -147,28 +147,6 @@ const Editor = props => {
     };
     dispatch(createPecDocs(doc, file, clearState));
   };
-
-  // Handle Members
-  // const addMembers = (value, i, type) => {
-  //   const array = [...eventMembers];
-  //   if (type === "name") array[i].name = value;
-  //   if (type === "enrollment") array[i].enrollmentNo = value;
-  //   setEventMembers([...array]);
-  // };
-  // const addNewMembers = () => {
-  //   const array = [...eventMembers];
-  //   array.push({
-  //     name: "",
-  //     enrollmentNo: ""
-  //   });
-
-  //   setEventMembers([...array]);
-  // };
-  // const removeMember = index => {
-  //   const array = [...eventMembers].filter((member, i) => i !== index);
-  //   setEventMembers([...array]);
-  // };
-
   // Event Create
   const createEventFunc = () => {
     const eve = {
