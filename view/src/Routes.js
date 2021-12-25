@@ -33,8 +33,8 @@ const Routes = () => {
   return (
     <Col
       className="main-content p-0"
-      lg={{ size: 10, offset: 2 }}
-      md={{ size: 10, offset: 2 }}
+      // lg={{ size: 10, offset: 2 }}
+      // md={{ size: 10, offset: 2 }}
     >
       <PrivateRoute exact path="/latest-news" component={BlogPosts} />
       {/* <PrivateRoute exact path="/latest-news" component={Errors} /> */}

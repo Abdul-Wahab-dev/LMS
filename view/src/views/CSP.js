@@ -142,7 +142,7 @@ const CSP = props => {
     dispatch(addCSPRemarks(obj, clearState));
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle sm="4" title="CSP" subtitle="CSP" className="text-sm-left" />
       </Row>
@@ -153,14 +153,18 @@ const CSP = props => {
               <CardHeader className="border-bottom">
                 <Row className="mb-3">
                   <Col
-                    md="2"
+                    md="3"
+                    sm="3"
+                    xs="4"
                     className="d-flex justify-content-center align-items-center"
                   >
                     <h5 className="m-0">Search By</h5>
                   </Col>
 
                   <Col
-                    md="1"
+                    md="2"
+                    sm="3"
+                    xs="4"
                     className="d-flex justify-content-center align-items-center"
                   >
                     <FormRadio
@@ -171,7 +175,9 @@ const CSP = props => {
                     </FormRadio>
                   </Col>
                   <Col
-                    md="1"
+                    md="2"
+                    sm="3"
+                    xs="4"
                     className="d-flex justify-content-center align-items-center"
                   >
                     <FormRadio
@@ -193,7 +199,7 @@ const CSP = props => {
                         onChange={e => setSearchEnrollment(e.target.value)}
                       />
                     </Col>
-                    <Col sm="2">
+                    <Col sm="2" xs="3" className="mt-sm">
                       <Button
                         size="md"
                         onClick={() =>
@@ -212,17 +218,17 @@ const CSP = props => {
                   </Row>
                 ) : (
                   <Row>
-                    <Col sm="4">
+                    <Col sm="4" xs="4">
                       <Program
                         program={searchProgram}
                         setProgram={setSearchProgram}
                         errors={errors}
                       />
                     </Col>
-                    <Col md="4">
+                    <Col sm="4" xs="4">
                       <Batch batch={searchBatch} setBatch={setSearchBatch} />
                     </Col>
-                    <Col sm="2">
+                    <Col sm="2" xs="2">
                       <Button
                         size="md"
                         onClick={() =>
@@ -409,7 +415,7 @@ const CSP = props => {
                           errors={errors}
                         />
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-sm">
                         <label>Batch</label>
                         <Batch
                           batch={batch}
@@ -418,7 +424,7 @@ const CSP = props => {
                         />
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" className="mt-sm">
                         <label>Deadline</label>
                         <FormInput
                           type="date"
@@ -494,7 +500,7 @@ const CSP = props => {
                             )}
                         </div>
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-sm">
                         <label>Name</label>
                         <FormInput
                           type="text"
@@ -513,16 +519,12 @@ const CSP = props => {
                         )}
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" className="mt-sm">
                         <label>File</label>
                         <CustomFileUpload file={file} setFile={setFile} />
                       </Col>
                     </Row>
-                    <Button
-                      type="button"
-                      className="mt-4"
-                      onClick={e => createCSPFunc(e)}
-                    >
+                    <Button type="button" onClick={e => createCSPFunc(e)}>
                       Create New
                     </Button>
                   </Form>

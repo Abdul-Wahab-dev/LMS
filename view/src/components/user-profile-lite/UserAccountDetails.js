@@ -84,6 +84,7 @@ const UserAccountDetails = ({ profile }) => {
                 borderRadius: "50%",
                 marginBottom: "20px"
               }}
+              className="thumbnail-image"
             />
           </div>
           <Row>

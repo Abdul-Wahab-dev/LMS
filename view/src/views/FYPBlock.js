@@ -30,7 +30,10 @@ import {
   getProjectNames,
   deleteFYP,
   deleteIdea,
-  addMembersToFYPAct
+  addMembersToFYPAct,
+  getFYPCategory,
+  assignTimeAction,
+  presentationStatusAction
 } from "../actions/fyp";
 import { getUsers } from "../actions/authActions";
 // loader
@@ -48,11 +51,18 @@ const FYPBlock = () => {
   const [idea, setIdea] = useState("");
   const [data, setData] = useState({});
   const [modal, setModal] = useState(false);
+  const [timeModal, setTimeModal] = useState(false);
+  const [duration, setDuration] = useState(20);
+  const [startTime, setStartTime] = useState("");
+  const [timeCategory, setTimeCategory] = useState("");
+  const [timeEventName, setTimeEventName] = useState("");
+  const [breakTimeStart, setBreakTimeStart] = useState("");
+  const [breakTimeEnd, setBreakTimeEnd] = useState("");
   const [comment, setComment] = useState("");
   const [remarks, setRemarks] = useState("");
   const [errors, setErrors] = useState({});
   const [eventIdForMember, setEventIdForMember] = useState("");
-
+  const [category, setCategory] = useState("");
   const [eventMembers, setEventMembers] = useState([
     {
       name: "",
@@ -67,6 +77,8 @@ const FYPBlock = () => {
   const names = useSelector(state => state.fyp.names);
   const auth = useSelector(state => state.auth.user);
   const users = useSelector(state => state.auth.users);
+  const memberExist = useSelector(state => state.fyp.memberExist);
+  const fypCategory = useSelector(state => state.fyp.category);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // useEffect
@@ -75,11 +87,10 @@ const FYPBlock = () => {
   }, [errorsFromStore]);
 
   useEffect(() => {
-    if (auth.role !== "student") {
-      dispatch(getProjectNames());
-    }
+    dispatch(getProjectNames());
     dispatch(getFyp({ eventName: "", batch: "" }));
     dispatch(getUsers());
+    dispatch(getFYPCategory());
   }, []);
   // get formate date
   const getFullyFormateDate = fullDate => {
@@ -184,10 +195,25 @@ const FYPBlock = () => {
         supervisor: {
           name: supervisorName.toLowerCase(),
           enrollmentNo: supervisorId.toLowerCase()
-        }
+        },
+        category
       }
     };
     dispatch(addMembersToFYPAct(memberObj, clearRemarksState));
+  };
+
+  // assign presentation time
+  const assignTimeFunc = () => {
+    const obj = {
+      category: timeCategory.toLowerCase(),
+      eventName: timeEventName,
+      duration: duration * 1,
+      date: presentationDate,
+      startTime,
+      breakTimeStart,
+      breakTimeEnd
+    };
+    dispatch(assignTimeAction(obj, clearRemarksState));
   };
   // clear state
   const clearRemarksState = () => {
@@ -209,10 +235,18 @@ const FYPBlock = () => {
     setSupervisorId("");
     setSupervisorName("");
     setModal(false);
+    setCategory("");
+    setTimeCategory("");
+    setTimeEventName("");
+    setTimeModal(false);
+    setBreakTimeEnd("");
+    setBreakTimeStart("");
+    setDuration("");
+    setStartTime("");
   };
 
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -231,7 +265,7 @@ const FYPBlock = () => {
                     <Col md="3">
                       <Batch batch={batchSearch} setBatch={setBatchSearch} />
                     </Col>
-                    <Col md="3">
+                    <Col md="3" className="mt-md">
                       <FormSelect
                         id="feInputState"
                         value={eventNameSearch}
@@ -240,7 +274,7 @@ const FYPBlock = () => {
                       >
                         {names.length > 0 ? (
                           <>
-                            <option value="">Choose...</option>
+                            <option value="">Choose FYP...</option>
                             {names
                               .filter(
                                 name =>
@@ -262,9 +296,14 @@ const FYPBlock = () => {
                       </FormSelect>
                     </Col>
 
-                    <Col md="2">
+                    <Col md="1" className="mt-md">
                       <Button type="button" onClick={() => searchProject()}>
                         Search
+                      </Button>
+                    </Col>
+                    <Col md="2" className="mt-md">
+                      <Button type="button" onClick={() => setTimeModal(true)}>
+                        Manage Time
                       </Button>
                     </Col>
                   </Row>
@@ -296,10 +335,16 @@ const FYPBlock = () => {
                     <th scope="col" className="border-0">
                       Remarks
                     </th>
+
                     {auth.role !== "student" ? (
-                      <th scope="col" className="border-0" colSpan="2">
-                        Action
-                      </th>
+                      <>
+                        <th scope="col" className="border-0">
+                          Status
+                        </th>
+                        <th scope="col" className="border-0" colSpan="2">
+                          Action
+                        </th>
+                      </>
                     ) : null}
                   </tr>
                 </thead>
@@ -308,7 +353,12 @@ const FYPBlock = () => {
                     projects.map(project =>
                       project.projects.map((fyp, i) => (
                         <tr key={fyp._id}>
-                          <td>{i + 1}</td>
+                          <td>
+                            {i + 1}
+                            {fyp.status === "inprogress" ? (
+                              <span className="active-presentation"></span>
+                            ) : null}
+                          </td>
                           <td colSpan="2">
                             {fyp.eventMembers.map(member => (
                               <Row className="mb-2" key={member._id}>
@@ -329,8 +379,16 @@ const FYPBlock = () => {
                           </td>
                           <td>{fyp.idea}</td>
                           <td>
-                            {fyp.presentationDate} <br />
-                            {fyp.presentationTime}
+                            {fyp.presentationDate.length > 0 ? (
+                              <span>
+                                {fyp.presentationDate}
+                                <br />
+
+                                {fyp.presentationTime}
+                              </span>
+                            ) : (
+                              "NIL"
+                            )}{" "}
                           </td>
                           <td>
                             {fyp.supervisor ? fyp.supervisor.name : "Null"}
@@ -347,12 +405,46 @@ const FYPBlock = () => {
                               Remarks
                             </Button>
                           </td>
-
+                          {auth.role !== "student" ? (
+                            <td>
+                              {fyp.status === "inprogress" ? (
+                                <Button
+                                  onClick={() =>
+                                    dispatch(
+                                      presentationStatusAction({
+                                        id: project._id,
+                                        projectId: fyp._id,
+                                        status: "complete"
+                                      })
+                                    )
+                                  }
+                                >
+                                  End
+                                </Button>
+                              ) : null}
+                              {fyp.status === "pending" ? (
+                                <Button
+                                  onClick={() =>
+                                    dispatch(
+                                      presentationStatusAction({
+                                        id: project._id,
+                                        projectId: fyp._id,
+                                        status: "inprogress"
+                                      })
+                                    )
+                                  }
+                                >
+                                  Start
+                                </Button>
+                              ) : null}
+                              {fyp.status === "complete" ? "completed" : null}
+                            </td>
+                          ) : null}
                           {auth.role !== "student" ? (
                             <td colSpan="2">
                               <div className="d-flex justify-content-center align-items-center">
                                 <Button
-                                  className="mr-1"
+                                  className="mx-1"
                                   onClick={() => {
                                     if (
                                       window.confirm(
@@ -438,7 +530,7 @@ const FYPBlock = () => {
                           </FormFeedback>
                         )}
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Batch</label>
                         <Batch
                           batch={batch}
@@ -459,8 +551,14 @@ const FYPBlock = () => {
         </>
       ) : null}
 
-      {auth.role !== "student" && auth.role !== "faculty" ? (
+      {(auth.role === "student" && memberExist === false) ||
+      auth.role === "admin" ? (
         <>
+          {errors && errors.message && (
+            <div className="error-message alert-danger m-0" role="alert">
+              {errors.message}
+            </div>
+          )}
           <Row noGutters className="page-header py-4">
             <PageTitle
               sm="4"
@@ -475,7 +573,7 @@ const FYPBlock = () => {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col sm="4">
+                      <Col md="4" sm="6">
                         <label>Event Name</label>
                         <FormSelect
                           id="feInputState"
@@ -500,7 +598,7 @@ const FYPBlock = () => {
                         </FormSelect>
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" sm="6" className="mt-sm">
                         <label>Supervisor name</label>
                         <FormInput
                           type="text"
@@ -549,7 +647,33 @@ const FYPBlock = () => {
                       </Col>
                     </Row>
                     <Row className="my-2">
-                      <Col md="4">
+                      <Col md="4" sm="6" className="mt-md">
+                        <label>Category</label>
+                        <FormSelect
+                          id="feInputState"
+                          value={category}
+                          onChange={e => setCategory(e.target.value)}
+                          required
+                        >
+                          {fypCategory.length > 0 ? (
+                            <>
+                              <option value="">Choose</option>
+                              {fypCategory.map((cate, i) => (
+                                <option
+                                  value={`${cate.category}`}
+                                  key={cate._id}
+                                >
+                                  {cate.category.charAt(0).toUpperCase() +
+                                    cate.category.slice(1)}
+                                </option>
+                              ))}
+                            </>
+                          ) : (
+                            <option>Loading...</option>
+                          )}
+                        </FormSelect>
+                      </Col>
+                      <Col md="4" sm="6" className="mt-md">
                         <label> Project Name </label>
                         <FormInput
                           type="text"
@@ -565,7 +689,7 @@ const FYPBlock = () => {
                           <FormFeedback>{errors.validation.idea}</FormFeedback>
                         )}
                       </Col>
-                      <Col md="4">
+                      {/* <Col md="4">
                         <label> Date </label>
                         <FormInput
                           type="date"
@@ -606,7 +730,7 @@ const FYPBlock = () => {
                               {errors.validation.presentationTime}
                             </FormFeedback>
                           )}
-                      </Col>
+                      </Col> */}
                     </Row>
                     <div className="mt-3">
                       <label>Members</label>
@@ -614,11 +738,16 @@ const FYPBlock = () => {
                     <div className="mb-4">
                       {eventMembers.map((member, i) => (
                         <Row key={member._id} className="mb-4">
-                          <Col md="4" style={{ position: "relative" }}>
+                          <Col
+                            md="4"
+                            xs="12"
+                            sm="6"
+                            style={{ position: "relative" }}
+                          >
                             <div>
                               <FormInput
                                 type="text"
-                                placeholder="Enrollmnet NO"
+                                placeholder="Enrollmnet no"
                                 value={member.enrollmentNo}
                                 onChange={e =>
                                   addMembers(e.target.value, i, "enrollment")
@@ -665,7 +794,7 @@ const FYPBlock = () => {
                               ) : null}
                             </div>
                           </Col>
-                          <Col md="4">
+                          <Col md="4" xs="12" sm="6" className="mt-sm">
                             <FormInput
                               type="text"
                               placeholder="Name"
@@ -675,9 +804,15 @@ const FYPBlock = () => {
                               }
                             />
                           </Col>
-                          <Col md="4" className="position-relative">
+                          <Col
+                            md="4"
+                            xs="12"
+                            sm="6"
+                            className="position-relative mt-sm mt-md"
+                            style={{ height: "35px" }}
+                          >
                             <div
-                              className="position-absolute"
+                              className="position-absolute bottom-auto-sm"
                               style={{ bottom: "0px" }}
                             >
                               {i < 2 && i === eventMembers.length - 1 ? (
@@ -817,6 +952,130 @@ const FYPBlock = () => {
                 )}
               </tbody>
             </table>
+          </div>
+        </ModalBody>
+      </Modal>
+      <Modal open={timeModal} toggle={() => setTimeModal(!timeModal)}>
+        <ModalHeader>Assign Time</ModalHeader>
+        <ModalBody>
+          <div className="complain-modal-container">
+            {errors.message &&
+            errors.message.length > 0 &&
+            !errors.validation ? (
+              <div className="error-message alert-danger" role="alert">
+                {errors.message}
+              </div>
+            ) : null}
+            <Row>
+              <Col sm="4">
+                <label>Event Name</label>
+                <FormSelect
+                  id="feInputState"
+                  value={timeEventName}
+                  onChange={e => setTimeEventName(e.target.value)}
+                  required
+                >
+                  {names.length > 0 ? (
+                    <>
+                      <option value="">Choose</option>
+                      {names.map((name, i) => (
+                        <option value={`${name._id}`} key={name._id}>
+                          {name.eventName.charAt(0).toUpperCase() +
+                            name.eventName.slice(1)}{" "}
+                          {`( ${name.batch} )`}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option>Loading...</option>
+                  )}
+                </FormSelect>
+              </Col>
+              <Col sm="4">
+                <label>Category</label>
+                <FormSelect
+                  id="feInputState"
+                  value={timeCategory}
+                  onChange={e => setTimeCategory(e.target.value)}
+                  required
+                >
+                  {fypCategory.length > 0 ? (
+                    <>
+                      <option value="">Choose</option>
+                      {fypCategory.map((cate, i) => (
+                        <option value={`${cate.category}`} key={cate._id}>
+                          {cate.category.charAt(0).toUpperCase() +
+                            cate.category.slice(1)}
+                        </option>
+                      ))}
+                    </>
+                  ) : (
+                    <option>Loading...</option>
+                  )}
+                </FormSelect>
+              </Col>
+              <Col md="4">
+                <label> Duration </label>
+                <FormInput
+                  type="number"
+                  placeholder="Duration"
+                  value={duration}
+                  onChange={e => setDuration(e.target.value * 1)}
+                  required
+                />
+              </Col>
+            </Row>
+            <Row className="mt-2">
+              <Col md="4">
+                <label> Date </label>
+                <FormInput
+                  type="date"
+                  placeholder="Idea"
+                  value={presentationDate}
+                  onChange={e => setPresentationDate(e.target.value)}
+                  required
+                />
+              </Col>
+              <Col md="4">
+                <label> Time </label>
+                <FormInput
+                  type="time"
+                  placeholder="Idea"
+                  value={startTime}
+                  onChange={e => setStartTime(e.target.value)}
+                  required
+                />
+              </Col>
+            </Row>
+            <Row className="mt-2">
+              <Col md="4">
+                <label> Break Start </label>
+                <FormInput
+                  type="time"
+                  placeholder="Idea"
+                  value={breakTimeStart}
+                  onChange={e => setBreakTimeStart(e.target.value)}
+                  required
+                />
+              </Col>
+              <Col md="4">
+                <label> Break End </label>
+                <FormInput
+                  type="time"
+                  placeholder="Idea"
+                  value={breakTimeEnd}
+                  onChange={e => setBreakTimeEnd(e.target.value)}
+                  required
+                />
+              </Col>
+            </Row>
+            <Button
+              className="mt-2"
+              type="button"
+              onClick={() => assignTimeFunc()}
+            >
+              Assign
+            </Button>
           </div>
         </ModalBody>
       </Modal>

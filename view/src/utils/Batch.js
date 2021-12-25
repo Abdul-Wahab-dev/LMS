@@ -24,7 +24,7 @@ function batch(props) {
       >
         {batchs.length > 0 ? (
           <>
-            <option value="">Choose</option>{" "}
+            <option value="">Choose Batch...</option>{" "}
             {batchs.map(batch => (
               <option key={batch._id} value={batch.batch}>
                 {batch.batch}

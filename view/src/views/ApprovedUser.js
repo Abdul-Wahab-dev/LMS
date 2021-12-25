@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 // page title
 import PageTitle from "../components/common/PageTitle";
 // action
-import { getUsers, approveUser , deleteUser } from "../actions/authActions";
+import { getUsers, approveUser, deleteUser } from "../actions/authActions";
 
 const ApprovedUser = () => {
   // get state from store
@@ -35,11 +35,11 @@ const ApprovedUser = () => {
     };
     dispatch(approveUser(obj));
   };
-  const deleteUserFunc = id =>{
-    dispatch(deleteUser(id))
-  }
+  const deleteUserFunc = id => {
+    dispatch(deleteUser(id));
+  };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -52,7 +52,7 @@ const ApprovedUser = () => {
         <Col>
           <Card small className="mb-4">
             <CardHeader className="border-bottom">
-              <h6 className="m-0">Complains</h6>
+              <h6 className="m-0">Users</h6>
             </CardHeader>
             <CardBody className="p-0 pb-3">
               <table className="table mb-0">
@@ -102,7 +102,7 @@ const ApprovedUser = () => {
                             </Button>
                             <Button
                               type="button"
-                              onClick={e=> deleteUserFunc(user._id)}
+                              onClick={e => deleteUserFunc(user._id)}
                               className="btn btn-danger ml-2"
                             >
                               Delete

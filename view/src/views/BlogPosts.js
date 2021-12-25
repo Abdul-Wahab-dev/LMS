@@ -48,7 +48,14 @@ const BlogPosts = () => {
       <Row>
         {news.news.length > 0 ? (
           news.news.map((latestNews, i) => (
-            <Col lg="6" sm="12" className="mb-4" key={latestNews._id}>
+            <Col
+              lg="6"
+              sm="6"
+              xs="12"
+              md="6"
+              className="mb-4"
+              key={latestNews._id}
+            >
               <Card small className="card-post card-post--aside card-post--1">
                 <CardBody>
                   <h5 className="card-title">

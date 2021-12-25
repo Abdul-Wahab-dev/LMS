@@ -85,7 +85,7 @@ const AddNewPost = () => {
     }
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -209,7 +209,7 @@ const AddNewPost = () => {
 
       <Row>
         <Col lg="9" md="12">
-          <Editor for="complains" title="Complain TO" />
+          <Editor for="complains" title="Complain to" />
         </Col>
       </Row>
       <Modal open={modal} toggle={() => setModal(!modal)}>

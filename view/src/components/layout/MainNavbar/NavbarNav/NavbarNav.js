@@ -32,7 +32,7 @@ export default () => {
     setModal(false);
   };
   return (
-    <>
+    <div className="d-lg-none-c">
       <Nav navbar className="flex-row">
         <UserActions user={user} setModal={setModal} />
       </Nav>
@@ -87,6 +87,6 @@ export default () => {
           </Form>
         </ModalBody>
       </Modal>
-    </>
+    </div>
   );
 };

@@ -100,11 +100,11 @@ const UserActions = props => {
         </Collapse>
       </NavItem>
     ) : (
-      <div className="d-flex justify-content-center align-items-center">
-        <Link to="/user-login" className="mr-3 custom-btn">
+      <div className="d-flex justify-content-center align-items-center ">
+        <Link to="/user-login" className="mr-3 custom-btn m-md-0">
           Login
         </Link>
-        <Link to="/user-register" className="custom-btn">
+        <Link to="/user-register" className="custom-btn d-md-none">
           Register
         </Link>
       </div>

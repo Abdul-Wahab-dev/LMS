@@ -33,11 +33,9 @@ const Index = props => {
   // get state from store
   const slides = useSelector(state => state.slider.slides);
   const users = useSelector(state => state.auth.users);
-  const auth = useSelector(state => state.auth);
   const news = useSelector(state => state.news.news);
   const events = useSelector(state => state.events.privateEvents);
   const quotes = useSelector(state => state.quote.quotes);
-  console.log(auth);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // useEffect

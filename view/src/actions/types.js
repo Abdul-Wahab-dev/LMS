@@ -45,6 +45,10 @@ export const DELETE_FYP = "DELETE_FYP";
 export const UPDATE_FYP = "UPDATE_FYP";
 export const GET_NAMES = "GET_NAMES";
 export const UPDATE_FYP_PROJECT = "UPDATE_FYP_PROJECT";
+export const CREATE_FYP_CATEGORY = "CREATE_FYP_CATEGORY";
+export const GET_FYP_CATEGORY = "GET_FYP_CATEGORY";
+export const DELETE_FYP_CATEGORY = "DELETE_FYP_CATEGORY";
+
 // Team
 export const GET_TEAMS = "GET_TEAMS";
 export const GET_TEAMS_NAMES = "GET_TEAMS_NAMES";

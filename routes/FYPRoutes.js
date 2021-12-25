@@ -6,7 +6,17 @@ const authController = require("../contorller/authContoller");
 
 router.get("/getnames", fypController.getProjectsName);
 router.route("/").post(authController.protect, fypController.create);
+router
+  .route("/category")
+  .post(authController.protect, fypController.createCategory)
+  .get(authController.protect, fypController.getCategory);
+router.delete(
+  "/category/:id",
+  authController.protect,
+  fypController.deleteCategory
+);
 
+router.put("/assign-time", authController.protect, fypController.assignTime);
 router
   .route("/:eventName?/:batch?")
   .get(authController.protect, fypController.getFYP);
@@ -19,4 +29,9 @@ router.route("/:id").delete(authController.protect, fypController.deleteFYP);
 
 router.patch("/ideadelete", authController.protect, fypController.deleteIdea);
 
+router.patch(
+  "/presentation-status",
+  authController.protect,
+  fypController.presentationStatus
+);
 module.exports = router;

@@ -14,7 +14,6 @@ exports.create = catchAsync(async (req, res, next) => {
   if (!isValid) {
     return next(new AppError("fields required", 400, errors));
   }
-  console.log(req.body);
   // create assignment
   const complain = await Complain.create(req.body);
   // send response to user

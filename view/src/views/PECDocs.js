@@ -96,7 +96,7 @@ const PECDocs = props => {
     setAddWorkModal(false);
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -133,7 +133,7 @@ const PECDocs = props => {
                     <Col md="3" className="pt-2">
                       <Button
                         type="button"
-                        className="mt-4"
+                        className="mt-4 mt-md"
                         onClick={() =>
                           dispatch(getDocuments(searchByType.toLowerCase()))
                         }

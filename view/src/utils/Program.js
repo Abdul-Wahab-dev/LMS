@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPrograms } from "../actions/programAndAction";
 function Program(props) {
   const programs = useSelector(state => state.programAndBatch.programs);
-  console.log(programs);
   // initialize useDispatch()
   const dispatch = useDispatch();
   useEffect(() => {

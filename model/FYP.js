@@ -19,6 +19,11 @@ const fypSchema = Schema({
     required: true,
     default: "student",
   },
+  timeAssign: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
   projects: [
     {
       presentationDate: {
@@ -28,6 +33,9 @@ const fypSchema = Schema({
         type: String,
       },
       idea: {
+        type: String,
+      },
+      category: {
         type: String,
       },
       eventMembers: [
@@ -48,6 +56,11 @@ const fypSchema = Schema({
           enrollmentNo: String,
         },
       ],
+      status: {
+        type: String,
+        required: true,
+        default: "pending",
+      },
     },
   ],
   createdAt: {

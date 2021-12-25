@@ -91,7 +91,6 @@ exports.login = catchAsync(async (req, res, next) => {
 
   if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError("Incorrect email or password", 401));
-    // return next(new AppError("Incorrect email or password", 401));
   }
   if (user.approvedUser !== true) {
     return next(new AppError("User not Approved", 401));
@@ -339,7 +338,6 @@ exports.getAllUser = catchAsync(async (req, res, next) => {
 // @desc        Change User role
 // @access      Private
 exports.changeUserRole = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const user = await User.findOneAndUpdate(
     { _id: req.body.id },
     { role: req.body.role },

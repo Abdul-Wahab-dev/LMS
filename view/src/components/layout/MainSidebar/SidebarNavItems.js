@@ -51,6 +51,16 @@ const SidebarNavItems = props => {
             <NavItem>
               <NavLink
                 tag={RouteNavLink}
+                to={"/"}
+                className="d-flex align-items-center"
+              >
+                <ion-icon name="speedometer"></ion-icon>
+                <span>Home</span>
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                tag={RouteNavLink}
                 to={"/dashboard"}
                 className="d-flex align-items-center"
               >
@@ -360,6 +370,72 @@ const SidebarNavItems = props => {
                 ) : null}
               </NavLink>
             </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>EE FACULTY</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/department-overview/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Overview</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/vision/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Vision</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/message-form-hod/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Message of HOD</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/under-graduate-programs/bee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>BEE</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/graduate-programs/ms-electrical-engineering/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>MEE</span>
+              </a>
+            </NavItem>
           </Nav>
         </div>
       );
@@ -367,6 +443,16 @@ const SidebarNavItems = props => {
       return (
         <div className="nav-wrapper">
           <Nav className="nav--no-borders flex-column">
+            <NavItem>
+              <NavLink
+                tag={RouteNavLink}
+                to={"/"}
+                className="d-flex align-items-center"
+              >
+                <ion-icon name="speedometer"></ion-icon>
+                <span>Home</span>
+              </NavLink>
+            </NavItem>
             {auth.permissions &&
             auth.permissions.NEWS &&
             auth.permissions.NEWS.read === true ? (
@@ -570,6 +656,72 @@ const SidebarNavItems = props => {
                 <span>CMS</span>
               </a>
             </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>EE FACULTY</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/department-overview/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Overview</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/vision/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Vision</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/message-form-hod/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Message of HOD</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/under-graduate-programs/bee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>BEE</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/graduate-programs/ms-electrical-engineering/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>MEE</span>
+              </a>
+            </NavItem>
           </Nav>
         </div>
       );
@@ -578,6 +730,16 @@ const SidebarNavItems = props => {
       return (
         <div className="nav-wrapper">
           <Nav className="nav--no-borders flex-column">
+            <NavItem>
+              <NavLink
+                tag={RouteNavLink}
+                to={"/"}
+                className="d-flex align-items-center"
+              >
+                <ion-icon name="speedometer"></ion-icon>
+                <span>Home</span>
+              </NavLink>
+            </NavItem>
             <NavItem>
               <NavLink
                 tag={RouteNavLink}
@@ -675,6 +837,72 @@ const SidebarNavItems = props => {
                 <span>CMS</span>
               </a>
             </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>EE FACULTY</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/department-overview/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Overview</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/vision/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Vision</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/message-form-hod/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Message of HOD</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/under-graduate-programs/bee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>BEE</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/graduate-programs/ms-electrical-engineering/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>MEE</span>
+              </a>
+            </NavItem>
           </Nav>
         </div>
       );
@@ -683,6 +911,16 @@ const SidebarNavItems = props => {
       return (
         <div className="nav-wrapper">
           <Nav className="nav--no-borders flex-column">
+            <NavItem>
+              <NavLink
+                tag={RouteNavLink}
+                to={"/"}
+                className="d-flex align-items-center"
+              >
+                <ion-icon name="speedometer"></ion-icon>
+                <span>Home</span>
+              </NavLink>
+            </NavItem>
             <NavItem>
               <NavLink
                 tag={RouteNavLink}
@@ -861,6 +1099,72 @@ const SidebarNavItems = props => {
                 </NavLink>
               </NavItem>
             ) : null}
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>EE FACULTY</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/department-overview/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Overview</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/vision/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Department Vision</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/buic/ee/message-form-hod/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>Message of HOD</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/under-graduate-programs/bee/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>BEE</span>
+              </a>
+            </NavItem>
+            <NavItem>
+              <a
+                href="https://www.bahria.edu.pk/academics/graduate-programs/ms-electrical-engineering/"
+                className="d-flex align-items-center nav-link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <ion-icon name="person-circle"></ion-icon>
+                <span style={{ marginLeft: "14px" }}>MEE</span>
+              </a>
+            </NavItem>
           </Nav>
         </div>
       );

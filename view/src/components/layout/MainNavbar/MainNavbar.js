@@ -12,6 +12,7 @@ import {
 import { Link } from "react-router-dom";
 import NavbarNav from "./NavbarNav/NavbarNav";
 import LOGO from "../../../images/logo5.png";
+import MenuIcon from "../../../images/menuIcon.png";
 
 const MainNavbar = ({ stickyTop }) => {
   const [aboutUs, setAboutUs] = useState(false);
@@ -24,42 +25,68 @@ const MainNavbar = ({ stickyTop }) => {
   //   "bg-white",
   //   stickyTop && "sticky-top"
   // );
-let classes;
-if(auth.user.role === "admin"){
-  classes = classNames(
-    "main-navbar",
-    "bg-white",
-    "header-color-for-admin",
-    stickyTop && "sticky-top"
-  );
-}else if(auth.user.role === "faculty" || auth.user.role === "coordinator" ){
-  classes = classNames(
-    "main-navbar",
-    "bg-white",
-    "header-color-for-faculty",
-    stickyTop && "sticky-top"
-  );
-}else{
-  classes = classNames(
+  let classes;
+  if (auth.user.role === "admin") {
+    classes = classNames(
+      "main-navbar",
+      "bg-white",
+      "header-color-for-admin",
+      stickyTop && "sticky-top"
+    );
+  } else if (auth.user.role === "faculty" || auth.user.role === "coordinator") {
+    classes = classNames(
+      "main-navbar",
+      "bg-white",
+      "header-color-for-faculty",
+      stickyTop && "sticky-top"
+    );
+  } else {
+    classes = classNames(
       "main-navbar",
       "bg-white",
       "header-color-for-student",
       stickyTop && "sticky-top"
     );
-}
+  }
+
+  // Side bar Toggle
+  const sideBarToggle = () => {
+    if (document.getElementById("side-bar")) {
+      document.getElementById("side-bar").classList.toggle("main-sidebar-hide");
+    }
+  };
   return (
-    <div className={classes} style={{padding:"0 30px"}}>
-        <Navbar type="light" className="align-items-stretch p-0 flex-md-nowrap w-100 ">
-            {/* <h3
+    <div className={classes} style={{ padding: "0 25px" }}>
+      <Navbar
+        type="light"
+        // className="align-items-stretch p-0 flex-md-nowrap w-100 "
+        className="p-0 flex-md-nowrap w-100 "
+      >
+        {/* <h3
               style={{ color: "#fff", marginRight: "10px", marginBottom: "0" }}
               >
               {" "}
               LOGO
             </h3> */}
 
-            <img src={LOGO} alt="logo" width="150" style={{width:"200px"}} className="mr-3" />
-            <Container className="p-0">
-            <div className="d-flex justify-content-center align-items-center">
+        <img
+          src={MenuIcon}
+          style={{ width: "40px", height: "40px" }}
+          alt="menu icon"
+          onClick={() => sideBarToggle()}
+          className="d-none-c d-xl-none-c d-lg-block-c"
+        />
+
+        <img
+          src={LOGO}
+          alt="logo"
+          width="150"
+          style={{ width: "200px" }}
+          className="mr-3 d-lg-none-c d-block-c"
+        />
+        {/* <Container className="p-0 d-md-none nav-bar-links d-md-none d-sm-none d-xs-none"> */}
+        <Container className="p-0 nav-bar-links  d-lg-none-c d-block-c">
+          <div className="d-flex justify-content-center align-items-center">
             <Link to="/" className="custom-btn">
               HOME
             </Link>
@@ -131,9 +158,17 @@ if(auth.user.role === "admin"){
               </DropdownMenu>
             </Dropdown>
           </div>
-      </Container>
-          <NavbarNav />
-        </Navbar>
+        </Container>
+        {auth.isAuthenticated === true ? (
+          <Link
+            to={auth.user.role === "admin" ? "/dashboard" : "/latest-news"}
+            className="custom-btn dashboard-btn d-lg-block-c d-none-c d-xl-none-c"
+          >
+            Dashboard
+          </Link>
+        ) : null}
+        <NavbarNav />
+      </Navbar>
     </div>
   );
 };

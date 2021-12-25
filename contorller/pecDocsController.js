@@ -67,7 +67,6 @@ exports.create = catchAsync(async (req, res, next) => {
 // @desc          get pec documents
 // @access        Private
 exports.getDocs = catchAsync(async (req, res, next) => {
-  console.log(req.params.type);
   let forAllUser;
   if (req.user.role !== "student") {
     forAllUser = await PECDocs.find({ type: req.params.type });

@@ -234,7 +234,7 @@ const Editor = props => {
               </Col>
             ) : null}
             {props.for === "documents" || props.for === "pec" ? (
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label>File</label>
                 <CustomFileUpload file={file} setFile={setFile} />
               </Col>
@@ -275,13 +275,17 @@ const Editor = props => {
               <Row>
                 <Col
                   md="3"
-                  className="d-flex justify-content-center align-items-center"
+                  sm="3"
+                  xs="12"
+                  className="d-flex justify-content-center align-items-center justify-content-start"
                 >
                   <h5 className="m-0">{props.title}</h5>
                 </Col>
                 <Col
                   md="2"
-                  className="d-flex justify-content-center align-items-center"
+                  sm="2"
+                  xs="6"
+                  className="d-flex justify-content-center align-items-center justify-content-start"
                 >
                   <FormRadio
                     name="complainFor"
@@ -294,7 +298,9 @@ const Editor = props => {
                 </Col>
                 <Col
                   md="2"
-                  className="d-flex justify-content-center align-items-center"
+                  sm="2"
+                  xs="6"
+                  className="d-flex justify-content-center align-items-center justify-content-start"
                 >
                   <FormRadio
                     name="complainFor"
@@ -306,7 +312,9 @@ const Editor = props => {
                 </Col>
                 <Col
                   md="2"
-                  className="d-flex justify-content-center align-items-center"
+                  sm="2"
+                  xs="6"
+                  className="d-flex justify-content-center align-items-center justify-content-start"
                 >
                   <FormRadio
                     name="complainFor"
@@ -316,7 +324,7 @@ const Editor = props => {
                     Coordinator
                   </FormRadio>
                 </Col>
-                <Col md="3">
+                <Col md="3" sm="3" xs="6">
                   <FormSelect
                     id="feInputState"
                     value={complaineeName}
@@ -352,7 +360,9 @@ const Editor = props => {
           {props.for === "pec" ? (
             <>
               <Row>
-                <Col md="4">Students</Col>
+                <Col md="4" className="mb-md">
+                  Students
+                </Col>
                 <Col md="4">
                   <Program
                     program={program}
@@ -360,7 +370,7 @@ const Editor = props => {
                     errors={errors}
                   />
                 </Col>
-                <Col md="4">
+                <Col md="4" className="mt-md">
                   <Batch batch={batch} setBatch={setBatch} errors={errors} />
                 </Col>
               </Row>

@@ -4,7 +4,10 @@ import {
   CLEAR_FYP_LOADING,
   SET_FYP_LOADING,
   DELETE_FYP,
-  GET_NAMES
+  GET_NAMES,
+  CREATE_FYP_CATEGORY,
+  DELETE_FYP_CATEGORY,
+  GET_FYP_CATEGORY
 } from "../actions/types";
 
 const initialState = {
@@ -12,6 +15,8 @@ const initialState = {
   // user: {}
   names: [],
   projects: [],
+  category: [],
+  memberExist: false,
   loading: false
 };
 
@@ -31,7 +36,8 @@ export default function fypReducer(state = initialState, action) {
       return {
         ...state,
         loading: false,
-        projects: action.payload
+        projects: action.payload.projects,
+        memberExist: action.payload.memberExist
       };
     case UPDATE_FYP:
       return {
@@ -54,6 +60,22 @@ export default function fypReducer(state = initialState, action) {
         projects: state.projects.filter(
           project => project._id !== action.payload._id
         )
+      };
+
+    case CREATE_FYP_CATEGORY:
+      return {
+        ...state,
+        category: [...state.category, action.payload]
+      };
+    case GET_FYP_CATEGORY:
+      return {
+        ...state,
+        category: action.payload
+      };
+    case DELETE_FYP_CATEGORY:
+      return {
+        ...state,
+        category: state.category.filter(type => type._id !== action.payload._id)
       };
 
     default:

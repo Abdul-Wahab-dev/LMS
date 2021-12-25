@@ -7,11 +7,13 @@ import { Row, Col } from "shards-react";
 import PreLoader from "./utils/preLoader";
 import MainNavbar from "./components/layout/MainNavbar/MainNavbar";
 import MainSidebar from "./components/layout/MainSidebar/MainSidebar";
+import history from "./history";
 // stylesheets
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./shards-dashboard/styles/shards-dashboards.1.1.0.min.css";
 import "./assets/custom.css";
-import history from "./history";
+import "./assets/mediaQuery.css";
+
 // Token
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
@@ -24,6 +26,9 @@ const Index = lazy(() => import("./views/index"));
 const Register = lazy(() => import("./components/auth/Register"));
 const Login = lazy(() => import("./components/auth/Login"));
 const Routes = lazy(() => import("./Routes"));
+const SimpleSideBar = lazy(() =>
+  import("./components/layout/MainSidebar/SimpleSideBar")
+);
 // Check for token
 if (localStorage.jwtToken) {
   // Set auth token header auth
@@ -53,23 +58,26 @@ const App = props => {
       <Suspense fallback={<PreLoader />}>
         <Router history={history}>
           <MainNavbar />
+          {store.getState().auth.isAuthenticated === false ? (
+            <SimpleSideBar test="props" />
+          ) : null}
           {/* <Container fluid> */}
           <Switch>
             <Route path="/" exact component={Index} />
             {/* <Route path="/" exact component={Error} /> */}
-
             <Route path="/user-register" exact component={Register} />
             {/* <Route path="/user-register" exact component={Error} /> */}
 
             <Route path="/user-login" exact component={Login} />
             {/* <Route path="/user-login" exact component={Error} /> */}
 
-            <Row>
-              <Col md="2">
+            <Row className="w-100 m-sm-none">
+              <Col lg="2" sm="0">
                 <MainSidebar role={store.getState().auth.user.role} />
               </Col>
-
-              <Routes />
+              <Col lg="10" sm="12" className="p-sm-none">
+                <Routes />
+              </Col>
             </Row>
           </Switch>
         </Router>

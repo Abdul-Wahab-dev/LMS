@@ -1,10 +1,14 @@
 const app = require("./app");
 const mongoose = require("mongoose");
-
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION APP is shutting down....");
   process.exit(1);
 });
+
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = require("dotenv");
+  dotenv.config({ path: "./config.env" });
+}
 
 const db = require("./config/keys");
 
