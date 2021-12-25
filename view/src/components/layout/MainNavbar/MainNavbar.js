@@ -159,14 +159,7 @@ const MainNavbar = ({ stickyTop }) => {
             </Dropdown>
           </div>
         </Container>
-        {auth.isAuthenticated === true ? (
-          <Link
-            to={auth.user.role === "admin" ? "/dashboard" : "/latest-news"}
-            className="custom-btn dashboard-btn d-lg-block-c d-none-c d-xl-none-c"
-          >
-            Dashboard
-          </Link>
-        ) : null}
+
         <NavbarNav />
       </Navbar>
     </div>

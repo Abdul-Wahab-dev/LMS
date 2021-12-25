@@ -11,7 +11,10 @@ const SimpleSideBar = props => {
     "px-0",
     "col-12",
     "main-sidebar-hide",
-    "main-sidebar-show"
+    "main-sidebar-show",
+    "d-xl-none-c",
+    "d-none-c",
+    "d-lg-block-c"
   );
   return (
     <Col

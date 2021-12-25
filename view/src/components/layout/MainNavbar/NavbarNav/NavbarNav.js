@@ -32,11 +32,15 @@ export default () => {
     setModal(false);
   };
   return (
-    <div className="d-lg-none-c">
+    <div>
       <Nav navbar className="flex-row">
         <UserActions user={user} setModal={setModal} />
       </Nav>
-      <Modal open={modal} toggle={() => setModal(!modal)}>
+      <Modal
+        open={modal}
+        toggle={() => setModal(!modal)}
+        className="d-lg-none-c"
+      >
         <ModalBody>
           <Form>
             {errorsFromStore.message ? (
