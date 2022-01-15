@@ -209,7 +209,7 @@ const AddNewPost = () => {
 
       <Row>
         <Col lg="9" md="12">
-          <Editor for="complains" title="Complain to" />
+          <Editor for="complains" title="to" />
         </Col>
       </Row>
       <Modal open={modal} toggle={() => setModal(!modal)}>

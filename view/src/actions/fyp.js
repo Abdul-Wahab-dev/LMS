@@ -248,7 +248,6 @@ export const deleteFYP = id => dispatch => {
 //  @route          PUT /api/v1/fyp/assign-time
 //  @desc           assign presentation time
 //  @access         Private
-
 export const assignTimeAction = (data, clearState) => async dispatch => {
   dispatch({
     type: CLEAR_ERRORS
@@ -264,6 +263,23 @@ export const assignTimeAction = (data, clearState) => async dispatch => {
   }
 };
 
+// @route           PUT /api/v1/fyp/assign-teacher
+// @desc            assign teacher
+// @access          Private
+export const assignTeacherAction = (data, clearState) => async dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
+  try {
+    const res = await axios.put("/api/v1/fyp/assign-teacher", data);
+    console.log(res.data);
+  } catch (error) {
+    dispatch({
+      type: GET_ERRORS,
+      payload: error.response.data
+    });
+  }
+};
 const setLoading = () => {
   return {
     type: SET_FYP_LOADING

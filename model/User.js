@@ -146,6 +146,11 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.pre("save", function (next) {
+  this.batch = this.batch.toLowerCase();
+  this.program = this.program.toLowerCase();
+  next();
+});
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword

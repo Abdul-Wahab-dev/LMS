@@ -8,7 +8,8 @@ import {
   Modal,
   Button,
   FormInput,
-  Container
+  Container,
+  CardBody
 } from "shards-react";
 // Page Title
 import PageTitle from "../components/common/PageTitle";
@@ -45,7 +46,7 @@ const UserData = props => {
         program: undefined,
         batch: undefined,
         role: "student",
-        type: "multiple"
+        type: "single"
       })
     );
   };
@@ -73,7 +74,7 @@ const UserData = props => {
   }, []);
 
   return (
-    <Container fluid className="main-content-container p-4">
+    <Container fluid className="main-content-container p-4 complain-page">
       <Row noGutters className="page-header pb-4">
         <PageTitle
           title="Student"
@@ -85,14 +86,18 @@ const UserData = props => {
       <Card small className="h-100 p-4">
         <Row className="mb-3">
           <Col
-            md="2"
+            md="3"
+            sm="3"
+            xs="4"
             className="d-flex justify-content-center align-items-center"
           >
             <h5 className="m-0">Search By</h5>
           </Col>
 
           <Col
-            md="1"
+            md="2"
+            sm="3"
+            xs="4"
             className="d-flex justify-content-center align-items-center"
           >
             <FormRadio
@@ -103,7 +108,9 @@ const UserData = props => {
             </FormRadio>
           </Col>
           <Col
-            md="1"
+            md="2"
+            sm="3"
+            xs="4"
             className="d-flex justify-content-center align-items-center"
           >
             <FormRadio
@@ -126,7 +133,7 @@ const UserData = props => {
                 onChange={e => setEnrollment(e.target.value)}
               />
             </Col>
-            <Col sm="2">
+            <Col sm="2" xs="3" className="mt-sm">
               <Button size="md" onClick={() => searchStudent()}>
                 Search
               </Button>
@@ -134,105 +141,107 @@ const UserData = props => {
           </Row>
         ) : (
           <Row>
-            <Col sm="4">
+            <Col sm="4" xs="4">
               <Program program={userProgram} setProgram={setUserProgram} />
             </Col>
-            <Col md="4">
+            <Col sm="4" xs="4">
               <Batch batch={batch} setBatch={setBatch} />
             </Col>
-            <Col sm="2">
+            <Col sm="2" xs="2">
               <Button size="md" onClick={() => searchStudentByProgram()}>
                 Search
               </Button>
             </Col>
           </Row>
         )}
-
-        <table className="table my-4">
-          <thead className="bg-light">
-            <tr>
-              <th scope="col" className="border-0">
-                Sr#
-              </th>
-              <th scope="col" className="border-0">
-                Name
-              </th>
-              <th scope="col" className="border-0">
-                Father Name
-              </th>
-              <th scope="col" className="border-0">
-                Username
-              </th>
-
-              <th scope="col" className="border-0">
-                Email
-              </th>
-
-              <th scope="col" className="border-0">
-                Action
-              </th>
-              {auth.role === "admin" ? (
+        <CardBody>
+          <table className="table my-4">
+            <thead className="bg-light">
+              <tr>
                 <th scope="col" className="border-0">
-                  Delete User
+                  Sr#
                 </th>
-              ) : null}
-            </tr>
-          </thead>
-          <tbody>
-            {users.filter(user => user.role === "student").length > 0 ? (
-              users
-                .filter(user => user.role === "student")
-                .map((user, i) => (
-                  <tr key={user._id}>
-                    <td>{i + 1}</td>
-                    <td>{user.name}</td>
-                    <td>{user.fatherName}</td>
-                    <td>{user.enrollmentNo}</td>
-                    <td>
-                      {user.personalEmail
-                        ? user.personalEmail
-                        : user.universityEmail}
-                    </td>
-                    <td>
-                      <span
-                        className="view-detail-icon"
-                        onClick={() => {
-                          setData(user);
-                          setModal(true);
-                        }}
-                      >
-                        <img src={eyeIcon} alt="eye" width="18px" />
-                      </span>
-                    </td>
-                    {auth.role === "admin" ? (
+                <th scope="col" className="border-0">
+                  Name
+                </th>
+                <th scope="col" className="border-0">
+                  Father Name
+                </th>
+                <th scope="col" className="border-0">
+                  Username
+                </th>
+
+                <th scope="col" className="border-0">
+                  Email
+                </th>
+
+                <th scope="col" className="border-0">
+                  Action
+                </th>
+                {auth.role === "admin" ? (
+                  <th scope="col" className="border-0">
+                    Delete User
+                  </th>
+                ) : null}
+              </tr>
+            </thead>
+            <tbody>
+              {users.filter(user => user.role === "student").length > 0 ? (
+                users
+                  .filter(user => user.role === "student")
+                  .map((user, i) => (
+                    <tr key={user._id}>
+                      <td>{i + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.fatherName}</td>
+                      <td>{user.enrollmentNo}</td>
                       <td>
-                        <Button
-                          type="button"
-                          className="btn btn-danger"
+                        {user.personalEmail
+                          ? user.personalEmail
+                          : user.universityEmail}
+                      </td>
+                      <td>
+                        <span
+                          className="view-detail-icon"
                           onClick={() => {
-                            if (
-                              window.confirm(
-                                "If you want to delete User then press OK"
-                              )
-                            ) {
-                              dispatch(deleteUser(user._id));
-                            }
+                            setData(user);
+                            setModal(true);
                           }}
                         >
-                          Delete
-                        </Button>
+                          <img src={eyeIcon} alt="eye" width="18px" />
+                        </span>
                       </td>
-                    ) : null}
-                  </tr>
-                ))
-            ) : (
-              <tr>
-                <td className="p-4 m-0 border-0">No Record</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                      {auth.role === "admin" ? (
+                        <td>
+                          <Button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  "If you want to delete User then press OK"
+                                )
+                              ) {
+                                dispatch(deleteUser(user._id));
+                              }
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))
+              ) : (
+                <tr>
+                  <td className="p-4 m-0 border-0">No Record</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </CardBody>
       </Card>
+
       <Modal open={modal} toggle={() => setModal(!modal)}>
         <UserAccountDetails profile={data} />
       </Modal>

@@ -155,7 +155,6 @@ exports.addRemarks = catchAsync(async (req, res, next) => {
       ],
     },
     { $push: { "projects.$.remarks": req.body } },
-    // req.body
     {
       new: true,
     }
@@ -244,7 +243,7 @@ exports.deleteIdea = catchAsync(async (req, res, next) => {
 
 exports.getProjectsName = catchAsync(async (req, res, next) => {
   const names = await FYP.find({}).select(
-    "-eventProvider -createdAt -__v -eventFor"
+    "-eventProvider -createdAt -__v -eventFor -projects -timeAssign"
   );
   // send response to user
   res.status(200).json({
@@ -308,6 +307,27 @@ exports.assignTime = catchAsync(async (req, res, next) => {
   }
 
   next(new AppError("Time already assign", 400, null));
+});
+
+//  @route          PUT /api/v1/fyp/assign-teacher
+//  @desc           assign presentation time
+//  @access         Private
+exports.assignTeacher = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+  const projects = await FYP.findOneAndUpdate(
+    {
+      $and: [
+        { _id: req.body.fypId },
+        { projects: { $elemMatch: { _id: req.body.ideaId } } },
+        // { "projects._id": req.params.fypId },
+      ],
+    },
+    { $push: { "projects.$.teacher": req.body.teacher } },
+    { new: true }
+  );
+  console.log(projects);
+
+  // next(new AppError("Time already assign", 400, null));
 });
 
 const formatAMPM = (date) => {

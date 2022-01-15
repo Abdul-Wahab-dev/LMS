@@ -34,7 +34,9 @@ import {
 import {
   createFYPCategory,
   getFYPCategory,
-  deleteFYPCategory
+  deleteFYPCategory,
+  getProjectNames,
+  deleteFYP
 } from "../actions/fyp";
 // page title
 import PageTitle from "../components/common/PageTitle";
@@ -60,6 +62,8 @@ const AdminDashBoard = () => {
   const programAndBatch = useSelector(state => state.programAndBatch);
   const pecTypes = useSelector(state => state.pec.pecDocType);
   const fypCategory = useSelector(state => state.fyp.category);
+  const names = useSelector(state => state.fyp.names);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSlides());
@@ -71,6 +75,7 @@ const AdminDashBoard = () => {
     dispatch(getBatchs());
     dispatch(getPECDocType());
     dispatch(getFYPCategory());
+    dispatch(getProjectNames());
   }, []);
 
   // Create Program
@@ -895,6 +900,57 @@ const AdminDashBoard = () => {
                 >
                   Add
                 </Button>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col md="6">
+            <Row noGutters className="page-header py-4">
+              <PageTitle sm="4" title="FYP" className="text-sm-left" />
+            </Row>
+            <Card small className="mb-4">
+              <CardHeader className="border-bottom">
+                <h6 className="m-0">FYP</h6>
+              </CardHeader>
+              <CardBody className="p-0 pb-3 admin-dashboard-table-h ">
+                <table className="table mb-0">
+                  <thead className="bg-light">
+                    <tr>
+                      <th scope="col" className="border-0">
+                        Sr#
+                      </th>
+                      <th scope="col" className="border-0">
+                        FYP
+                      </th>
+                      <th scope="col" className="border-0">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {names.length > 0 ? (
+                      names.map((fyp, i) => (
+                        <tr key={fyp._id}>
+                          <td>{i + 1}</td>
+                          <td>{fyp.eventName}</td>
+                          <td>
+                            <Button
+                              className="btn btn-danger"
+                              onClick={() => dispatch(deleteFYP(fyp._id))}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td className="p-4 m-0 border-0">No Record</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
               </CardBody>
             </Card>
           </Col>

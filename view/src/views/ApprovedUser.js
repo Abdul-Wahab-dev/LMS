@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Row,
@@ -6,16 +6,21 @@ import {
   CardBody,
   CardHeader,
   Card,
+  Modal,
   Button
 } from "shards-react";
 
 import { useDispatch, useSelector } from "react-redux";
 // page title
 import PageTitle from "../components/common/PageTitle";
+import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
 // action
 import { getUsers, approveUser, deleteUser } from "../actions/authActions";
-
+// Icon
+import eyeIcon from "../images/eye.png";
 const ApprovedUser = () => {
+  const [data, setData] = useState({});
+  const [modal, setModal] = useState(false);
   // get state from store
   const users = useSelector(state => state.auth.users);
 
@@ -76,6 +81,10 @@ const ApprovedUser = () => {
                     </th>
 
                     <th scope="col" className="border-0">
+                      view
+                    </th>
+
+                    <th scope="col" className="border-0" colSpan={2}>
                       Action
                     </th>
                   </tr>
@@ -93,6 +102,17 @@ const ApprovedUser = () => {
                           <td>{user.enrollmentNo}</td>
                           <td>{user.role}</td>
                           <td>
+                            <span
+                              className="view-detail-icon"
+                              onClick={() => {
+                                setData(user);
+                                setModal(true);
+                              }}
+                            >
+                              <img src={eyeIcon} alt="eye" width="18px" />
+                            </span>
+                          </td>
+                          <td colSpan={2}>
                             {" "}
                             <Button
                               type="button"
@@ -121,6 +141,9 @@ const ApprovedUser = () => {
           </Card>
         </Col>
       </Row>
+      <Modal open={modal} toggle={() => setModal(!modal)}>
+        <UserAccountDetails profile={data} />
+      </Modal>
     </Container>
   );
 };

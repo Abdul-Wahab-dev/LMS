@@ -117,7 +117,7 @@ const TeamMembers = props => {
     setEnrollment("");
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -150,10 +150,10 @@ const TeamMembers = props => {
                     )}
                   </FormSelect>
                 </Col>
-                <Col md="3">
+                <Col md="3" className="mt-md">
                   <Batch batch={batch} setBatch={setBatch} />
                 </Col>
-                <Col md="1">
+                <Col md="1" className="mt-md">
                   <Button type="button" onClick={e => searchMember(e)}>
                     Search
                   </Button>
@@ -279,57 +279,59 @@ const TeamMembers = props => {
                 </Button>
               </Col>
             </Row>
-            <table className="table my-4">
-              <thead className="bg-light">
-                <tr>
-                  <th scope="col" className="border-0">
-                    Sr#
-                  </th>
-                  <th scope="col" className="border-0">
-                    Name
-                  </th>
-
-                  <th scope="col" className="border-0">
-                    Username
-                  </th>
-                  <th scope="col" className="border-0">
-                    Program
-                  </th>
-                  <th scope="col" className="border-0">
-                    Batch
-                  </th>
-
-                  <th scope="col" className="border-0">
-                    Email
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {user.length > 0 ? (
-                  user.map((user, i) => (
-                    <tr key={user._id}>
-                      <td>{i + 1}</td>
-                      <td>{user.name}</td>
-
-                      <td>{user.enrollmentNo}</td>
-                      <td>{user.program ? user.program : "Nil"}</td>
-                      <td>{user.batch ? user.batch : "Nil"}</td>
-                      <td>
-                        {user.personalEmail
-                          ? user.personalEmail
-                          : user.universityEmail}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
+            <CardBody className="pt-0 ">
+              <table className="my-4">
+                <thead className="bg-light">
                   <tr>
-                    <td className="p-4 m-0 border-0">No Record</td>
+                    <th scope="col" className="border-0">
+                      Sr#
+                    </th>
+                    <th scope="col" className="border-0">
+                      Name
+                    </th>
+
+                    <th scope="col" className="border-0">
+                      Username
+                    </th>
+                    <th scope="col" className="border-0">
+                      Program
+                    </th>
+                    <th scope="col" className="border-0">
+                      Batch
+                    </th>
+
+                    <th scope="col" className="border-0">
+                      Email
+                    </th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-            {/* </CardHeader> */}
-            {/* <CardBody className="pt-0 "></CardBody> */}
+                </thead>
+                <tbody>
+                  {user.length > 0 ? (
+                    user.map((user, i) => (
+                      <tr key={user._id}>
+                        <td>{i + 1}</td>
+                        <td>{user.name}</td>
+
+                        <td>{user.enrollmentNo}</td>
+                        <td>{user.program ? user.program : "Nil"}</td>
+                        <td>{user.batch ? user.batch : "Nil"}</td>
+                        <td>
+                          {user.personalEmail
+                            ? user.personalEmail
+                            : user.universityEmail}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td className="p-4 m-0 border-0">No Record</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+
+              {/* </CardHeader> */}
+            </CardBody>
             <Row className="my-3 border-top py-3">
               <Col md="3">
                 <label>Team Name </label>
@@ -359,7 +361,7 @@ const TeamMembers = props => {
                 )}
               </Col>
 
-              <Col md="3">
+              <Col md="3" className="mt-md">
                 <label>Designation </label>
                 <FormInput
                   type="text"

@@ -10,7 +10,8 @@ import {
   ModalHeader,
   FormCheckbox,
   ModalBody,
-  Container
+  Container,
+  CardBody
 } from "shards-react";
 
 // Page title
@@ -175,7 +176,7 @@ const FacultyData = props => {
     setPermissionModal(false);
   };
   return (
-    <Container fluid className="main-content-container p-4">
+    <Container fluid className="main-content-container p-4 complain-page">
       <Row noGutters className="page-header pb-4">
         <PageTitle
           title="Faculty"
@@ -195,12 +196,12 @@ const FacultyData = props => {
               onChange={e => setEnrollment(e.target.value)}
             />
           </Col>
-          <Col sm="1">
+          <Col sm="2" className="mt-sm">
             <Button size="md" onClick={() => searchStudent()}>
               Search
             </Button>
           </Col>
-          <Col sm="1">
+          <Col sm="3" className="mt-sm">
             <Button
               size="md"
               className="btn btn-secondary"
@@ -210,190 +211,193 @@ const FacultyData = props => {
             </Button>
           </Col>
         </Row>
-        <table className="table my-4">
-          <thead className="bg-light">
-            <tr>
-              <th scope="col" className="border-0">
-                Sr#
-              </th>
-              <th scope="col" className="border-0">
-                Name
-              </th>
-
-              <th scope="col" className="border-0">
-                Username
-              </th>
-
-              <th scope="col" className="border-0">
-                Contact
-              </th>
-
-              <th scope="col" className="border-0">
-                Email
-              </th>
-              <th scope="col" className="border-0">
-                Permission
-              </th>
-              {auth.role === "admin" ? (
+        <CardBody>
+          <table className="table my-4">
+            <thead className="bg-light">
+              <tr>
                 <th scope="col" className="border-0">
-                  Delete User
+                  Sr#
                 </th>
-              ) : null}
-
-              {auth.role === "admin" ? (
                 <th scope="col" className="border-0">
-                  Change Role
+                  Name
                 </th>
-              ) : null}
-            </tr>
-          </thead>
-          <tbody>
-            {users.filter(user => user.role === "faculty").length > 0 ? (
-              users
-                .filter(user => user.role === "faculty")
-                .map((user, i) => (
-                  <tr key={user._id}>
-                    <td>{i + 1}</td>
-                    <td>{user.name}</td>
 
-                    <td>{user.enrollmentNo}</td>
-                    <td>{user.contact ? user.contact : user.mobile}</td>
-                    <td>
-                      {user.personalEmail
-                        ? user.personalEmail
-                        : user.universityEmail}
-                    </td>
-                    <td>
-                      <Button onClick={() => handlePermissionModal(user)}>
-                        Permissions
-                      </Button>
-                    </td>
-                    {auth.role === "admin" ? (
+                <th scope="col" className="border-0">
+                  Username
+                </th>
+
+                <th scope="col" className="border-0">
+                  Contact
+                </th>
+
+                <th scope="col" className="border-0">
+                  Email
+                </th>
+                <th scope="col" className="border-0">
+                  Permission
+                </th>
+                {auth.role === "admin" ? (
+                  <th scope="col" className="border-0">
+                    Delete User
+                  </th>
+                ) : null}
+
+                {auth.role === "admin" ? (
+                  <th scope="col" className="border-0">
+                    Change Role
+                  </th>
+                ) : null}
+              </tr>
+            </thead>
+            <tbody>
+              {users.filter(user => user.role === "faculty").length > 0 ? (
+                users
+                  .filter(user => user.role === "faculty")
+                  .map((user, i) => (
+                    <tr key={user._id}>
+                      <td>{i + 1}</td>
+                      <td>{user.name}</td>
+
+                      <td>{user.enrollmentNo}</td>
+                      <td>{user.contact ? user.contact : user.mobile}</td>
                       <td>
-                        <Button
-                          type="button"
-                          className="btn btn-danger"
-                          onClick={() => {
-                            if (
-                              window.confirm(
-                                "If you want to delete User then press OK"
-                              )
-                            ) {
-                              dispatch(deleteUser(user._id));
-                            }
-                          }}
-                        >
-                          Delete
+                        {user.personalEmail
+                          ? user.personalEmail
+                          : user.universityEmail}
+                      </td>
+                      <td>
+                        <Button onClick={() => handlePermissionModal(user)}>
+                          Permissions
                         </Button>
                       </td>
-                    ) : null}
-                    {auth.role === "admin" ? (
-                      <td>
-                        {user.role === "faculty" ? (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <Button
-                              className="mr-2 btn btn-secondary"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "admin"
-                                  })
+                      {auth.role === "admin" ? (
+                        <td>
+                          <Button
+                            type="button"
+                            className="btn btn-danger"
+                            onClick={() => {
+                              if (
+                                window.confirm(
+                                  "If you want to delete User then press OK"
                                 )
+                              ) {
+                                dispatch(deleteUser(user._id));
                               }
-                            >
-                              Admin
-                            </Button>
-                            <Button
-                              className="btn btn-light"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "coordinator"
-                                  })
-                                )
-                              }
-                            >
-                              Coordinator
-                            </Button>
-                          </div>
-                        ) : null}
-                        {user.role === "coordinator" ? (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <Button
-                              className="mr-2 btn btn-secondary"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "admin"
-                                  })
-                                )
-                              }
-                            >
-                              Admin
-                            </Button>
-                            <Button
-                              className="btn btn-light"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "faculty"
-                                  })
-                                )
-                              }
-                            >
-                              Faculty
-                            </Button>
-                          </div>
-                        ) : null}
-                        {user.role === "admin" ? (
-                          <div className="d-flex justify-content-center align-items-center">
-                            <Button
-                              className="mr-2 btn btn-secondary"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "faculty"
-                                  })
-                                )
-                              }
-                            >
-                              Faculty
-                            </Button>
-                            <Button
-                              className="btn btn-light"
-                              onClick={() =>
-                                dispatch(
-                                  changeUserRole({
-                                    id: user._id,
-                                    role: "coordinator"
-                                  })
-                                )
-                              }
-                            >
-                              Coordinator
-                            </Button>
-                          </div>
-                        ) : null}
-                      </td>
-                    ) : null}
-                  </tr>
-                ))
-            ) : (
-              <tr>
-                <td className="p-4 m-0 border-0">No Record</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      ) : null}
+                      {auth.role === "admin" ? (
+                        <td>
+                          {user.role === "faculty" ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button
+                                className="mr-2 btn btn-secondary"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "admin"
+                                    })
+                                  )
+                                }
+                              >
+                                Admin
+                              </Button>
+                              <Button
+                                className="btn btn-light"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "coordinator"
+                                    })
+                                  )
+                                }
+                              >
+                                Coordinator
+                              </Button>
+                            </div>
+                          ) : null}
+                          {user.role === "coordinator" ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button
+                                className="mr-2 btn btn-secondary"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "admin"
+                                    })
+                                  )
+                                }
+                              >
+                                Admin
+                              </Button>
+                              <Button
+                                className="btn btn-light"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "faculty"
+                                    })
+                                  )
+                                }
+                              >
+                                Faculty
+                              </Button>
+                            </div>
+                          ) : null}
+                          {user.role === "admin" ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Button
+                                className="mr-2 btn btn-secondary"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "faculty"
+                                    })
+                                  )
+                                }
+                              >
+                                Faculty
+                              </Button>
+                              <Button
+                                className="btn btn-light"
+                                onClick={() =>
+                                  dispatch(
+                                    changeUserRole({
+                                      id: user._id,
+                                      role: "coordinator"
+                                    })
+                                  )
+                                }
+                              >
+                                Coordinator
+                              </Button>
+                            </div>
+                          ) : null}
+                        </td>
+                      ) : null}
+                    </tr>
+                  ))
+              ) : (
+                <tr>
+                  <td className="p-4 m-0 border-0">No Record</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </CardBody>
       </Card>
       <Modal open={modal} toggle={() => setModal(!modal)}>
         <UserAccountDetails profile={data} />
       </Modal>
+
       <Modal
         open={permissionModal}
         toggle={() => setPermissionModal(!permissionModal)}

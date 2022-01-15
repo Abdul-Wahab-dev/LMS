@@ -103,7 +103,7 @@ const TeamAssignments = props => {
     }
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -274,7 +274,7 @@ const TeamAssignments = props => {
                           errors={errors}
                         />
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Batch</label>
                         <Batch
                           batch={batch}
@@ -282,7 +282,7 @@ const TeamAssignments = props => {
                           errors={errors}
                         />
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Deadline</label>
                         <FormInput
                           type="date"
@@ -313,7 +313,7 @@ const TeamAssignments = props => {
                             </FormFeedback>
                           )}
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Title</label>
                         <FormInput
                           type="text"
@@ -331,7 +331,7 @@ const TeamAssignments = props => {
                           </FormFeedback>
                         )}
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>File</label>
                         <CustomFileUpload file={file} setFile={setFile} />
                       </Col>

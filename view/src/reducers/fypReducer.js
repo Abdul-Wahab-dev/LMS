@@ -59,7 +59,8 @@ export default function fypReducer(state = initialState, action) {
         loading: false,
         projects: state.projects.filter(
           project => project._id !== action.payload._id
-        )
+        ),
+        names: state.names.filter(name => name._id !== action.payload._id)
       };
 
     case CREATE_FYP_CATEGORY:

@@ -17,6 +17,11 @@ router.delete(
 );
 
 router.put("/assign-time", authController.protect, fypController.assignTime);
+router.put(
+  "/assign-teacher",
+  authController.protect,
+  fypController.assignTeacher
+);
 router
   .route("/:eventName?/:batch?")
   .get(authController.protect, fypController.getFYP);

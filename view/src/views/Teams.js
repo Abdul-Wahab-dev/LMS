@@ -58,7 +58,7 @@ const Teams = props => {
     }
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -175,7 +175,7 @@ const Teams = props => {
                           </FormFeedback>
                         )}
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Type</label>
                         <FormSelect
                           id="feInputState"

@@ -103,7 +103,9 @@
   .complain-page .card-body {
     overflow-x: auto;
   }
-  .complain-page .card-body table {
+  .complain-page .card-body table,
+  .team-member-table,
+  .md-table-width {
     width: 1200px !important;
   }
   /* Complain Page */
@@ -123,6 +125,13 @@
     display: none !important;
   } */
   /* Main Nav bar */
+
+  /* Modal */
+  .modal-content {
+    max-height: 400px !important;
+  }
+
+  /* Modal */
 }
 
 /* Extra small devices (phones, 600px and down) */
@@ -185,6 +194,16 @@
   .item-col-name p {
     font-size: 20px !important;
   }
+
+  /* Modal */
+  .modal-content {
+    max-height: 350px !important;
+  }
+
+  .justify-content-start-sm {
+    justify-content: flex-start !important;
+  }
+  /* Modal */
 }
 
 @media only screen and (max-width: 576px) {

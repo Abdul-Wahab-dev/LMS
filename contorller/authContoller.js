@@ -189,13 +189,23 @@ exports.getUsers = catchAsync(async (req, res, next) => {
 // @desc        get user
 // @access      Private
 exports.getUser = catchAsync(async (req, res, next) => {
-  let users;
   if (req.body.type === "single") {
-    users = await User.find({ enrollmentNo: req.body.enrollment }).select(
-      "-password -createdAt"
-    );
+    const user = await User.find({
+      enrollmentNo: req.body.enrollment,
+    }).select("-password -createdAt");
+    if (!user) {
+      return next(new AppError("No User found with that ID", 404));
+    }
+
+    // send response to user
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: user,
+      },
+    });
   } else {
-    users = await User.find({
+    const users = await User.find({
       $or: [
         {
           $and: [
@@ -212,19 +222,18 @@ exports.getUser = catchAsync(async (req, res, next) => {
         },
       ],
     }).select("-password -createdAt");
-  }
+    if (!users) {
+      return next(new AppError("No User found with that ID", 404));
+    }
 
-  if (!users) {
-    return next(new AppError("No User found with that ID", 404));
+    // send response to user
+    res.status(200).json({
+      status: "success",
+      data: {
+        user: users,
+      },
+    });
   }
-
-  // send response to user
-  res.status(200).json({
-    status: "success",
-    data: {
-      user: users,
-    },
-  });
 });
 
 // @route       POST /api/v1/users/approve

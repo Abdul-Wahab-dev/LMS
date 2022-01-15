@@ -52,7 +52,7 @@ const Slider = props => {
     setFile({});
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -164,7 +164,7 @@ const Slider = props => {
               <Row>
                 <Col lg="9" md="12">
                   <Form>
-                    <Row className="my-3">
+                    <Row className="mt-1">
                       <Col md="4">
                         <label>Title</label>
                         <FormInput
@@ -174,7 +174,7 @@ const Slider = props => {
                           onChange={e => setTitle(e.target.value)}
                         />
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>File</label>
                         <CustomFileUpload file={file} setFile={setFile} />
                       </Col>

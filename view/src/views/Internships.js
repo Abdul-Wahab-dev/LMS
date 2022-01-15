@@ -142,7 +142,7 @@ const Internship = props => {
     setModal(true);
   };
   return (
-    <Container fluid className="main-content-container px-4 pb-4">
+    <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
         <PageTitle
           sm="4"
@@ -157,14 +157,18 @@ const Internship = props => {
             <CardHeader className="border-bottom">
               <Row className="mb-3">
                 <Col
-                  md="2"
+                  md="3"
+                  sm="3"
+                  xs="4"
                   className="d-flex justify-content-center align-items-center"
                 >
                   <h5 className="m-0">Search By</h5>
                 </Col>
 
                 <Col
-                  md="1"
+                  md="2"
+                  sm="3"
+                  xs="4"
                   className="d-flex justify-content-center align-items-center"
                 >
                   <FormRadio
@@ -175,7 +179,9 @@ const Internship = props => {
                   </FormRadio>
                 </Col>
                 <Col
-                  md="1"
+                  md="2"
+                  sm="3"
+                  xs="4"
                   className="d-flex justify-content-center align-items-center"
                 >
                   <FormRadio
@@ -216,17 +222,17 @@ const Internship = props => {
                 </Row>
               ) : (
                 <Row>
-                  <Col sm="4">
+                  <Col sm="4" xs="4">
                     <Program
                       program={searchProgram}
                       setProgram={setSearchProgram}
                       errors={errors}
                     />
                   </Col>
-                  <Col md="4">
+                  <Col sm="4" xs="4">
                     <Batch batch={searchBatch} setBatch={setSearchBatch} />
                   </Col>
-                  <Col sm="2">
+                  <Col sm="2" xs="2">
                     <Button
                       size="md"
                       onClick={() =>
@@ -347,7 +353,7 @@ const Internship = props => {
                           errors={errors}
                         />
                       </Col>
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Batch</label>
                         <Batch
                           batch={batch}
@@ -356,7 +362,7 @@ const Internship = props => {
                         />
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Company</label>
                         <FormInput
                           type="text"
@@ -433,7 +439,7 @@ const Internship = props => {
                           )}
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Name</label>
                         <FormInput
                           type="text"
@@ -452,7 +458,7 @@ const Internship = props => {
                         )}
                       </Col>
 
-                      <Col md="4">
+                      <Col md="4" className="mt-md">
                         <label>Start Date</label>
                         <FormInput
                           type="date"
@@ -498,11 +504,11 @@ const Internship = props => {
                       errors={errors}
                     />
                   </Col>
-                  <Col md="4">
+                  <Col md="4" className="mt-md">
                     <label>Batch</label>
                     <Batch batch={batch} setBatch={setBatch} />
                   </Col>
-                  <Col md="4">
+                  <Col md="4" className="mt-md">
                     <label>Enrollment No</label>
                     <FormInput
                       type="text"
@@ -522,7 +528,7 @@ const Internship = props => {
                       onChange={e => setName(e.target.value)}
                     />
                   </Col>
-                  <Col md="4">
+                  <Col md="4" className="mt-md">
                     <label>Company</label>
                     <FormInput
                       type="text"
@@ -531,7 +537,7 @@ const Internship = props => {
                       onChange={e => setCompany(e.target.value)}
                     />
                   </Col>
-                  <Col md="4">
+                  <Col md="4" className="mt-md">
                     <label>Start Date</label>
                     <FormInput
                       type="date"

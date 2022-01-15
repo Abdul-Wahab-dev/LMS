@@ -362,15 +362,17 @@ const PECDocs = props => {
         </Modal>
       ) : null}
 
-      {viewAssignmentsModal === true ? (
+      {viewAssignmentsModal !== true ? (
         <Modal
-          open={viewAssignmentsModal}
+          // open={viewAssignmentsModal}
+          open={true}
           toggle={() => setViewAssignmentsModal(!viewAssignmentsModal)}
           className="modal-1"
         >
           <ModalBody>
             {remarksModal === true ? (
               <div className="my-4">
+                x``
                 <h4>Remarks</h4>
                 <Row className="mb-2">
                   <Col md="3">
@@ -456,7 +458,10 @@ const PECDocs = props => {
                 </div>
               </div>
             ) : null}
-            <table className="table mb-0 mt-4" style={{ width: "100%" }}>
+            <table
+              className="table md-table-width mb-0 mt-4"
+              style={{ width: "100%" }}
+            >
               <thead className="bg-light">
                 <tr>
                   <th scope="col" className="border-0">

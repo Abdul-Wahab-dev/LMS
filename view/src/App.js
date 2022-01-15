@@ -1,6 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col } from "shards-react";
+import { useSelector } from "react-redux";
 // import { useDispatch } from "react-redux";
 // components
 // import Error from "./views/Errors";
@@ -52,13 +53,15 @@ const App = props => {
   // dispatch(pecMembersList());
   // dispatch(cspMembers());
   // }, []);
-
+  const auth = useSelector(state => state.auth);
   return (
     <div>
       <Suspense fallback={<PreLoader />}>
         <Router history={history}>
           <MainNavbar />
-          {store.getState().auth.isAuthenticated === false ? (
+          {auth.isAuthenticated === false ||
+          window.location.pathname === "/" ||
+          window.location.pathname === "/user-login" ? (
             <SimpleSideBar test="props" />
           ) : null}
           {/* <Container fluid> */}
@@ -73,7 +76,7 @@ const App = props => {
 
             <Row className="w-100 m-sm-none">
               <Col lg="2" sm="0">
-                <MainSidebar role={store.getState().auth.user.role} />
+                <MainSidebar role={auth.user.role} />
               </Col>
               <Col lg="10" sm="12" className="p-sm-none">
                 <Routes />

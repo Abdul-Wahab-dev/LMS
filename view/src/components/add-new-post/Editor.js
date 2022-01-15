@@ -242,7 +242,7 @@ const Editor = props => {
           </Row>
           {props.for === "events" ? (
             <Row>
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label>Event Date</label>
                 <FormInput
                   type="date"
@@ -250,7 +250,7 @@ const Editor = props => {
                   onChange={e => setEventDate(e.target.value)}
                 />
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label>File</label>
                 <CustomFileUpload file={file} setFile={setFile} />
               </Col>

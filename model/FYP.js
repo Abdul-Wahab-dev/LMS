@@ -44,6 +44,12 @@ const fypSchema = Schema({
           enrollmentNo: String,
         },
       ],
+      teacher: [
+        {
+          name: String,
+          enrollmentNo: String,
+        },
+      ],
       supervisor: {
         name: String,
         enrollmentNo: String,

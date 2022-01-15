@@ -33,7 +33,8 @@ import {
   addMembersToFYPAct,
   getFYPCategory,
   assignTimeAction,
-  presentationStatusAction
+  presentationStatusAction,
+  assignTeacherAction
 } from "../actions/fyp";
 import { getUsers } from "../actions/authActions";
 // loader
@@ -51,6 +52,7 @@ const FYPBlock = () => {
   const [idea, setIdea] = useState("");
   const [data, setData] = useState({});
   const [modal, setModal] = useState(false);
+  const [assignTeacherModal, setAssignTeacherModal] = useState(false);
   const [timeModal, setTimeModal] = useState(false);
   const [duration, setDuration] = useState(20);
   const [startTime, setStartTime] = useState("");
@@ -63,6 +65,8 @@ const FYPBlock = () => {
   const [errors, setErrors] = useState({});
   const [eventIdForMember, setEventIdForMember] = useState("");
   const [category, setCategory] = useState("");
+  const [fypID, setFypID] = useState("");
+  const [ideaID, setIdeaID] = useState({});
   const [eventMembers, setEventMembers] = useState([
     {
       name: "",
@@ -127,8 +131,16 @@ const FYPBlock = () => {
     if (type === "enrollment") array[i].enrollmentNo = value;
     setEventMembers([...array]);
   };
-  const addNewMembers = () => {
-    if (eventMembers.length < 3) {
+  const addNewMembers = type => {
+    if (eventMembers.length < 3 && type !== null) {
+      const array = [...eventMembers];
+      array.push({
+        name: "",
+        enrollmentNo: ""
+      });
+
+      setEventMembers([...array]);
+    } else {
       const array = [...eventMembers];
       array.push({
         name: "",
@@ -215,6 +227,14 @@ const FYPBlock = () => {
     };
     dispatch(assignTimeAction(obj, clearRemarksState));
   };
+  const assignTeacher = () => {
+    const obj = {
+      teacher: eventMembers,
+      fypId: fypID,
+      ideaId: ideaID._id ? ideaID._id : null
+    };
+    dispatch(assignTeacherAction(obj, clearRemarksState));
+  };
   // clear state
   const clearRemarksState = () => {
     setBatch("");
@@ -243,7 +263,12 @@ const FYPBlock = () => {
     setBreakTimeStart("");
     setDuration("");
     setStartTime("");
+    setIdeaID({});
+    setFypID("");
+    setAssignTeacherModal(false);
   };
+
+  console.log(fypID);
 
   return (
     <Container fluid className="main-content-container px-4 pb-4 complain-page">
@@ -341,7 +366,7 @@ const FYPBlock = () => {
                         <th scope="col" className="border-0">
                           Status
                         </th>
-                        <th scope="col" className="border-0" colSpan="2">
+                        <th scope="col" className="border-0" colSpan="3">
                           Action
                         </th>
                       </>
@@ -441,8 +466,17 @@ const FYPBlock = () => {
                             </td>
                           ) : null}
                           {auth.role !== "student" ? (
-                            <td colSpan="2">
+                            <td colSpan="3">
                               <div className="d-flex justify-content-center align-items-center">
+                                <Button
+                                  onClick={() => {
+                                    setAssignTeacherModal(!assignTeacherModal);
+                                    setFypID(project._id);
+                                    setIdeaID(fyp);
+                                  }}
+                                >
+                                  Teacher
+                                </Button>
                                 <Button
                                   className="mx-1"
                                   onClick={() => {
@@ -689,48 +723,6 @@ const FYPBlock = () => {
                           <FormFeedback>{errors.validation.idea}</FormFeedback>
                         )}
                       </Col>
-                      {/* <Col md="4">
-                        <label> Date </label>
-                        <FormInput
-                          type="date"
-                          placeholder="Idea"
-                          value={presentationDate}
-                          onChange={e => setPresentationDate(e.target.value)}
-                          required
-                          invalid={
-                            errors.validation &&
-                            errors.validation.presentationDate &&
-                            true
-                          }
-                        />
-                        {errors.validation &&
-                          errors.validation.presentationDate && (
-                            <FormFeedback>
-                              {errors.validation.presentationDate}
-                            </FormFeedback>
-                          )}
-                      </Col>
-                      <Col md="4">
-                        <label> Time </label>
-                        <FormInput
-                          type="time"
-                          placeholder="Idea"
-                          value={presentationTime}
-                          onChange={e => setPresentationTime(e.target.value)}
-                          required
-                          invalid={
-                            errors.validation &&
-                            errors.validation.presentationTime &&
-                            true
-                          }
-                        />
-                        {errors.validation &&
-                          errors.validation.presentationTime && (
-                            <FormFeedback>
-                              {errors.validation.presentationTime}
-                            </FormFeedback>
-                          )}
-                      </Col> */}
                     </Row>
                     <div className="mt-3">
                       <label>Members</label>
@@ -819,7 +811,7 @@ const FYPBlock = () => {
                                 <Button
                                   type="button"
                                   className="mr-2 btn"
-                                  onClick={() => addNewMembers()}
+                                  onClick={() => addNewMembers("member")}
                                 >
                                   Add
                                 </Button>
@@ -873,8 +865,9 @@ const FYPBlock = () => {
                 <div className="my-3">
                   <Row>
                     <Col
-                      md="4"
-                      className="d-flex justify-content-center align-items-center"
+                      sm="4"
+                      xs="12"
+                      className="d-flex justify-content-center align-items-center justify-content-start-sm"
                     >
                       <FormRadio
                         checked={remarks === "Not Satisified"}
@@ -884,8 +877,9 @@ const FYPBlock = () => {
                       </FormRadio>
                     </Col>
                     <Col
-                      md="4"
-                      className="d-flex justify-content-center align-items-center"
+                      sm="4"
+                      xs="12"
+                      className="d-flex justify-content-center align-items-center justify-content-start-sm"
                     >
                       <FormRadio
                         checked={remarks === "Partially Satisified"}
@@ -895,8 +889,9 @@ const FYPBlock = () => {
                       </FormRadio>
                     </Col>
                     <Col
-                      md="4"
-                      className="d-flex justify-content-center align-items-center"
+                      sm="4"
+                      xs="12"
+                      className="d-flex justify-content-center align-items-center justify-content-start-sm"
                     >
                       <FormRadio
                         checked={remarks === "Satisfied"}
@@ -917,7 +912,10 @@ const FYPBlock = () => {
               </>
             )}
 
-            <table className="table mb-0 mt-4" style={{ width: "100%" }}>
+            <table
+              className="table mb-0 mt-4 md-table-width"
+              style={{ width: "100%" }}
+            >
               <thead className="bg-light">
                 <tr>
                   <th scope="col" className="border-0">
@@ -991,7 +989,7 @@ const FYPBlock = () => {
                   )}
                 </FormSelect>
               </Col>
-              <Col sm="4">
+              <Col sm="4" className="mt-md">
                 <label>Category</label>
                 <FormSelect
                   id="feInputState"
@@ -1014,7 +1012,7 @@ const FYPBlock = () => {
                   )}
                 </FormSelect>
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label> Duration </label>
                 <FormInput
                   type="number"
@@ -1036,7 +1034,7 @@ const FYPBlock = () => {
                   required
                 />
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label> Time </label>
                 <FormInput
                   type="time"
@@ -1058,7 +1056,7 @@ const FYPBlock = () => {
                   required
                 />
               </Col>
-              <Col md="4">
+              <Col md="4" className="mt-md">
                 <label> Break End </label>
                 <FormInput
                   type="time"
@@ -1076,6 +1074,159 @@ const FYPBlock = () => {
             >
               Assign
             </Button>
+          </div>
+        </ModalBody>
+      </Modal>
+      <Modal
+        open={assignTeacherModal}
+        toggle={() => setAssignTeacherModal(!assignTeacherModal)}
+      >
+        <ModalHeader>Assign Teacher</ModalHeader>
+        <ModalBody>
+          <div className="complain-modal-container">
+            {errors.message &&
+            errors.message.length > 0 &&
+            !errors.validation ? (
+              <div className="error-message alert-danger" role="alert">
+                {errors.message}
+              </div>
+            ) : null}
+            {ideaID.teacher && ideaID.teacher.length > 0 ? (
+              <table className="table mb-0">
+                <thead className="bg-light">
+                  <th scope="col" className="border-0">
+                    Sr#
+                  </th>
+                  <th scope="col" className="border-0">
+                    Name
+                  </th>
+                  <th scope="col" className="border-0">
+                    Registration #
+                  </th>
+                </thead>
+                <tbody>
+                  {ideaID.teacher &&
+                    ideaID.teacher.map((teacher, i) => (
+                      <tr key={teacher._id}>
+                        <td>{i + 1}</td>
+                        <td>{teacher.name}</td>
+                        <td>{teacher.enrollmentNo}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            ) : (
+              <>
+                <div className="mb-4">
+                  {eventMembers.map((member, i) => (
+                    <Row key={member._id} className="mb-4">
+                      <Col
+                        md="4"
+                        xs="12"
+                        sm="6"
+                        style={{ position: "relative" }}
+                      >
+                        <div>
+                          <FormInput
+                            type="text"
+                            placeholder="Enrollmnet no"
+                            value={member.enrollmentNo}
+                            onChange={e =>
+                              addMembers(e.target.value, i, "enrollment")
+                            }
+                          />
+                          {users.length > 0 &&
+                          member.enrollmentNo.length > 0 &&
+                          member.name.length < 1 &&
+                          users.filter(
+                            user =>
+                              user.enrollmentNo.indexOf(member.enrollmentNo) !==
+                              -1
+                          ).length > 0 ? (
+                            <div className="user-filter-div">
+                              {users
+                                .filter(
+                                  user =>
+                                    user.enrollmentNo.indexOf(
+                                      member.enrollmentNo
+                                    ) !== -1
+                                )
+                                .map(user => (
+                                  <p
+                                    key={user._id}
+                                    style={{
+                                      margin: "5px 0 0 0",
+                                      cursor: "pointer"
+                                    }}
+                                    onClick={() => {
+                                      addMembers(user.name, i, "name");
+                                      // setEnrollmentNo(user.enrollmentNo);
+                                      addMembers(
+                                        user.enrollmentNo,
+                                        i,
+                                        "enrollment"
+                                      );
+                                    }}
+                                  >
+                                    {user.name}
+                                  </p>
+                                ))}
+                            </div>
+                          ) : null}
+                        </div>
+                      </Col>
+                      <Col md="4" xs="12" sm="6" className="mt-sm">
+                        <FormInput
+                          type="text"
+                          placeholder="Name"
+                          value={member.name}
+                          onChange={e => addMembers(e.target.value, i, "name")}
+                        />
+                      </Col>
+                      <Col
+                        md="4"
+                        xs="12"
+                        sm="6"
+                        className="position-relative mt-sm mt-md"
+                        style={{ height: "35px" }}
+                      >
+                        <div
+                          className="position-absolute bottom-auto-sm"
+                          style={{ bottom: "0px" }}
+                        >
+                          {i === eventMembers.length - 1 ? (
+                            <Button
+                              type="button"
+                              className="mr-2 btn"
+                              onClick={() => addNewMembers(null)}
+                            >
+                              Add
+                            </Button>
+                          ) : null}
+
+                          {i !== 0 || eventMembers.length > 1 ? (
+                            <Button
+                              type="button"
+                              onClick={() => removeMember(i)}
+                              className="btn btn-danger "
+                            >
+                              Remove
+                            </Button>
+                          ) : null}
+                        </div>
+                      </Col>
+                    </Row>
+                  ))}
+                </div>
+                <Button
+                  className="mt-2"
+                  type="button"
+                  onClick={() => assignTeacher()}
+                >
+                  Assign Teacher
+                </Button>
+              </>
+            )}
           </div>
         </ModalBody>
       </Modal>
