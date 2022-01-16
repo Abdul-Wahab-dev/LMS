@@ -107,7 +107,7 @@ const RegistrationFrom = () => {
             </div>
           ) : null}
           <Row>
-            <Col>
+            <Col sm="12">
               <Form>
                 <div className="d-flex justify-content-center align-items-center flex-column">
                   <img

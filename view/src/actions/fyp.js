@@ -107,6 +107,7 @@ export const presentationStatusAction = fyp => dispatch => {
 // @access        Private
 export const addRemarks = (remarks, id, fypId, clearState) => dispatch => {
   dispatch(setLoading());
+  dispatch({ type: CLEAR_ERRORS });
   axios
     .patch(`/api/v1/fyp/${id}/${fypId}`, remarks)
     .then(res => {
@@ -272,7 +273,12 @@ export const assignTeacherAction = (data, clearState) => async dispatch => {
   });
   try {
     const res = await axios.put("/api/v1/fyp/assign-teacher", data);
-    console.log(res.data);
+
+    dispatch({
+      type: UPDATE_FYP,
+      payload: res.data.data.project
+    });
+    clearState();
   } catch (error) {
     dispatch({
       type: GET_ERRORS,

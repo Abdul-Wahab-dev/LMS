@@ -108,7 +108,7 @@ const Index = props => {
               >
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
-                    ? `0${users.filter(user => user.role === "student").length}`
+                    ? `${users.filter(user => user.role === "student").length}`
                     : "00"}
                 </h1>
                 <h3 style={{ textAlign: "center" }}>Student</h3>
@@ -119,7 +119,7 @@ const Index = props => {
               >
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
-                    ? `0${users.filter(user => user.role === "faculty").length}`
+                    ? `${users.filter(user => user.role === "faculty").length}`
                     : "00"}
                 </h1>
                 <h3 style={{ textAlign: "center" }}>Professors</h3>
@@ -130,7 +130,7 @@ const Index = props => {
               >
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
-                    ? `0${
+                    ? `${
                         users.filter(user => user.role === "coordinator").length
                       }`
                     : "00"}
@@ -162,7 +162,14 @@ const Index = props => {
                         <CardTitle>{news.title}</CardTitle>
                         <ReactQuill
                           readOnly
-                          value={news.body}
+                          value={
+                            news.body.length > 105
+                              ? `${news.body.substring(
+                                  0,
+                                  100
+                                )}... \n LOGIN TO READ MORE`
+                              : news.body
+                          }
                           toolbar={false}
                         />
                         <span

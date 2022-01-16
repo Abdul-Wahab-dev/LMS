@@ -19,6 +19,7 @@ import PageTitle from "../components/common/PageTitle";
 import { getTeams, createTeam, deleteTeam } from "../actions/team";
 // loader
 import Loader from "../utils/Loader";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 const Teams = props => {
   const [teamName, setTeamName] = useState("");
   const [semesterType, setSemesterType] = useState("");
@@ -107,13 +108,14 @@ const Teams = props => {
                     teams.map((team, i) => (
                       <tr key={team._id}>
                         <td>{i + 1}</td>
-                        <td>{team.teamName}</td>
-                        <td>{team.semesterType}</td>
+                        <td>{capitalizeFirstLetter(team.teamName)}</td>
+                        <td>{capitalizeFirstLetter(team.semesterType)}</td>
                         <td>{team.members.length}</td>
                         <td>
                           {team.createdBy && team.createdBy.id}
                           <br />
-                          {team.createdBy && team.createdBy.name}
+                          {team.createdBy &&
+                            capitalizeFirstLetter(team.createdBy.name)}
                         </td>
                         {auth.enrollmentNo === team.createdBy.id ? (
                           <td>

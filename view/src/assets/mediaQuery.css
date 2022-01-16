@@ -25,9 +25,16 @@
   .d-none-c {
     display: none !important;
   }
+
+  .register-form-container {
+    width: 900px !important;
+  }
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (max-width: 1200px) {
+  .register-form-container {
+    width: 800px !important;
+  }
   .example {
     background: pink;
   }
@@ -40,6 +47,10 @@
   /* .example {
     background: orange;
   } */
+
+  .register-form-container {
+    width: 710px !important;
+  }
   .d-lg-block-c {
     display: block !important;
   }
@@ -66,6 +77,10 @@
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (max-width: 768px) {
   /* GLobal */
+
+  .register-form-container {
+    width: 550px !important;
+  }
   .m-md-0 {
     margin: 0 !important;
   }
@@ -137,6 +152,9 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   /* GLOBAL */
+  .register-form-container {
+    width: 310px !important;
+  }
   .d-xs-none {
     display: none !important;
   }

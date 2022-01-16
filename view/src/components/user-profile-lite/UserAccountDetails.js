@@ -11,6 +11,7 @@ import {
   FormGroup,
   FormInput
 } from "shards-react";
+import capitalizeFirstLetter from "../../utils/capitalizeFirstLetter";
 
 import { useDispatch } from "react-redux";
 // Actons
@@ -97,7 +98,7 @@ const UserAccountDetails = ({ profile }) => {
                       id="feEnrollment"
                       type="text"
                       placeholder="Role"
-                      value={role}
+                      value={capitalizeFirstLetter(role)}
                       readOnly={
                         profile && profile.role !== "admin" ? true : false
                       }
@@ -126,7 +127,7 @@ const UserAccountDetails = ({ profile }) => {
                       id="feName"
                       type="text"
                       placeholder="Name"
-                      value={name}
+                      value={capitalizeFirstLetter(name)}
                       onChange={e => setName(e.target.value)}
                       readOnly={
                         profile && profile.role !== "admin" ? true : false
@@ -139,7 +140,7 @@ const UserAccountDetails = ({ profile }) => {
                       id="feFatherName"
                       type="text"
                       placeholder="FatherName"
-                      value={fatherName}
+                      value={capitalizeFirstLetter(fatherName)}
                       onChange={e => setFatherName(e.target.value)}
                       readOnly={
                         profile && profile.role !== "admin" ? true : false

@@ -26,6 +26,7 @@ import {
 import { studentData } from "../actions/authActions";
 // loader
 import Loader from "../utils/Loader";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 const TeamMembers = props => {
   const [teamName, setTeamName] = useState("");
@@ -133,7 +134,7 @@ const TeamMembers = props => {
               <Row className="mb-2">
                 <Col md="3">
                   <FormSelect
-                    value={teamName}
+                    value={capitalizeFirstLetter(teamName)}
                     onChange={e => setTeamName(e.target.value)}
                   >
                     {teamsNames.length > 0 ? (
@@ -141,7 +142,7 @@ const TeamMembers = props => {
                         <option>Choose Name...</option>
                         {teamsNames.map(name => (
                           <option key={name._id} value={name._id}>
-                            {name.teamName}
+                            {capitalizeFirstLetter(name.teamName)}
                           </option>
                         ))}
                       </>
@@ -201,7 +202,7 @@ const TeamMembers = props => {
                         team.members.map((member, index) => (
                           <tr key={member._id}>
                             <td>{index + 1}</td>
-                            <td>{member.name}</td>
+                            <td>{capitalizeFirstLetter(member.name)}</td>
                             <td>{member.enrollmentNo}</td>
                             <td>
                               {member.personalEmail
@@ -210,7 +211,9 @@ const TeamMembers = props => {
                             </td>
                             <td>{member.phone ? member.phone : "Nil"}</td>
                             <td>
-                              {member.designation ? member.designation : "Nil"}
+                              {member.designation
+                                ? capitalizeFirstLetter(member.designation)
+                                : "Nil"}
                             </td>
                             {(member.memberAddedBy &&
                               member.memberAddedBy.enrollmentNo ===
@@ -310,7 +313,7 @@ const TeamMembers = props => {
                     user.map((user, i) => (
                       <tr key={user._id}>
                         <td>{i + 1}</td>
-                        <td>{user.name}</td>
+                        <td>{capitalizeFirstLetter(user.name)}</td>
 
                         <td>{user.enrollmentNo}</td>
                         <td>{user.program ? user.program : "Nil"}</td>
@@ -336,7 +339,7 @@ const TeamMembers = props => {
               <Col md="3">
                 <label>Team Name </label>
                 <FormSelect
-                  value={userTeamName}
+                  value={capitalizeFirstLetter(userTeamName)}
                   onChange={e => setUserTeamName(e.target.value)}
                   required
                   invalid={errors.validation && errors.validation.id && true}
@@ -346,7 +349,7 @@ const TeamMembers = props => {
                       <option>Choose Name...</option>
                       {teamsNames.map(name => (
                         <option key={name._id} value={name._id}>
-                          {name.teamName}
+                          {capitalizeFirstLetter(name.teamName)}
                         </option>
                       ))}
                     </>

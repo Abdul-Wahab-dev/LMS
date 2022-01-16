@@ -18,6 +18,8 @@ import UserAccountDetails from "../components/user-profile-lite/UserAccountDetai
 // Program
 import Program from "../utils/Program";
 import Batch from "../utils/Batch";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import { studentData, getPrograms, deleteUser } from "../actions/authActions";
 // Loader
@@ -192,8 +194,8 @@ const UserData = props => {
                   .map((user, i) => (
                     <tr key={user._id}>
                       <td>{i + 1}</td>
-                      <td>{user.name}</td>
-                      <td>{user.fatherName}</td>
+                      <td>{capitalizeFirstLetter(user.name)}</td>
+                      <td>{capitalizeFirstLetter(user.fatherName)}</td>
                       <td>{user.enrollmentNo}</td>
                       <td>
                         {user.personalEmail

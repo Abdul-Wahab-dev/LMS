@@ -3,6 +3,7 @@ import Carousel from "react-multi-carousel";
 import "./css/styles.css";
 import "react-multi-carousel/lib/styles.css";
 import profileThumbNail from "../images/profile-thumbnail.png";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -27,7 +28,12 @@ const ItemsSlider = props => {
       responsive={responsive}
     >
       {props.users
-        .filter(user => user.role !== "student" && user.approvedUser === true)
+        .filter(
+          user =>
+            user.role !== "student" &&
+            user.role !== "admin" &&
+            user.approvedUser === true
+        )
         .map(user => (
           <div
             className="d-flex justify-content-center align-items-center flex-column"
@@ -51,7 +57,7 @@ const ItemsSlider = props => {
               }}
             ></div>
             <p className="m-0" style={{ textAlign: "center" }}>
-              {user.name}
+              {capitalizeFirstLetter(user.name)}
             </p>
           </div>
         ))}

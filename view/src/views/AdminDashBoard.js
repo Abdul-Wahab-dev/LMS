@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 import {
   Container,
   Row,
@@ -236,7 +237,7 @@ const AdminDashBoard = () => {
                   <h2 className="mb-2">
                     {" "}
                     {users.length > 0
-                      ? `0${
+                      ? `${
                           users.filter(user => user.role === "student").length
                         }`
                       : "00"}
@@ -264,7 +265,7 @@ const AdminDashBoard = () => {
                   <h2 className="mb-2">
                     {" "}
                     {users.length > 0
-                      ? `0${
+                      ? `${
                           users.filter(user => user.role === "faculty").length
                         }`
                       : "00"}
@@ -292,7 +293,7 @@ const AdminDashBoard = () => {
                   <h2 className="mb-2">
                     {" "}
                     {users.length > 0
-                      ? `0${
+                      ? `${
                           users.filter(user => user.role === "coordinator")
                             .length
                         }`
@@ -347,7 +348,7 @@ const AdminDashBoard = () => {
                         .map((user, i) => (
                           <tr key={user._id}>
                             <td>{i + 1}</td>
-                            <td>{user.name}</td>
+                            <td>{capitalizeFirstLetter(user.name)}</td>
                             <td>
                               {user.personalEmail
                                 ? user.personalEmail
@@ -396,7 +397,7 @@ const AdminDashBoard = () => {
                         .map((user, i) => (
                           <tr key={user._id}>
                             <td>{i + 1}</td>
-                            <td>{user.name}</td>
+                            <td>{capitalizeFirstLetter(user.name)}</td>
                             <td>
                               {user.personalEmail
                                 ? user.personalEmail
@@ -423,7 +424,7 @@ const AdminDashBoard = () => {
             <Card className="admin-dashboard-cards">
               <Row>
                 <Col xs="4" className="item-col-qty">
-                  {complains.length > 0 ? "0" + complains.length : "00"}
+                  {complains.length > 0 ? complains.length : "00"}
                 </Col>
                 <Col xs="8" className="item-col-name justify-content-start">
                   <div className="item-name">
@@ -439,8 +440,7 @@ const AdminDashBoard = () => {
               <Row>
                 <Col xs="4" className="item-col-qty color-green ">
                   {complains.length > 0
-                    ? "0" +
-                      complains.filter(compl => compl.status === "pending")
+                    ? complains.filter(compl => compl.status === "pending")
                         .length
                     : "00"}
                 </Col>
@@ -458,8 +458,7 @@ const AdminDashBoard = () => {
               <Row>
                 <Col xs="4" className="item-col-qty  color-blue">
                   {complains.length > 0
-                    ? "0" +
-                      complains.filter(compl => compl.status === "complete")
+                    ? complains.filter(compl => compl.status === "complete")
                         .length
                     : "00"}
                 </Col>
@@ -479,8 +478,7 @@ const AdminDashBoard = () => {
               <Row>
                 <Col xs="4" className="item-col-qty color-red">
                   {complains.length > 0
-                    ? "0" +
-                      complains.filter(compl => compl.complainFor === "admin")
+                    ? complains.filter(compl => compl.complainFor === "admin")
                         .length
                     : "00"}
                 </Col>
@@ -498,8 +496,7 @@ const AdminDashBoard = () => {
               <Row>
                 <Col xs="4" className="item-col-qty  color-orange">
                   {complains.length > 0
-                    ? "0" +
-                      complains.filter(compl => compl.complainFor === "faculty")
+                    ? complains.filter(compl => compl.complainFor === "faculty")
                         .length
                     : "00"}
                 </Col>
@@ -520,8 +517,7 @@ const AdminDashBoard = () => {
               <Row>
                 <Col xs="4" className="item-col-qty color-green">
                   {complains.length > 0
-                    ? "0" +
-                      complains.filter(
+                    ? complains.filter(
                         compl => compl.complainFor === "coordinator"
                       ).length
                     : "00"}
@@ -613,7 +609,7 @@ const AdminDashBoard = () => {
                       programAndBatch.programs.map((pro, i) => (
                         <tr key={pro._id}>
                           <td>{i + 1}</td>
-                          <td>{pro.program}</td>
+                          <td>{capitalizeFirstLetter(pro.program)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -688,7 +684,7 @@ const AdminDashBoard = () => {
                       programAndBatch.batchs.map((bat, i) => (
                         <tr key={bat._id}>
                           <td>{i + 1}</td>
-                          <td>{bat.batch}</td>
+                          <td>{capitalizeFirstLetter(bat.batch)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -765,7 +761,7 @@ const AdminDashBoard = () => {
                       pecTypes.map((type, i) => (
                         <tr key={type._id}>
                           <td>{i + 1}</td>
-                          <td>{type.type}</td>
+                          <td>{capitalizeFirstLetter(type.type)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -844,7 +840,7 @@ const AdminDashBoard = () => {
                       fypCategory.map((type, i) => (
                         <tr key={type._id}>
                           <td>{i + 1}</td>
-                          <td>{type.category}</td>
+                          <td>{capitalizeFirstLetter(type.category)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -933,7 +929,7 @@ const AdminDashBoard = () => {
                       names.map((fyp, i) => (
                         <tr key={fyp._id}>
                           <td>{i + 1}</td>
-                          <td>{fyp.eventName}</td>
+                          <td>{capitalizeFirstLetter(fyp.eventName)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"

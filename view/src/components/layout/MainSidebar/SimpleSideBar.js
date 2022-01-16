@@ -103,6 +103,16 @@ const SimpleSideBar = props => {
               <span style={{ marginLeft: "14px" }}>MEE</span>
             </a>
           </NavItem>
+          <NavItem>
+            <NavLink
+              tag={RouteNavLink}
+              to={"/user-register"}
+              className="d-flex align-items-center"
+            >
+              <ion-icon name="person-circle"></ion-icon>
+              <span>Register</span>
+            </NavLink>
+          </NavItem>
         </Nav>
       </div>
     </Col>

@@ -22,6 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../components/common/PageTitle";
 // Batch
 import Batch from "../utils/Batch";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 // action
 import {
   getFyp,
@@ -116,7 +117,7 @@ const FYPBlock = () => {
   // add remarks
   const addRemarksFunc = id => {
     const remarksObj = {
-      comment: comment.toLowerCase(),
+      comment: comment,
       Satisification: remarks,
       name: auth.name,
       enrollmentNo: auth.enrollmentNo
@@ -267,9 +268,6 @@ const FYPBlock = () => {
     setFypID("");
     setAssignTeacherModal(false);
   };
-
-  console.log(fypID);
-
   return (
     <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
@@ -309,7 +307,9 @@ const FYPBlock = () => {
                               .map((name, i) => (
                                 <option key={name._id} value={`${name._id}`}>
                                   {name.eventName.charAt(0).toUpperCase() +
-                                    name.eventName.slice(1)}{" "}
+                                    capitalizeFirstLetter(
+                                      name.eventName.slice(1)
+                                    )}{" "}
                                   {`( ${name.batch} )`}
                                 </option>
                               ))}
@@ -391,7 +391,8 @@ const FYPBlock = () => {
                                   md="6"
                                   className="d-flex justify-content-center align-items-center"
                                 >
-                                  {member.name}
+                                  {member.name &&
+                                    capitalizeFirstLetter(member.name)}
                                 </Col>
                                 <Col
                                   md="6"
@@ -416,7 +417,9 @@ const FYPBlock = () => {
                             )}{" "}
                           </td>
                           <td>
-                            {fyp.supervisor ? fyp.supervisor.name : "Null"}
+                            {fyp.supervisor
+                              ? capitalizeFirstLetter(fyp.supervisor.name)
+                              : "Null"}
                           </td>
 
                           <td>
@@ -425,6 +428,7 @@ const FYPBlock = () => {
                               onClick={() => {
                                 setModal(true);
                                 setData({ id: project._id, fyp });
+                                setErrors({});
                               }}
                             >
                               Remarks
@@ -621,7 +625,9 @@ const FYPBlock = () => {
                               {names.map((name, i) => (
                                 <option value={`${name._id}`} key={name._id}>
                                   {name.eventName.charAt(0).toUpperCase() +
-                                    name.eventName.slice(1)}{" "}
+                                    capitalizeFirstLetter(
+                                      name.eventName.slice(1)
+                                    )}{" "}
                                   {`( ${name.batch} )`}
                                 </option>
                               ))}
@@ -673,7 +679,8 @@ const FYPBlock = () => {
                                     setSupervisorId(user.enrollmentNo);
                                   }}
                                 >
-                                  {user.name}
+                                  {user.name &&
+                                    capitalizeFirstLetter(user.name)}
                                 </p>
                               ))}
                           </div>
@@ -694,7 +701,8 @@ const FYPBlock = () => {
                               <option value="">Choose</option>
                               {fypCategory.map((cate, i) => (
                                 <option
-                                  value={`${cate.category}`}
+                                  value={`${cate.category &&
+                                    capitalizeFirstLetter(cate.category)}`}
                                   key={cate._id}
                                 >
                                   {cate.category.charAt(0).toUpperCase() +
@@ -843,9 +851,20 @@ const FYPBlock = () => {
           </Row>
         </>
       ) : null}
-      <Modal open={modal} toggle={() => setModal(!modal)}>
+      <Modal
+        open={modal}
+        toggle={() => {
+          setModal(!modal);
+          setErrors({});
+        }}
+      >
         <ModalHeader>Remarks</ModalHeader>
         <ModalBody>
+          {errors && errors.message && (
+            <div className="error-message alert-danger m-0" role="alert">
+              {errors.message}
+            </div>
+          )}
           <div className="complain-modal-container">
             {/* <h3>Title</h3> */}
             <h6>{data.fyp && data.fyp.idea ? data.fyp.idea : ""}</h6>
@@ -857,10 +876,11 @@ const FYPBlock = () => {
               ).length > 0) ? null : (
               <>
                 <FormInput
-                  placeholder="comment"
+                  placeholder="Number"
                   className="my-3"
                   value={comment}
-                  onChange={e => setComment(e.target.value)}
+                  type="number"
+                  onChange={e => setComment(e.target.value * 1)}
                 />
                 <div className="my-3">
                   <Row>
@@ -929,7 +949,7 @@ const FYPBlock = () => {
                   </th>
 
                   <th scope="col" className="border-0">
-                    Remarks
+                    Number
                   </th>
                 </tr>
               </thead>
@@ -940,7 +960,7 @@ const FYPBlock = () => {
                       <td>{i + 1}</td>
                       <td>{remark.name}</td>
                       <td>{remark.enrollmentNo}</td>
-                      <td>{remark.Satisification}</td>
+                      <td>{remark.comment}</td>
                     </tr>
                   ))
                 ) : (

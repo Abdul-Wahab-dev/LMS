@@ -11,7 +11,10 @@ const Register = () => {
 
   return (
     <div style={{ position: "relative" }}>
-      <div style={{ width: "800px", margin: "0 auto", padding: "30px 0" }}>
+      <div
+        className="register-form-container"
+        style={{ margin: "0 auto", padding: "30px 0" }}
+      >
         <Card small>
           <CardHeader className="border-bottom">
             <h6 className="m-0">Create account</h6>

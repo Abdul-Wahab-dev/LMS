@@ -3,6 +3,7 @@ const FYPCategory = require("../model/FYPCategory");
 const AppError = require("./../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const fypValidator = require("../validation/fyp");
+const mongoose = require("mongoose");
 
 // @route         CREATE /api/v1/fyp/category
 // @desc          create FYP Category
@@ -145,23 +146,67 @@ exports.presentationStatus = catchAsync(async (req, res, next) => {
 // @desc          add FYP remarks
 // @access        Private
 exports.addRemarks = catchAsync(async (req, res, next) => {
-  let project;
-  project = await FYP.findOneAndUpdate(
+  // check user can give remarks or not
+  const fyp = await FYP.aggregate([
     {
-      $and: [
-        { _id: req.params.id },
-        { projects: { $elemMatch: { _id: req.params.fypId } } },
-        // { "projects._id": req.params.fypId },
-      ],
+      $unwind: {
+        path: "$projects",
+      },
     },
-    { $push: { "projects.$.remarks": req.body } },
     {
-      new: true,
+      $match: {
+        "projects._id": mongoose.Types.ObjectId(req.params.fypId),
+      },
+    },
+  ]);
+
+  if (fyp) {
+    const teacherPermission = fyp[0].projects.teacher.filter(
+      (teach) => teach.enrollmentNo === req.user.enrollmentNo
+    );
+    if (teacherPermission.length > 0) {
+      if (fyp[0].projects.status === "complete") {
+        let project;
+        project = await FYP.findOneAndUpdate(
+          {
+            $and: [
+              { _id: req.params.id },
+              { projects: { $elemMatch: { _id: req.params.fypId } } },
+              // { "projects._id": req.params.fypId },
+            ],
+          },
+          { $push: { "projects.$.remarks": req.body } },
+          {
+            new: true,
+          }
+        );
+        // send response to user
+        res.status(200).json({
+          status: "success",
+          data: {
+            project: project,
+          },
+        });
+      } else {
+        return next(
+          new AppError(
+            `Presentation does not complete. Please complete the presentation first!`,
+            400,
+            null
+          )
+        );
+      }
+    } else {
+      return next(
+        new AppError(`You have not permission to add remarks`),
+        400,
+        null
+      );
     }
-  );
+  }
 
   // if not found then send error response to user
-  if (!project) {
+  if (!fyp) {
     return res.status(404).json({
       status: "success",
       errors: {
@@ -169,13 +214,6 @@ exports.addRemarks = catchAsync(async (req, res, next) => {
       },
     });
   }
-  // send response to user
-  res.status(200).json({
-    status: "success",
-    data: {
-      project,
-    },
-  });
 });
 // @route         Patch /api/v1/fyp/member
 // @desc          Add Member
@@ -313,7 +351,6 @@ exports.assignTime = catchAsync(async (req, res, next) => {
 //  @desc           assign presentation time
 //  @access         Private
 exports.assignTeacher = catchAsync(async (req, res, next) => {
-  console.log(req.body);
   const projects = await FYP.findOneAndUpdate(
     {
       $and: [
@@ -325,7 +362,12 @@ exports.assignTeacher = catchAsync(async (req, res, next) => {
     { $push: { "projects.$.teacher": req.body.teacher } },
     { new: true }
   );
-  console.log(projects);
+  res.status(201).json({
+    status: "success",
+    data: {
+      project: projects,
+    },
+  });
 
   // next(new AppError("Time already assign", 400, null));
 });

@@ -13,7 +13,8 @@ import {
   APPROVED_USER,
   GET_PROGRAMS,
   DELETE_USER,
-  UPDATE_PERMISSION
+  UPDATE_PERMISSION,
+  CLEAR_ERRORS
 } from "./types";
 
 // @route   POST /api/v1/users/signup
@@ -22,6 +23,9 @@ import {
 
 export const createMultipleUsers = (users, clearState) => dispatch => {
   dispatch(setLoading());
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   axios
     .post("/api/v1/users/create-multiple-users", { users: users })
     .then(res => {
@@ -76,6 +80,9 @@ export const registerUser = (userData, file, clearState) => dispatch => {
 // @desc    Login in to get token
 // @access  Public
 export const loginUser = (userData, history) => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   dispatch(setLoading());
   axios
     .post("/api/v1/users/login", userData)
@@ -126,6 +133,9 @@ export const logoutUser = () => dispatch => {
 };
 
 export const getCurrentUser = () => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   dispatch(setLoading());
   axios
     .get("/api/v1/users/current")
@@ -151,6 +161,9 @@ export const getCurrentUser = () => dispatch => {
 // @desc        get users
 // @access      Private
 export const getUsers = () => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   dispatch(setLoading());
   axios
     .get("/api/v1/users")
@@ -176,6 +189,9 @@ export const getUsers = () => dispatch => {
 // @desc        get user
 // @access      Private
 export const studentData = data => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   dispatch(setLoading());
   axios
     .post(`/api/v1/users/findUser`, data)
@@ -226,6 +242,9 @@ export const getAllUser = data => dispatch => {
 // @desc        approve user
 // @access      Private
 export const approveUser = user => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
   dispatch(setLoading());
   axios
     .post("/api/v1/users/approve", user)

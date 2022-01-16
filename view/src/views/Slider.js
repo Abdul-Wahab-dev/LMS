@@ -17,8 +17,10 @@ import PageTitle from "../components/common/PageTitle";
 import { getSlides, deleteSlide, createSlide } from "../actions/sliderAction";
 // Loader
 import Loader from "../utils/Loader";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 // Download File
 import downloadFile from "../utils/downloadFile";
+
 // custom File Uploader
 import CustomFileUpload from "../components/components-overview/CustomFileUpload";
 
@@ -91,7 +93,7 @@ const Slider = props => {
                     slides.map((slide, i) => (
                       <tr key={slide._id}>
                         <td>{i + 1}</td>
-                        <td>{slide.title}</td>
+                        <td>{capitalizeFirstLetter(slide.title)}</td>
                         <td
                           onClick={e =>
                             slide.fileName

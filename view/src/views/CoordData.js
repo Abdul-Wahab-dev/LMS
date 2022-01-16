@@ -17,6 +17,7 @@ import {
 import PageTitle from "../components/common/PageTitle";
 // User data detail
 import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 // action
 import {
   studentData,
@@ -261,7 +262,7 @@ const CoorData = props => {
                   .map((user, i) => (
                     <tr key={user._id}>
                       <td>{i + 1}</td>
-                      <td>{user.name}</td>
+                      <td>{capitalizeFirstLetter(user.name)}</td>
 
                       <td>{user.enrollmentNo}</td>
                       <td>{user.contact ? user.contact : user.mobile}</td>
@@ -409,7 +410,9 @@ const CoorData = props => {
         <ModalHeader>Permissions</ModalHeader>
         <ModalBody>
           <Row className="mb-4">
-            <Col md="4">{data.name}</Col>
+            <Col md="4">
+              {data && data.name && capitalizeFirstLetter(data.name)}
+            </Col>
             <Col md="4">{data.enrollmentNo}</Col>
             <Col md="4">{data.role}</Col>
           </Row>
