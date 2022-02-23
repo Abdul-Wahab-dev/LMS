@@ -15,7 +15,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 // react textarea
 import ReactQuill from "react-quill";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 // acton
 import {
   getComplains,
@@ -141,14 +140,10 @@ const AddNewPost = () => {
                     Complains.map((complain, i) => (
                       <tr key={complain._id}>
                         <td>{i + 1}</td>
-                        <td>
-                          {capitalizeFirstLetter(complain.from.complainerName)}
-                        </td>
-                        <td>
-                          {capitalizeFirstLetter(complain.to.complaineeName)}
-                        </td>
-                        <td>{capitalizeFirstLetter(complain.complainFor)}</td>
-                        <td>{capitalizeFirstLetter(complain.title)}</td>
+                        <td>{complain.from.complainerName}</td>
+                        <td>{complain.to.complaineeName}</td>
+                        <td>{complain.complainFor}</td>
+                        <td>{complain.title}</td>
                         <td>{complain.status}</td>
                         <td>
                           <span
@@ -236,9 +231,7 @@ const AddNewPost = () => {
                         {""} :{" "}
                       </small>
                     </strong>
-                    <p style={{ margin: "0" }}>
-                      {reply && capitalizeFirstLetter(reply.answer)}
-                    </p>
+                    <p style={{ margin: "0" }}>{reply && reply.answer}</p>
                   </>
                 ))
               : null}

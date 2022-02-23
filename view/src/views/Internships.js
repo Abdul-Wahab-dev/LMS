@@ -21,7 +21,7 @@ import PageTitle from "../components/common/PageTitle";
 // Program component
 import Program from "../utils/Program";
 import Batch from "../utils/Batch";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import {
   createInternship,
@@ -286,9 +286,9 @@ const Internship = props => {
                     internships.map((internship, i) => (
                       <tr key={internship._id}>
                         <td>{i + 1}</td>
-                        <td>{capitalizeFirstLetter(internship.name)}</td>
+                        <td>{internship.name}</td>
                         <td>{internship.enrollmentNo}</td>
-                        <td>{capitalizeFirstLetter(internship.company)}</td>
+                        <td>{internship.company}</td>
                         <td>{getFullyFormateDate(internship.startDate)}</td>
                         <td>
                           {internship.endDate
@@ -426,7 +426,7 @@ const Internship = props => {
                                       setEnrollmentNo(user.enrollmentNo);
                                     }}
                                   >
-                                    {capitalizeFirstLetter(user.name)}
+                                    {user.name}
                                   </p>
                                 ))}
                             </div>

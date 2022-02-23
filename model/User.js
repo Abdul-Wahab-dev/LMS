@@ -54,7 +54,8 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-
+  designation: String,
+  yearofJoining: Number,
   passwordConfirm: {
     type: String,
     required: true,

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import * as XLSX from "xlsx";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 import {
   Container,
   Row,
@@ -348,7 +347,7 @@ const AdminDashBoard = () => {
                         .map((user, i) => (
                           <tr key={user._id}>
                             <td>{i + 1}</td>
-                            <td>{capitalizeFirstLetter(user.name)}</td>
+                            <td>{user.name}</td>
                             <td>
                               {user.personalEmail
                                 ? user.personalEmail
@@ -397,7 +396,7 @@ const AdminDashBoard = () => {
                         .map((user, i) => (
                           <tr key={user._id}>
                             <td>{i + 1}</td>
-                            <td>{capitalizeFirstLetter(user.name)}</td>
+                            <td>{user.name}</td>
                             <td>
                               {user.personalEmail
                                 ? user.personalEmail
@@ -609,7 +608,7 @@ const AdminDashBoard = () => {
                       programAndBatch.programs.map((pro, i) => (
                         <tr key={pro._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(pro.program)}</td>
+                          <td>{pro.program}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -684,7 +683,7 @@ const AdminDashBoard = () => {
                       programAndBatch.batchs.map((bat, i) => (
                         <tr key={bat._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(bat.batch)}</td>
+                          <td>{bat.batch}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -761,7 +760,7 @@ const AdminDashBoard = () => {
                       pecTypes.map((type, i) => (
                         <tr key={type._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(type.type)}</td>
+                          <td>{type.type}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -840,7 +839,7 @@ const AdminDashBoard = () => {
                       fypCategory.map((type, i) => (
                         <tr key={type._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(type.category)}</td>
+                          <td>{type.category}</td>
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -920,6 +919,9 @@ const AdminDashBoard = () => {
                         FYP
                       </th>
                       <th scope="col" className="border-0">
+                        Batch
+                      </th>
+                      <th scope="col" className="border-0">
                         Action
                       </th>
                     </tr>
@@ -929,7 +931,8 @@ const AdminDashBoard = () => {
                       names.map((fyp, i) => (
                         <tr key={fyp._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(fyp.eventName)}</td>
+                          <td>{fyp.eventName}</td>
+                          <td>{fyp.batch}</td>
                           <td>
                             <Button
                               className="btn btn-danger"

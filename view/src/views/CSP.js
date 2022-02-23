@@ -20,7 +20,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../components/common/PageTitle";
 import Program from "../utils/Program";
 import Batch from "../utils/Batch";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 // action
 import {
   createCSP,
@@ -286,7 +285,7 @@ const CSP = props => {
                       csps.map((csp, i) => (
                         <tr key={csp._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(csp.name)}</td>
+                          <td>{csp.name}</td>
                           <td>{csp.enrollmentNo}</td>
 
                           <td id="download-file-csp">
@@ -488,7 +487,7 @@ const CSP = props => {
                                       setEnrollmentNo(user.enrollmentNo);
                                     }}
                                   >
-                                    {capitalizeFirstLetter(user.name)}
+                                    {user.name}
                                   </p>
                                 ))}
                             </div>

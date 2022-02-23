@@ -22,7 +22,7 @@ import {
 import PageTitle from "../components/common/PageTitle";
 // Loader
 import Loader from "../utils/Loader";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 const Quotes = () => {
   const [body, setBody] = useState("");
   // initialize useDispatch
@@ -96,9 +96,9 @@ const Quotes = () => {
                     quotes.map((eve, i) => (
                       <tr key={eve._id}>
                         <td>{i + 1}</td>
-                        <td>{capitalizeFirstLetter(eve.body)}</td>
+                        <td>{eve.body}</td>
                         <td>
-                          {capitalizeFirstLetter(eve.Provider.providerName)}
+                          {eve.Provider.providerName}
                           <br />
                           {eve.Provider.providerId}
                         </td>

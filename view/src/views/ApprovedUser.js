@@ -9,7 +9,6 @@ import {
   Modal,
   Button
 } from "shards-react";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 import { useDispatch, useSelector } from "react-redux";
 // page title
@@ -80,6 +79,9 @@ const ApprovedUser = () => {
                     <th scope="col" className="border-0">
                       Role
                     </th>
+                    <th scope="col" className="border-0">
+                      Designation
+                    </th>
 
                     <th scope="col" className="border-0">
                       view
@@ -98,10 +100,12 @@ const ApprovedUser = () => {
                       .map((user, i) => (
                         <tr key={user._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(user.name)}</td>
-                          <td>{capitalizeFirstLetter(user.fatherName)}</td>
+                          <td>{user.name}</td>
+                          <td>{user.fatherName}</td>
                           <td>{user.enrollmentNo}</td>
-                          <td>{capitalizeFirstLetter(user.role)}</td>
+                          <td>{user.role}</td>
+
+                          <td>{user.designation ? user.designation : ""}</td>
                           <td>
                             <span
                               className="view-detail-icon"

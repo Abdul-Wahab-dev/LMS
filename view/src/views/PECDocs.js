@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Editor from "../components/add-new-post/Editor";
 // page title
 import PageTitle from "../components/common/PageTitle";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import {
   getDocuments,
@@ -125,7 +125,7 @@ const PECDocs = props => {
                         {pecTypes.length > 0
                           ? pecTypes.map(type => (
                               <option key={type._id} value={type.type}>
-                                {capitalizeFirstLetter(type.type)}{" "}
+                                {type.type}{" "}
                               </option>
                             ))
                           : null}
@@ -184,7 +184,7 @@ const PECDocs = props => {
                       documents.map((doc, i) => (
                         <tr key={doc._id}>
                           <td>{i + 1}</td>
-                          <td>{capitalizeFirstLetter(doc.title)}</td>
+                          <td>{doc.title}</td>
                           <td
                             onClick={e =>
                               doc.fileName
@@ -209,8 +209,7 @@ const PECDocs = props => {
                             )}
                           </td>
                           <td>
-                            {capitalizeFirstLetter(doc.from.providerName)}{" "}
-                            <br />
+                            {doc.from.providerName} <br />
                           </td>
                           <td>{convertToLocalDateFormat(doc.createdAt)}</td>
 
@@ -380,9 +379,7 @@ const PECDocs = props => {
                     <strong>Name :</strong>
                   </Col>
                   <Col md="3">
-                    {stuAssignmentData.name
-                      ? capitalizeFirstLetter(stuAssignmentData.name)
-                      : null}
+                    {stuAssignmentData.name ? stuAssignmentData.name : null}
                   </Col>
                   <Col md="3">
                     <strong>Enrollment No :</strong>
@@ -493,7 +490,7 @@ const PECDocs = props => {
                         doc.docSubmittedBy.map((ass, i) => (
                           <tr key={ass._id}>
                             <td>{i + 1}</td>
-                            <td>{capitalizeFirstLetter(ass.name)}</td>
+                            <td>{ass.name}</td>
                             <td>{ass.enrollmentNo}</td>
                             <td id="download-file-pec-submitby-stu">
                               {ass.fileName ? (

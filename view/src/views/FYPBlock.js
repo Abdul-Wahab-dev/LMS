@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../components/common/PageTitle";
 // Batch
 import Batch from "../utils/Batch";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import {
   getFyp,
@@ -307,9 +307,7 @@ const FYPBlock = () => {
                               .map((name, i) => (
                                 <option key={name._id} value={`${name._id}`}>
                                   {name.eventName.charAt(0).toUpperCase() +
-                                    capitalizeFirstLetter(
-                                      name.eventName.slice(1)
-                                    )}{" "}
+                                    name.eventName.slice(1)}{" "}
                                   {`( ${name.batch} )`}
                                 </option>
                               ))}
@@ -366,7 +364,7 @@ const FYPBlock = () => {
                         <th scope="col" className="border-0">
                           Status
                         </th>
-                        <th scope="col" className="border-0" colSpan="3">
+                        <th scope="col" className="border-0">
                           Action
                         </th>
                       </>
@@ -391,8 +389,7 @@ const FYPBlock = () => {
                                   md="6"
                                   className="d-flex justify-content-center align-items-center"
                                 >
-                                  {member.name &&
-                                    capitalizeFirstLetter(member.name)}
+                                  {member.name && member.name}
                                 </Col>
                                 <Col
                                   md="6"
@@ -417,9 +414,7 @@ const FYPBlock = () => {
                             )}{" "}
                           </td>
                           <td>
-                            {fyp.supervisor
-                              ? capitalizeFirstLetter(fyp.supervisor.name)
-                              : "Null"}
+                            {fyp.supervisor ? fyp.supervisor.name : "Null"}
                           </td>
 
                           <td>
@@ -470,8 +465,11 @@ const FYPBlock = () => {
                             </td>
                           ) : null}
                           {auth.role !== "student" ? (
-                            <td colSpan="3">
-                              <div className="d-flex justify-content-center align-items-center">
+                            <td>
+                              <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{ flexDirection: "column", gap: "5px" }}
+                              >
                                 <Button
                                   onClick={() => {
                                     setAssignTeacherModal(!assignTeacherModal);
@@ -482,7 +480,7 @@ const FYPBlock = () => {
                                   Teacher
                                 </Button>
                                 <Button
-                                  className="mx-1"
+                                  className="btn btn-danger"
                                   onClick={() => {
                                     if (
                                       window.confirm(
@@ -499,20 +497,6 @@ const FYPBlock = () => {
                                   }}
                                 >
                                   Delete Idea
-                                </Button>
-                                <Button
-                                  className="btn btn-danger"
-                                  onClick={() => {
-                                    if (
-                                      window.confirm(
-                                        "If you want to delete Complete FYP then press OK"
-                                      )
-                                    ) {
-                                      dispatch(deleteFYP(project._id));
-                                    }
-                                  }}
-                                >
-                                  Delete
                                 </Button>
                               </div>
                             </td>
@@ -625,9 +609,7 @@ const FYPBlock = () => {
                               {names.map((name, i) => (
                                 <option value={`${name._id}`} key={name._id}>
                                   {name.eventName.charAt(0).toUpperCase() +
-                                    capitalizeFirstLetter(
-                                      name.eventName.slice(1)
-                                    )}{" "}
+                                    name.eventName.slice(1)}{" "}
                                   {`( ${name.batch} )`}
                                 </option>
                               ))}
@@ -679,8 +661,7 @@ const FYPBlock = () => {
                                     setSupervisorId(user.enrollmentNo);
                                   }}
                                 >
-                                  {user.name &&
-                                    capitalizeFirstLetter(user.name)}
+                                  {user.name && user.name}
                                 </p>
                               ))}
                           </div>
@@ -701,8 +682,7 @@ const FYPBlock = () => {
                               <option value="">Choose</option>
                               {fypCategory.map((cate, i) => (
                                 <option
-                                  value={`${cate.category &&
-                                    capitalizeFirstLetter(cate.category)}`}
+                                  value={`${cate.category && cate.category}`}
                                   key={cate._id}
                                 >
                                   {cate.category.charAt(0).toUpperCase() +

@@ -13,7 +13,7 @@ module.exports = function validateRegisterInput(data) {
   data.batch = !isEmpty(data.batch) ? data.batch : "";
   data.maxSemester = !isEmpty(data.maxSemester) ? data.maxSemester : "";
   data.mobile = !isEmpty(data.mobile) ? data.mobile : "";
-  data.contact = !isEmpty(data.contact) ? data.contact : "";
+
   data.personalEmail = !isEmpty(data.personalEmail) ? data.personalEmail : "";
   data.permanentAddress = !isEmpty(data.permanentAddress)
     ? data.permanentAddress
@@ -21,6 +21,8 @@ module.exports = function validateRegisterInput(data) {
   data.currentAddress = !isEmpty(data.currentAddress)
     ? data.currentAddress
     : "";
+  data.designation = !isEmpty(data.designation) ? data.designation : "";
+
   data.password = !isEmpty(data.password) ? data.password : "";
   data.passwordConfirm = !isEmpty(data.passwordConfirm)
     ? data.passwordConfirm
@@ -32,6 +34,18 @@ module.exports = function validateRegisterInput(data) {
 
   if (Validator.isEmpty(data.role)) {
     errors.role = "role field is required";
+  }
+  if (
+    (data.role !== "student" || Validator.isEmpty(data.role)) &&
+    Validator.isEmpty(data.designation)
+  ) {
+    errors.designation = "Designation field is required";
+  }
+  if (
+    (data.role !== "student" || Validator.isEmpty(data.role)) &&
+    data.yearofJoining < 1989
+  ) {
+    errors.yearofJoining = "Year of Joining field is required";
   }
   if (Validator.isEmpty(data.name)) {
     errors.name = "Name field is required";
@@ -57,9 +71,6 @@ module.exports = function validateRegisterInput(data) {
   }
   if (Validator.isEmpty(data.mobile)) {
     errors.mobile = "mobile number field is required";
-  }
-  if (Validator.isEmpty(data.contact)) {
-    errors.contact = "contact number field is required";
   }
   if (Validator.isEmpty(data.personalEmail)) {
     errors.personalEmail = "personal Email field is required";

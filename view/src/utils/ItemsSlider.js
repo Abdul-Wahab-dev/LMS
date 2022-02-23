@@ -3,7 +3,6 @@ import Carousel from "react-multi-carousel";
 import "./css/styles.css";
 import "react-multi-carousel/lib/styles.css";
 import profileThumbNail from "../images/profile-thumbnail.png";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -57,7 +56,7 @@ const ItemsSlider = props => {
               }}
             ></div>
             <p className="m-0" style={{ textAlign: "center" }}>
-              {capitalizeFirstLetter(user.name)}
+              {user.name}
             </p>
           </div>
         ))}

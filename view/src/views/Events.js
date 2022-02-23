@@ -21,7 +21,6 @@ import PageTitle from "../components/common/PageTitle";
 import Editor from "../components/add-new-post/Editor";
 // Loader
 import Loader from "../utils/Loader";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 const Events = () => {
   // initialize useDispatch
@@ -80,11 +79,9 @@ const Events = () => {
                     privateEvents.map((eve, i) => (
                       <tr key={eve._id}>
                         <td>{i + 1}</td>
-                        <td>{capitalizeFirstLetter(eve.eventName)}</td>
+                        <td>{eve.eventName}</td>
                         <td>
-                          {capitalizeFirstLetter(
-                            eve.eventProvider.providerName
-                          )}
+                          {eve.eventProvider.providerName}
                           <br />
                           {eve.eventProvider.providerId}
                         </td>

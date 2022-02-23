@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import PageTitle from "../components/common/PageTitle";
 // Program
 import Program from "../utils/Program";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import {
   getTeamAssignments,
@@ -173,12 +173,10 @@ const TeamAssignments = props => {
                                 "No File"
                               )}
                             </td>
-                            <td>{capitalizeFirstLetter(assignment.title)}</td>
+                            <td>{assignment.title}</td>
                             <td>
                               {assignment.assignmentCreatedBy &&
-                                capitalizeFirstLetter(
-                                  assignment.assignmentCreatedBy.name
-                                )}
+                                assignment.assignmentCreatedBy.name}
                               <br />
                               {assignment.assignmentCreatedBy &&
                                 assignment.assignmentCreatedBy.enrollmentNo}
@@ -240,7 +238,7 @@ const TeamAssignments = props => {
                       <Col md="4">
                         <label>Team Name </label>
                         <FormSelect
-                          value={capitalizeFirstLetter(teamName)}
+                          value={teamName}
                           onChange={e => setTeamName(e.target.value)}
                           required
                           invalid={
@@ -252,7 +250,7 @@ const TeamAssignments = props => {
                               <option>Choose Name...</option>
                               {teamsNames.map(name => (
                                 <option key={name._id} value={name._id}>
-                                  {capitalizeFirstLetter(name.teamName)}
+                                  {name.teamName}
                                 </option>
                               ))}
                             </>

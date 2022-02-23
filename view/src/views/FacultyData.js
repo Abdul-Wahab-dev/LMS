@@ -10,6 +10,8 @@ import {
   ModalHeader,
   FormCheckbox,
   ModalBody,
+  FormRadio,
+  FormSelect,
   Container,
   CardBody
 } from "shards-react";
@@ -18,7 +20,7 @@ import {
 import PageTitle from "../components/common/PageTitle";
 // check user detail
 import UserAccountDetails from "../components/user-profile-lite/UserAccountDetails";
-import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
+
 // action
 import {
   studentData,
@@ -42,6 +44,9 @@ const FacultyData = props => {
   const [FYP, setFYP] = useState({ read: false, write: false });
   const [TEAM, setTEAM] = useState({ read: false, write: false });
   const [permissionModal, setPermissionModal] = useState(false);
+  const [searchBy, setSearchBy] = useState("enrollment");
+  const [yearofJoining, setYearofJoining] = useState("");
+  const [designation, setDesignation] = useState("");
 
   const userData = useSelector(state => state.auth.studentData);
   const auth = useSelector(state => state.auth.user);
@@ -56,7 +61,9 @@ const FacultyData = props => {
         program: undefined,
         batch: undefined,
         role: "faculty",
-        type: "multiple"
+        type: "multiple",
+        yearofJoining: yearofJoining * 1,
+        designation: designation.toLowerCase()
       })
     );
   };
@@ -187,15 +194,119 @@ const FacultyData = props => {
         />
       </Row>
       <Card small className="h-100 p-4">
+        <Row className="mb-3">
+          <Col
+            md="3"
+            sm="3"
+            xs="12"
+            className="d-flex justify-content-center align-items-center"
+          >
+            <h5 className="m-0">Search By</h5>
+          </Col>
+
+          <Col
+            md="2"
+            sm="3"
+            xs="4"
+            className="d-flex justify-content-center align-items-center"
+          >
+            <FormRadio
+              checked={searchBy === "enrollment"}
+              onChange={e => setSearchBy("enrollment")}
+            >
+              Enrollment
+            </FormRadio>
+          </Col>
+          <Col
+            md="2"
+            sm="3"
+            xs="4"
+            className="d-flex justify-content-center align-items-center"
+          >
+            <FormRadio
+              checked={searchBy === "designation"}
+              onChange={e => setSearchBy("designation")}
+            >
+              Designation
+            </FormRadio>
+          </Col>
+          <Col
+            md="2"
+            sm="3"
+            xs="4"
+            className="d-flex justify-content-center align-items-center"
+          >
+            <FormRadio
+              checked={searchBy === "yearofjoining"}
+              onChange={e => setSearchBy("yearofjoining")}
+            >
+              Joining Year
+            </FormRadio>
+          </Col>
+        </Row>
         <Row>
           <Col sm="4">
-            <FormInput
-              id="feEnrollment"
-              type="text"
-              placeholder="Enrollment No"
-              value={enrollment}
-              onChange={e => setEnrollment(e.target.value)}
-            />
+            {searchBy === "yearofjoining" ? (
+              <FormSelect
+                id="feInputState"
+                value={yearofJoining}
+                onChange={e => setYearofJoining(e.target.value)}
+              >
+                <option value="">Choose...</option>
+                <option value="1990">1990</option>
+                <option value="1991">1991</option>
+                <option value="1992">1992</option>
+                <option value="1993">1993</option>
+                <option value="1994">1994</option>
+                <option value="1995">1995</option>
+                <option value="1996">1996</option>
+                <option value="1997">1997</option>
+                <option value="1998">1998</option>
+                <option value="1999">1999</option>
+                <option value="2000">2000</option>
+                <option value="2001">2001</option>
+                <option value="2002">2002</option>
+                <option value="2003">2003</option>
+                <option value="2004">2004</option>
+                <option value="2005">2005</option>
+                <option value="2006">2006</option>
+                <option value="2007">2007</option>
+                <option value="2008">2008</option>
+                <option value="2009">2009</option>
+                <option value="2010">2010</option>
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+              </FormSelect>
+            ) : null}
+
+            {searchBy === "enrollment" ? (
+              <FormInput
+                id="feEnrollment"
+                type="text"
+                placeholder="Enrollment No"
+                value={enrollment}
+                onChange={e => setEnrollment(e.target.value)}
+              />
+            ) : null}
+            {searchBy === "designation" ? (
+              <FormInput
+                id="feEnrollment"
+                type="text"
+                placeholder="Designation"
+                value={designation}
+                onChange={e => setDesignation(e.target.value)}
+              />
+            ) : null}
           </Col>
           <Col sm="2" className="mt-sm">
             <Button size="md" onClick={() => searchStudent()}>
@@ -232,7 +343,10 @@ const FacultyData = props => {
                 </th>
 
                 <th scope="col" className="border-0">
-                  Email
+                  Designation
+                </th>
+                <th scope="col" className="border-0">
+                  Year of Joining
                 </th>
                 <th scope="col" className="border-0">
                   Permission
@@ -257,15 +371,12 @@ const FacultyData = props => {
                   .map((user, i) => (
                     <tr key={user._id}>
                       <td>{i + 1}</td>
-                      <td>{capitalizeFirstLetter(user.name)}</td>
+                      <td>{user.name}</td>
 
                       <td>{user.enrollmentNo}</td>
                       <td>{user.contact ? user.contact : user.mobile}</td>
-                      <td>
-                        {user.personalEmail
-                          ? user.personalEmail
-                          : user.universityEmail}
-                      </td>
+                      <td>{user.designation}</td>
+                      <td>{user.yearofJoining ? user.yearofJoining : "NIL"}</td>
                       <td>
                         <Button onClick={() => handlePermissionModal(user)}>
                           Permissions
@@ -408,9 +519,7 @@ const FacultyData = props => {
         </ModalHeader>
         <ModalBody>
           <Row className="mb-4">
-            <Col md="4">
-              {data && data.name && capitalizeFirstLetter(data.name)}
-            </Col>
+            <Col md="4">{data && data.name}</Col>
             <Col md="4">{data.enrollmentNo}</Col>
             <Col md="4">{data.role}</Col>
           </Row>

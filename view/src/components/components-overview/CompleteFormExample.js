@@ -42,6 +42,8 @@ const RegistrationFrom = () => {
   const [permanentAddress, setPermanentAddress] = useState("");
   const [currentAddress, setCurrentAddress] = useState("");
   const [password, setPassword] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [yearofJoining, setYearofJoining] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [file, setFile] = useState({});
   const [errors, setErrors] = useState({});
@@ -73,6 +75,8 @@ const RegistrationFrom = () => {
       universityEmail: universityEmail.toLowerCase(),
       permanentAddress: permanentAddress.toLowerCase(),
       currentAddress: currentAddress.toLowerCase(),
+      designation: designation.toLowerCase(),
+      yearofJoining: yearofJoining * 1,
       password,
       passwordConfirm
     };
@@ -139,7 +143,7 @@ const RegistrationFrom = () => {
                         errors.validation && errors.validation.role && true
                       }
                     >
-                      <option>Choose...</option>
+                      <option value="">Choose...</option>
                       <option value="student">Student</option>
                       <option value="faculty">Faculty</option>
                       <option value="coordinator">Coordinator</option>
@@ -311,25 +315,48 @@ const RegistrationFrom = () => {
                       </FormFeedback>
                     )}
                   </Col>
-                  <Col md="6">
-                    <label htmlFor="fePhoneNumber">Phone number</label>
-                    <FormInput
-                      id="fePhoneNumber"
-                      type="number"
-                      placeholder="Phone Number"
-                      value={contact}
-                      onChange={e => setContact(e.target.value)}
-                      required
-                      invalid={
-                        errors.validation && errors.validation.contact && true
-                      }
-                    />
-                    {errors.validation && errors.validation.contact && (
-                      <FormFeedback>
-                        {errors.validation && errors.validation.contact}
-                      </FormFeedback>
-                    )}
-                  </Col>
+                  {role !== "student" ? (
+                    <Col md="6">
+                      <label htmlFor="fePhoneNumber">Designation</label>
+                      <FormInput
+                        type="text"
+                        placeholder="Designation"
+                        value={designation}
+                        onChange={e => setDesignation(e.target.value)}
+                        required
+                        invalid={
+                          errors.validation &&
+                          errors.validation.designation &&
+                          true
+                        }
+                      />
+                      {errors.validation && errors.validation.designation && (
+                        <FormFeedback>
+                          {errors.validation && errors.validation.designation}
+                        </FormFeedback>
+                      )}
+                    </Col>
+                  ) : (
+                    <Col md="6">
+                      <label htmlFor="fePhoneNumber">Phone number</label>
+                      <FormInput
+                        id="fePhoneNumber"
+                        type="number"
+                        placeholder="Phone Number"
+                        value={contact}
+                        onChange={e => setContact(e.target.value)}
+                        required
+                        invalid={
+                          errors.validation && errors.validation.contact && true
+                        }
+                      />
+                      {errors.validation && errors.validation.contact && (
+                        <FormFeedback>
+                          {errors.validation && errors.validation.contact}
+                        </FormFeedback>
+                      )}
+                    </Col>
+                  )}
                 </Row>
                 <Row form>
                   <Col md="6" className="form-group">
@@ -365,7 +392,7 @@ const RegistrationFrom = () => {
                   </Col>
                 </Row>
                 <Row form>
-                  <Col md="6">
+                  <Col md="6" className={"form-group"}>
                     <label htmlFor="fePassword">Password</label>
                     <FormInput
                       id="fePassword"
@@ -384,7 +411,7 @@ const RegistrationFrom = () => {
                       </FormFeedback>
                     )}
                   </Col>
-                  <Col md="6">
+                  <Col md="6" className="form-group">
                     <label htmlFor="feConfirmPassword">Confirm Password</label>
                     <FormInput
                       id="feConfirmPassword"
@@ -406,6 +433,64 @@ const RegistrationFrom = () => {
                     )}
                   </Col>
                 </Row>
+                {role !== "student" && role !== "" ? (
+                  <Row form>
+                    <Col md="6">
+                      <label htmlFor="YearOfJoing">Year of Joining</label>
+                      <FormSelect
+                        id="feInputState"
+                        value={yearofJoining}
+                        onChange={e => setYearofJoining(e.target.value)}
+                        required
+                        invalid={
+                          errors.validation &&
+                          errors.validation.yearofJoining &&
+                          true
+                        }
+                      >
+                        <option value="">Choose...</option>
+                        <option value="1990">1990</option>
+                        <option value="1991">1991</option>
+                        <option value="1992">1992</option>
+                        <option value="1993">1993</option>
+                        <option value="1994">1994</option>
+                        <option value="1995">1995</option>
+                        <option value="1996">1996</option>
+                        <option value="1997">1997</option>
+                        <option value="1998">1998</option>
+                        <option value="1999">1999</option>
+                        <option value="2000">2000</option>
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                        <option value="2005">2005</option>
+                        <option value="2006">2006</option>
+                        <option value="2007">2007</option>
+                        <option value="2008">2008</option>
+                        <option value="2009">2009</option>
+                        <option value="2010">2010</option>
+                        <option value="2011">2011</option>
+                        <option value="2012">2012</option>
+                        <option value="2013">2013</option>
+                        <option value="2014">2014</option>
+                        <option value="2015">2015</option>
+                        <option value="2016">2016</option>
+                        <option value="2017">2017</option>
+                        <option value="2018">2018</option>
+                        <option value="2019">2019</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                      </FormSelect>
+                      {errors.validation && errors.validation.yearofJoining && (
+                        <FormFeedback>
+                          {errors.validation && errors.validation.yearofJoining}
+                        </FormFeedback>
+                      )}
+                    </Col>
+                  </Row>
+                ) : null}
                 <br />
                 <FormGroup>
                   <label htmlFor="feInputAddress">Current Address</label>

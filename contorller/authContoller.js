@@ -220,6 +220,18 @@ exports.getUser = catchAsync(async (req, res, next) => {
             { role: req.body.role },
           ],
         },
+        {
+          $and: [
+            { designation: req.body.designation },
+            { role: req.body.role },
+          ],
+        },
+        {
+          $and: [
+            { yearofJoining: req.body.yearofJoining },
+            { role: req.body.role },
+          ],
+        },
       ],
     }).select("-password -createdAt");
     if (!users) {
