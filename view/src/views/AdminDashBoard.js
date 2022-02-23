@@ -798,12 +798,7 @@ const AdminDashBoard = () => {
                 </Row>
                 <Button
                   onClick={() =>
-                    dispatch(
-                      createPECDocType(
-                        { type: pecType.toLowerCase() },
-                        clearState
-                      )
-                    )
+                    dispatch(createPECDocType({ type: pecType }, clearState))
                   }
                 >
                   Add

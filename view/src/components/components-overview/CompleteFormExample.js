@@ -63,8 +63,8 @@ const RegistrationFrom = () => {
     const user = {
       role: role.toLowerCase(),
       enrollmentNo: enrollmentNo.toLowerCase(),
-      name: name.toLowerCase(),
-      fatherName: fatherName.toLowerCase(),
+      name: name,
+      fatherName: fatherName,
       program: role !== "student" ? "" : program.toLowerCase(),
       degreeDuration: role !== "student" ? "" : degreeDuration.toLowerCase(),
       batch: role !== "student" ? "" : intakeSemester.toLowerCase(),
@@ -73,9 +73,9 @@ const RegistrationFrom = () => {
       contact: contact.toLowerCase(),
       personalEmail: personalEmail.toLowerCase(),
       universityEmail: universityEmail.toLowerCase(),
-      permanentAddress: permanentAddress.toLowerCase(),
-      currentAddress: currentAddress.toLowerCase(),
-      designation: designation.toLowerCase(),
+      permanentAddress: permanentAddress,
+      currentAddress: currentAddress,
+      designation: designation,
       yearofJoining: yearofJoining * 1,
       password,
       passwordConfirm

@@ -180,7 +180,7 @@ const FYPBlock = () => {
   // create function
   const createFYPFunc = e => {
     const fypObj = {
-      eventName: eventName.toLowerCase(),
+      eventName: eventName,
       batch: batch.toLowerCase(),
       eventProvider: {
         providerId: auth.enrollmentNo,
@@ -206,7 +206,7 @@ const FYPBlock = () => {
             : presentationTime,
         idea,
         supervisor: {
-          name: supervisorName.toLowerCase(),
+          name: supervisorName,
           enrollmentNo: supervisorId.toLowerCase()
         },
         category
