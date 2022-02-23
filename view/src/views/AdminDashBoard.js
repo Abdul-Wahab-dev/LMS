@@ -45,6 +45,8 @@ import CustomFileUpload from "../components/components-overview/CustomFileUpload
 import Calendar from "../utils/Calendar";
 // loader
 import Loader from "../utils/Loader";
+// capitalizeFirstLetter
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 
 const AdminDashBoard = () => {
   const [program, setProgram] = useState("");
@@ -927,7 +929,7 @@ const AdminDashBoard = () => {
                         <tr key={fyp._id}>
                           <td>{i + 1}</td>
                           <td>{fyp.eventName}</td>
-                          <td>{fyp.batch}</td>
+                          <td>{capitalizeFirstLetter(fyp.batch)}</td>
                           <td>
                             <Button
                               className="btn btn-danger"

@@ -40,6 +40,7 @@ import {
 import { getUsers } from "../actions/authActions";
 // loader
 import Loader from "../utils/Loader";
+import capitalizeFirstLetter from "../utils/capitalizeFirstLetter";
 const FYPBlock = () => {
   const [eventName, setEventName] = useState("");
   const [eventNameSearch, setEventNameSearch] = useState("");
@@ -308,7 +309,7 @@ const FYPBlock = () => {
                                 <option key={name._id} value={`${name._id}`}>
                                   {name.eventName.charAt(0).toUpperCase() +
                                     name.eventName.slice(1)}{" "}
-                                  {`( ${name.batch} )`}
+                                  {`( ${capitalizeFirstLetter(name.batch)} )`}
                                 </option>
                               ))}
                             )
@@ -610,7 +611,7 @@ const FYPBlock = () => {
                                 <option value={`${name._id}`} key={name._id}>
                                   {name.eventName.charAt(0).toUpperCase() +
                                     name.eventName.slice(1)}{" "}
-                                  {`( ${name.batch} )`}
+                                  {`( ${capitalizeFirstLetter(name.batch)} )`}
                                 </option>
                               ))}
                             </>
