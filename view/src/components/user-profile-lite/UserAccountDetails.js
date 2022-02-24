@@ -63,6 +63,7 @@ const UserAccountDetails = ({ profile }) => {
       setCurrentAddress(profile.currentAddress ? profile.currentAddress : "");
     }
   }, [profile]);
+  console.log(profile);
   return (
     <Card small className="mb-4">
       <CardHeader className="border-bottom">

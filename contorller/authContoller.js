@@ -173,7 +173,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 // @access      Private
 exports.getUsers = catchAsync(async (req, res, next) => {
   const users = await User.find().select(
-    "-__v -intakeSemester -degreeDuration -permissions -maxSemester -mobile -contact +personalEmail -permanentAddress -currentAddress -password  -createdAt"
+    "-__v  -permission -password  -createdAt"
   );
   // send response to user
   res.status(200).json({

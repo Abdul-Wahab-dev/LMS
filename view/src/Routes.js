@@ -1,33 +1,57 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Col } from "shards-react";
 
 // component
-
-// import Errors from "./views/Errors";
-import OfficalDocs from "./views/OfficalDocs";
-import Assignment from "./views/Assignment";
-import FYPBlock from "./views/FYPBlock";
-import Teams from "./views/Teams";
-import TeamMembers from "./views/TeamMembers";
-import TeamAssignments from "./views/TeamAssignments";
-import Internship from "./views/Internships";
-import CSP from "./views/CSP";
-import PECDocs from "./views/PECDocs";
-import Events from "./views/Events";
-import BlogPosts from "./views/BlogPosts";
-import ApprovedUser from "./views/ApprovedUser";
-import UserData from "./views/UserData";
-import FacultyData from "./views/FacultyData";
-import CoordData from "./views/CoordData";
-
-import UserProfileLite from "./views/UserProfileLite";
-import AddNewPost from "./views/AddNewPost";
-
 import PrivateRoute from "./utils/privateRoute";
 
-import Slider from "./views/Slider";
-import AdminDashBoard from "./views/AdminDashBoard";
-import Quotes from "./views/Quote";
+// import Errors from "./views/Errors";
+
+const OfficalDocs = lazy(() => import("./views/OfficalDocs"));
+// import OfficalDocs from "./views/OfficalDocs";
+const Assignment = lazy(() => import("./views/Assignment"));
+// import Assignment from "./views/Assignment";
+const FYPBlock = lazy(() => import("./views/FYPBlock"));
+// import FYPBlock from "./views/FYPBlock";
+const Teams = lazy(() => import("./views/Teams"));
+// import Teams from "./views/Teams";
+const TeamAssignments = lazy(() => import("./views/TeamAssignments"));
+// import TeamAssignments from "./views/TeamAssignments";
+const TeamMembers = lazy(() => import("./views/TeamMembers"));
+// import TeamMembers from "./views/TeamMembers";
+const Internship = lazy(() => import("./views/Internships"));
+// import Internship from "./views/Internships";
+
+const CSP = lazy(() => import("./views/CSP"));
+// import CSP from "./views/CSP";
+const PECDocs = lazy(() => import("./views/PECDocs"));
+// import PECDocs from "./views/PECDocs";
+const Events = lazy(() => import("./views/Events"));
+// import Events from "./views/Events";
+
+const BlogPosts = lazy(() => import("./views/BlogPosts"));
+// import BlogPosts from "./views/BlogPosts";
+
+const ApprovedUser = lazy(() => import("./views/ApprovedUser"));
+// import ApprovedUser from "./views/ApprovedUser";
+const UserData = lazy(() => import("./views/UserData"));
+// import UserData from "./views/UserData";
+const FacultyData = lazy(() => import("./views/FacultyData"));
+// import FacultyData from "./views/FacultyData";
+const CoordData = lazy(() => import("./views/CoordData"));
+// import CoordData from "./views/CoordData";
+
+const UserProfileLite = lazy(() => import("./views/UserProfileLite"));
+// import UserProfileLite from "./views/UserProfileLite";
+const AddNewPost = lazy(() => import("./views/AddNewPost"));
+// import AddNewPost from "./views/AddNewPost";
+
+const Slider = lazy(() => import("./views/Slider"));
+
+// import Slider from "./views/Slider";
+const AdminDashBoard = lazy(() => import("./views/AdminDashBoard"));
+// import AdminDashBoard from "./views/AdminDashBoard";
+const Quotes = lazy(() => import("./views/Quote"));
+// import Quotes from "./views/Quote";
 // store
 const Routes = () => {
   return (
