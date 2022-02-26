@@ -160,21 +160,23 @@ const AdminDashBoard = () => {
 
   // handle file upload
   const handleFileUpload = csv => {
-    setFile(csv);
-    const file = csv;
-    const reader = new FileReader();
-    reader.onload = evt => {
-      /* Parse data */
-      const bstr = evt.target.result;
-      const wb = XLSX.read(bstr, { type: "binary" });
-      /* Get first worksheet */
-      const wsname = wb.SheetNames[0];
-      const ws = wb.Sheets[wsname];
-      /* Convert array of arrays */
-      const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
-      processData(data);
-    };
-    reader.readAsBinaryString(file);
+    if (csv) {
+      setFile(csv);
+      const file = csv;
+      const reader = new FileReader();
+      reader.onload = evt => {
+        /* Parse data */
+        const bstr = evt.target.result;
+        const wb = XLSX.read(bstr, { type: "binary" });
+        /* Get first worksheet */
+        const wsname = wb.SheetNames[0];
+        const ws = wb.Sheets[wsname];
+        /* Convert array of arrays */
+        const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+        processData(data);
+      };
+      reader.readAsBinaryString(file);
+    }
   };
 
   // delete Pec Type
