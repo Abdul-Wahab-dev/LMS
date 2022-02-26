@@ -9,9 +9,7 @@ const CustomFileUpload = props => {
         id="customFile2"
         name="fileUpload"
         onChange={e => {
-          if (e.target.files[0]) {
-            props.setFile(e.target.files[0]);
-          }
+          props.setFile(e.target.files[0]);
         }}
       />
       <label
