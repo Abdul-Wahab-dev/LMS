@@ -8,9 +8,16 @@ const CustomFileUpload = props => {
         className="custom-file-input"
         id="customFile2"
         name="fileUpload"
-        onChange={e => props.setFile(e.target.files[0])}
+        onChange={e => {
+          if (e.target.files[0]) {
+            props.setFile(e.target.files[0]);
+          }
+        }}
       />
-      <label className="custom-file-label custom-file-label-for-admin-dashboard" htmlFor="customFile2">
+      <label
+        className="custom-file-label custom-file-label-for-admin-dashboard"
+        htmlFor="customFile2"
+      >
         {props.file && props.file.name ? props.file.name : "Choose file..."}
       </label>
     </div>
