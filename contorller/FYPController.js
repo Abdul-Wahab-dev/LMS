@@ -313,26 +313,29 @@ exports.assignTime = catchAsync(async (req, res, next) => {
   const projects = await FYP.findOne({ _id: req.body.eventName }).select(
     "+projects -eventProvider -eventName -batch -eventFor -__v -createdAt"
   );
-
   if (projects.projects.length > 0) {
     for (let i = 0; i < projects.projects.length; i++) {
-      const date = new Date(`${req.body.date} ${req.body.startTime}`);
+      if (req.body.category === projects.projects[i].category);
+      {
+        const date = new Date(`${req.body.date} ${req.body.startTime}`);
 
-      const datePlusDuration = date.getTime() + i * (req.body.duration * 60000);
-      const breakTimeStart = new Date(
-        `${req.body.date} ${req.body.breakTimeStart}`
-      ).getTime();
-      const breakTimeEnd = new Date(
-        `${req.body.date} ${req.body.breakTimeEnd}`
-      ).getTime();
-      if (
-        datePlusDuration < breakTimeStart ||
-        datePlusDuration > breakTimeEnd
-      ) {
-        const time = formatAMPM(new Date(datePlusDuration));
+        const datePlusDuration =
+          date.getTime() + i * (req.body.duration * 60000);
+        const breakTimeStart = new Date(
+          `${req.body.date} ${req.body.breakTimeStart}`
+        ).getTime();
+        const breakTimeEnd = new Date(
+          `${req.body.date} ${req.body.breakTimeEnd}`
+        ).getTime();
+        if (
+          datePlusDuration < breakTimeStart ||
+          datePlusDuration > breakTimeEnd
+        ) {
+          const time = formatAMPM(new Date(datePlusDuration));
 
-        projects.projects[i].presentationDate = req.body.date;
-        projects.projects[i].presentationTime = time;
+          projects.projects[i].presentationDate = req.body.date;
+          projects.projects[i].presentationTime = time;
+        }
       }
     }
 

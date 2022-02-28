@@ -205,35 +205,37 @@ exports.getUser = catchAsync(async (req, res, next) => {
       },
     });
   } else {
-    const users = await User.find({
-      $or: [
-        {
-          $and: [
-            { enrollmentNo: req.body.enrollment },
-            { role: req.body.role },
-          ],
-        },
-        {
-          $and: [
-            { program: req.body.program },
-            { batch: req.body.batch },
-            { role: req.body.role },
-          ],
-        },
-        {
-          $and: [
-            { designation: req.body.designation },
-            { role: req.body.role },
-          ],
-        },
-        {
-          $and: [
-            { yearofJoining: req.body.yearofJoining },
-            { role: req.body.role },
-          ],
-        },
-      ],
-    }).select("-password -createdAt");
+    console.log(req.body);
+    const users = await User.find(
+      req.body.role === "student"
+        ? {
+            $or: [
+              {
+                $and: [
+                  { program: req.body.program },
+                  { batch: req.body.batch },
+                  { role: req.body.role },
+                ],
+              },
+            ],
+          }
+        : {
+            $or: [
+              {
+                $and: [
+                  { designation: req.body.designation },
+                  { role: req.body.role },
+                ],
+              },
+              {
+                $and: [
+                  { yearofJoining: req.body.yearofJoining },
+                  { role: req.body.role },
+                ],
+              },
+            ],
+          }
+    ).select("-password -createdAt");
     if (!users) {
       return next(new AppError("No User found with that ID", 404));
     }

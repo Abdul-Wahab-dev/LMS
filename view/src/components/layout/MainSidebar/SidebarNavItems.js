@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Nav, NavItem, NavLink } from "shards-react";
 import { NavLink as RouteNavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import arrow from "../../../images/dropdownarrows.png";
 import store from "../../../store";
+import { logoutUser } from "../../../actions/authActions";
 
 const SidebarNavItems = props => {
   const [subNav, setSubNav] = useState(false);
   const [teamNav, setTeamNav] = useState(false);
   const [landingPageNav, setLandingPageNav] = useState(false);
 
+  // initialize useDispatch
+  const dispatch = useDispatch();
   const userNav = e => {
     if (
       e.target === document.getElementById("user-data") ||
@@ -42,6 +45,7 @@ const SidebarNavItems = props => {
   const pecMember = useSelector(state => state.pec.members);
   const cspMember = useSelector(state => state.csp.members);
   const auth = useSelector(state => state.auth.user);
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
   switch (store.getState().auth.user.role) {
     case "admin":
@@ -436,6 +440,20 @@ const SidebarNavItems = props => {
                 <span style={{ marginLeft: "14px" }}>MEE</span>
               </a>
             </NavItem>
+
+            {isAuthenticated === true ? (
+              <NavItem>
+                <NavLink
+                  tag={RouteNavLink}
+                  to={"/user-login"}
+                  className="d-flex align-items-center"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  <ion-icon name="log-out"></ion-icon>
+                  <span>Logout</span>
+                </NavLink>
+              </NavItem>
+            ) : null}
           </Nav>
         </div>
       );
@@ -722,6 +740,19 @@ const SidebarNavItems = props => {
                 <span style={{ marginLeft: "14px" }}>MEE</span>
               </a>
             </NavItem>
+            {isAuthenticated === true ? (
+              <NavItem>
+                <NavLink
+                  tag={RouteNavLink}
+                  to={"/user-login"}
+                  className="d-flex align-items-center"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  <ion-icon name="log-out"></ion-icon>
+                  <span>Logout</span>
+                </NavLink>
+              </NavItem>
+            ) : null}
           </Nav>
         </div>
       );
@@ -903,6 +934,19 @@ const SidebarNavItems = props => {
                 <span style={{ marginLeft: "14px" }}>MEE</span>
               </a>
             </NavItem>
+            {isAuthenticated === true ? (
+              <NavItem>
+                <NavLink
+                  tag={RouteNavLink}
+                  to={"/user-login"}
+                  className="d-flex align-items-center"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  <ion-icon name="speedometer"></ion-icon>
+                  <span>Logout</span>
+                </NavLink>
+              </NavItem>
+            ) : null}
           </Nav>
         </div>
       );
@@ -1165,6 +1209,19 @@ const SidebarNavItems = props => {
                 <span style={{ marginLeft: "14px" }}>MEE</span>
               </a>
             </NavItem>
+            {isAuthenticated === true ? (
+              <NavItem>
+                <NavLink
+                  tag={RouteNavLink}
+                  to={"/user-login"}
+                  className="d-flex align-items-center"
+                  onClick={() => dispatch(logoutUser())}
+                >
+                  <ion-icon name="log-out"></ion-icon>
+                  <span>Logout</span>
+                </NavLink>
+              </NavItem>
+            ) : null}
           </Nav>
         </div>
       );

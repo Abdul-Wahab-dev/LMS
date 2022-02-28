@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { CSVLink, CSVDownload } from "react-csv";
 import {
   Container,
   Row,
@@ -269,6 +270,17 @@ const FYPBlock = () => {
     setFypID("");
     setAssignTeacherModal(false);
   };
+
+  const headers = [
+    { label: "Batch", key: "batch" },
+    { label: "Event Name", key: "eventName" },
+    { label: "Category", key: "category" },
+    { label: "Idea", key: "idea" },
+    { label: "Status", key: "status" },
+    { label: "Supervisor", key: "supervisor" },
+    { label: "Student", key: "student" }
+  ];
+
   return (
     <Container fluid className="main-content-container px-4 pb-4 complain-page">
       <Row noGutters className="page-header py-4">
@@ -329,6 +341,46 @@ const FYPBlock = () => {
                       <Button type="button" onClick={() => setTimeModal(true)}>
                         Manage Time
                       </Button>
+                    </Col>
+                    <Col
+                      md="2"
+                      className="mt-md"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "start"
+                      }}
+                    >
+                      {projects.length > 0 ? (
+                        <CSVLink
+                          data={
+                            projects.map(fypProject => {
+                              return fypProject.projects.map(proj => {
+                                return {
+                                  batch: fypProject.batch,
+                                  eventName: fypProject.eventName,
+                                  category: proj.category,
+                                  idea: proj.idea,
+                                  status: proj.status,
+                                  supervisor: proj.supervisor.name,
+                                  student: proj.eventMembers
+                                    .map(
+                                      stu =>
+                                        ` ${stu.name}(${stu.enrollmentNo})   `
+                                    )
+                                    .toString()
+                                };
+                              });
+                            })[0]
+                          }
+                          headers={headers}
+                        >
+                          Export CSV
+                        </CSVLink>
+                      ) : null}
+                      {/* <Button type="button" onClick={() => setTimeModal(true)}>
+                        Manage Time
+                      </Button> */}
                     </Col>
                   </Row>
                 </Form>

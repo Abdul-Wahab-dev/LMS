@@ -1,9 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import { Col } from "shards-react";
-
+import { useSelector, useDispatch } from "react-redux";
 import { Nav, NavItem, NavLink } from "shards-react";
 import { NavLink as RouteNavLink } from "react-router-dom";
+import { logoutUser } from "../../../actions/authActions";
 
 const SimpleSideBar = props => {
   const classes = classNames(
@@ -16,6 +17,10 @@ const SimpleSideBar = props => {
     "d-none-c",
     "d-lg-block-c"
   );
+
+  // initialize useDispatch
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   return (
     <Col
       tag="aside"
@@ -113,6 +118,19 @@ const SimpleSideBar = props => {
               <span>Register</span>
             </NavLink>
           </NavItem>
+          {isAuthenticated === true ? (
+            <NavItem>
+              <NavLink
+                tag={RouteNavLink}
+                to={"/user-login"}
+                className="d-flex align-items-center"
+                onClick={() => dispatch(logoutUser())}
+              >
+                <ion-icon name="log-out"></ion-icon>
+                <span>Logout</span>
+              </NavLink>
+            </NavItem>
+          ) : null}
         </Nav>
       </div>
     </Col>
