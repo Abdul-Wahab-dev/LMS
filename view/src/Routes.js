@@ -1,5 +1,6 @@
 import React, { lazy } from "react";
 import { Col } from "shards-react";
+import { Route } from "react-router-dom";
 
 // component
 import PrivateRoute from "./utils/privateRoute";
@@ -64,7 +65,8 @@ const Routes = () => {
       {/* <PrivateRoute exact path="/latest-news" component={Errors} /> */}
       <PrivateRoute exact path="/slider" component={Slider} />
       {/* <PrivateRoute exact path="/slider" component={Errors} /> */}
-      <PrivateRoute exact path="/dashboard" component={AdminDashBoard} />
+      {/* <PrivateRoute exact path="/dashboard" component={AdminDashBoard} /> */}
+      <Route exact path="/dashboard" component={AdminDashBoard} />
       {/* <PrivateRoute exact path="/dashboard" component={Errors} /> */}
       <PrivateRoute
         exact

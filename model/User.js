@@ -18,7 +18,6 @@ const userSchema = new Schema({
   },
   fatherName: {
     type: String,
-    required: true,
   },
   program: {
     type: String,
