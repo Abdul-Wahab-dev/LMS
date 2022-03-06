@@ -14,7 +14,8 @@ import {
   GET_PROGRAMS,
   DELETE_USER,
   UPDATE_PERMISSION,
-  CLEAR_ERRORS
+  CLEAR_ERRORS,
+  GET_USER_DESIGNATIONS
 } from "./types";
 
 // @route   POST /api/v1/users/signup
@@ -301,6 +302,20 @@ export const getPrograms = () => dispatch => {
       dispatch({
         type: GET_PROGRAMS,
         payload: res.data.data.programs
+      });
+    }
+  });
+};
+
+// @route       GET /api/v1/users/designations
+// @desc        get designation
+// @access      Private
+export const getDesignations = () => dispatch => {
+  axios.get("/api/v1/users/designations").then(res => {
+    if (res) {
+      dispatch({
+        type: GET_USER_DESIGNATIONS,
+        payload: res.data.data.designations
       });
     }
   });

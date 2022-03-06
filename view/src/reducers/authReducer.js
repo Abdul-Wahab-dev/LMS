@@ -9,7 +9,8 @@ import {
   APPROVED_USER,
   UPDATE_PERMISSION,
   DELETE_USER,
-  GET_PROGRAMS
+  GET_PROGRAMS,
+  GET_USER_DESIGNATIONS
 } from "../actions/types";
 
 const initialState = {
@@ -19,7 +20,8 @@ const initialState = {
   users: [],
   studentData: [],
   programs: [],
-  loading: false
+  loading: false,
+  designations: []
 };
 
 export default function(state = initialState, action) {
@@ -33,6 +35,11 @@ export default function(state = initialState, action) {
       return {
         ...state,
         loading: false
+      };
+    case GET_USER_DESIGNATIONS:
+      return {
+        ...state,
+        designations: action.payload
       };
     case SET_CURRENT_USER:
       return {
@@ -74,7 +81,7 @@ export default function(state = initialState, action) {
         studentData: state.studentData.filter(
           user => user._id !== action.payload._id
         ),
-        users: state.users.filter(user => user._id !== action.payload._id),
+        users: state.users.filter(user => user._id !== action.payload._id)
       };
     case GET_PROGRAMS:
       return {

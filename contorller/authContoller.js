@@ -219,22 +219,30 @@ exports.getUser = catchAsync(async (req, res, next) => {
               },
             ],
           }
-        : {
-            $or: [
+        : req.body.yearofJoining > 0
+        ? {
+            $and: [
               {
-                $and: [
-                  { designation: req.body.designation },
-                  { role: req.body.role },
-                ],
+                yearofJoining: req.body.yearofJoining,
               },
-              {
-                $and: [
-                  { yearofJoining: req.body.yearofJoining },
-                  { role: req.body.role },
-                ],
-              },
+              { role: req.body.role },
             ],
           }
+        : {
+            $and: [
+              { designation: req.body.designation },
+              { role: req.body.role },
+            ],
+          }
+      // {
+
+      //     $or: [
+      //       {
+
+      //       },
+
+      //     ],
+      //   }
     ).select("-password -createdAt");
     if (!users) {
       return next(new AppError("No User found with that ID", 404));
@@ -371,6 +379,24 @@ exports.changeUserRole = catchAsync(async (req, res, next) => {
     status: "success",
     data: {
       user,
+    },
+  });
+});
+
+// @route       PATCH /api/v1/users/designation
+// @desc        get designation all
+// @access      Private
+exports.designations = catchAsync(async (req, res, next) => {
+  const designations = await User.find({
+    designation: { $exists: true },
+  }).select(
+    "-__v -role -enrollmentNo -name -fatherName -approvedUser -universityEmail -intakeSemester -degreeDuration -maxSemester -mobile -contact -personalEmail -permanentAddress -currentAddress -password  -createdAt -program -batch -permissions -yearofJoining -profile"
+  );
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      designations,
     },
   });
 });

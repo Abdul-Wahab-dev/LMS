@@ -27,7 +27,8 @@ import {
   assignPermission,
   getAllUser,
   changeUserRole,
-  deleteUser
+  deleteUser,
+  getDesignations
 } from "../actions/authActions";
 // loader
 import Loader from "../utils/Loader";
@@ -47,10 +48,13 @@ const FacultyData = props => {
   const [searchBy, setSearchBy] = useState("enrollment");
   const [yearofJoining, setYearofJoining] = useState("");
   const [designation, setDesignation] = useState("");
+  const [designationDropDown, setDesignationDropDown] = useState(false);
 
   const userData = useSelector(state => state.auth.studentData);
   const auth = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.auth.loading);
+  const designations = useSelector(state => state.auth.designations);
+  console.log(designations);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // Get Student Data
@@ -63,11 +67,14 @@ const FacultyData = props => {
         role: "faculty",
         type: "multiple",
         yearofJoining: yearofJoining * 1,
-        designation: designation.toLowerCase()
+        designation: designation
       })
     );
   };
   //  useEffect
+  useEffect(() => {
+    dispatch(getDesignations());
+  }, []);
   useEffect(() => {
     setUsers(userData);
   }, [userData]);
@@ -299,13 +306,60 @@ const FacultyData = props => {
               />
             ) : null}
             {searchBy === "designation" ? (
-              <FormInput
-                id="feEnrollment"
-                type="text"
-                placeholder="Designation"
-                value={designation}
-                onChange={e => setDesignation(e.target.value)}
-              />
+              <>
+                {/* <FormInput */}
+                <FormInput
+                  id="feEnrollment"
+                  type="text"
+                  placeholder="Designation"
+                  value={designation}
+                  onChange={e => setDesignation(e.target.value)}
+                  onFocus={() => setDesignationDropDown(true)}
+                />
+                {/* <input  onFocusOut /> */}
+                {designations.length > 0 &&
+                designation.length > 0 &&
+                designationDropDown === true &&
+                designations.filter(
+                  design => design.designation.indexOf(designation) !== -1
+                ).length > 0 ? (
+                  <div className="user-filter-div">
+                    {designations
+                      .filter(
+                        design => design.designation.indexOf(designation) !== -1
+                      )
+                      .filter(
+                        (design, i, arrayDesignations) =>
+                          arrayDesignations.findIndex(
+                            designs =>
+                              designs.designation === design.designation
+                          ) === i
+                      )
+                      .map(design => (
+                        <p
+                          key={design._id}
+                          style={{
+                            margin: "5px 0 0 0",
+                            cursor: "pointer"
+                          }}
+                          // onBlur={() => }
+                          onClick={() => {
+                            setDesignation(design.designation);
+                            setDesignationDropDown(false);
+                            // setEnrollmentNo(user.enrollmentNo);
+                            // addMembers(
+                            //   user.enrollmentNo,
+                            //   i,
+                            //   "enrollment"
+                            // );
+                          }}
+                        >
+                          {design.designation}
+                        </p>
+                      ))}
+                  </div>
+                ) : null}
+              </>
             ) : null}
           </Col>
           <Col sm="2" className="mt-sm">
