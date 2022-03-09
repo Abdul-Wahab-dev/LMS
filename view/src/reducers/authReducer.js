@@ -9,6 +9,7 @@ import {
   APPROVED_USER,
   UPDATE_PERMISSION,
   DELETE_USER,
+  UPDATE_USER,
   GET_PROGRAMS,
   GET_USER_DESIGNATIONS
 } from "../actions/types";
@@ -40,6 +41,15 @@ export default function(state = initialState, action) {
       return {
         ...state,
         designations: action.payload
+      };
+
+    case UPDATE_USER:
+      return {
+        ...state,
+        studentData: state.studentData.map(student =>
+          student._id === action.payload._id ? action.payload : student
+        ),
+        loading: false
       };
     case SET_CURRENT_USER:
       return {

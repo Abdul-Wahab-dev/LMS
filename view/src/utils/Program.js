@@ -13,6 +13,7 @@ function Program(props) {
     <>
       <FormSelect
         value={props.program}
+        defaultValue={props.program}
         onChange={e => props.setProgram(e.target.value)}
         required
         invalid={

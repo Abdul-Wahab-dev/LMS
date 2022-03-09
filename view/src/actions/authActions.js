@@ -15,7 +15,8 @@ import {
   DELETE_USER,
   UPDATE_PERMISSION,
   CLEAR_ERRORS,
-  GET_USER_DESIGNATIONS
+  GET_USER_DESIGNATIONS,
+  UPDATE_USER
 } from "./types";
 
 // @route   POST /api/v1/users/signup
@@ -173,6 +174,33 @@ export const getUsers = () => dispatch => {
         type: GET_USERS,
         payload: res.data.data.users
       });
+    })
+    .catch(err => {
+      dispatch(clearLoading());
+      if (err.response.data.message === "jwt expired") {
+        dispatch(logoutUser());
+      }
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      });
+    });
+};
+// @route       PATCH /api/v1/users/update-user
+export const updateUserAction = data => dispatch => {
+  dispatch({
+    type: CLEAR_ERRORS
+  });
+  dispatch(setLoading());
+  axios
+    .patch("/api/v1/users/update-user", data)
+    .then(res => {
+      if (res) {
+        dispatch({
+          type: UPDATE_USER,
+          payload: res.data.data.user
+        });
+      }
     })
     .catch(err => {
       dispatch(clearLoading());

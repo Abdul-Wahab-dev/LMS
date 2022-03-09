@@ -54,7 +54,6 @@ const FacultyData = props => {
   const auth = useSelector(state => state.auth.user);
   const loading = useSelector(state => state.auth.loading);
   const designations = useSelector(state => state.auth.designations);
-  console.log(designations);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // Get Student Data

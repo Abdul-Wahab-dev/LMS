@@ -9,12 +9,15 @@ import {
   Col,
   Form,
   FormGroup,
-  FormInput
+  FormInput,
+  Button
 } from "shards-react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Program from "../../utils/Program";
+import Batch from "../../utils/Batch";
 // Actons
-import { getCurrentUser } from "../../actions/authActions";
+import { getCurrentUser, updateUserAction } from "../../actions/authActions";
 import profileThumbNail from "../../images/profile-thumbnail.png";
 
 const UserAccountDetails = ({ profile }) => {
@@ -40,6 +43,9 @@ const UserAccountDetails = ({ profile }) => {
   useEffect(() => {
     dispatch(getCurrentUser());
   }, []);
+
+  // get state from store
+  const auth = useSelector(state => state.auth.user);
   useEffect(() => {
     if (profile.role) {
       setRole(profile.role ? profile.role : "");
@@ -64,6 +70,26 @@ const UserAccountDetails = ({ profile }) => {
     }
   }, [profile]);
 
+  const updateUserFunc = () => {
+    const user = {
+      id: profile && profile._id,
+      role: role.toLowerCase(),
+      enrollmentNo: enrollmentNo.toLowerCase(),
+      name: name,
+      fatherName: fatherName,
+      program: role !== "student" ? "" : program.toLowerCase(),
+      degreeDuration: role !== "student" ? "" : degreeDuration.toLowerCase(),
+      batch: role !== "student" ? "" : intakeSemester.toLowerCase(),
+      maxSemester: role !== "student" ? "" : maxSemester.toLowerCase(),
+      mobile: mobile.toLowerCase(),
+      contact: contact.toLowerCase(),
+      personalEmail: personalEmail.toLowerCase(),
+      universityEmail: universityEmail.toLowerCase(),
+      permanentAddress: permanentAddress,
+      currentAddress: currentAddress
+    };
+    dispatch(updateUserAction(user));
+  };
   return (
     <Card small className="mb-4">
       <CardHeader className="border-bottom">
@@ -99,9 +125,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="text"
                       placeholder="Role"
                       value={role}
-                      readOnly={
-                        profile && profile.role !== "admin" ? true : false
-                      }
+                      readOnly={true}
                       onChange={e => setRole(e.target.value)}
                     />
                   </Col>
@@ -113,7 +137,10 @@ const UserAccountDetails = ({ profile }) => {
                       placeholder="Enrollment"
                       value={enrollmentNo}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                       // readOnly={true}
                       onChange={e => setEnrollmentNo(e.target.value)}
@@ -130,7 +157,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={name}
                       onChange={e => setName(e.target.value)}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -143,7 +173,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={fatherName}
                       onChange={e => setFatherName(e.target.value)}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -153,17 +186,23 @@ const UserAccountDetails = ({ profile }) => {
                     <Row form>
                       <Col md="6" className="form-group">
                         <label htmlFor="feProgram">Program</label>
-                        <FormInput
+                        <Program program={program} setProgram={setProgram} />
+                        {/* <FormInput
                           id="feProgram"
                           type="text"
                           placeholder="Program"
                           value={program}
                           onChange={e => setProgram(e.target.value)}
                           readOnly={
-                            profile && profile.role !== "admin" ? true : false
+                            auth &&
+                            auth.role !== "student" &&
+                            auth &&
+                            auth.role !== "coordinator"
+                              ? false
+                              : true
                           }
-                          // readOnly={true}
-                        />
+                          
+                        /> */}
                       </Col>
                       <Col md="6">
                         <label htmlFor="feDegreeDuration">
@@ -176,17 +215,22 @@ const UserAccountDetails = ({ profile }) => {
                           value={degreeDuration}
                           onChange={e => setDegreeDuration(e.target.value)}
                           readOnly={
-                            profile && profile.role !== "admin" ? true : false
+                            (auth && auth.role !== "student") ||
+                            (auth && auth.role !== "coordinator")
+                              ? false
+                              : true
                           }
                         />
                       </Col>
                     </Row>
                     <Row form>
                       <Col md="6" className="form-group">
-                        <label htmlFor="feIntakeSemester">
-                          Intake Semester
-                        </label>
-                        <FormInput
+                        <label htmlFor="feIntakeSemester">Batch</label>
+                        <Batch
+                          batch={intakeSemester}
+                          setBatch={setIntakeSemester}
+                        />
+                        {/* <FormInput
                           id="feIntakeSemester"
                           type="text"
                           placeholder="Intake Semester"
@@ -195,7 +239,7 @@ const UserAccountDetails = ({ profile }) => {
                           readOnly={
                             profile && profile.role !== "admin" ? true : false
                           }
-                        />
+                        /> */}
                       </Col>
                       <Col md="6">
                         <label htmlFor="feMaxSemester">Max Semester</label>
@@ -206,7 +250,10 @@ const UserAccountDetails = ({ profile }) => {
                           value={maxSemester}
                           onChange={e => setMaxSemester(e.target.value)}
                           readOnly={
-                            profile && profile.role !== "admin" ? true : false
+                            (auth && auth.role !== "student") ||
+                            (auth && auth.role !== "coordinator")
+                              ? false
+                              : true
                           }
                         />
                       </Col>
@@ -253,7 +300,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={mobile}
                       onChange={e => setMobile(e.target.value)}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -266,7 +316,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={contact}
                       onChange={e => setContact(e.target.value)}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -281,9 +334,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={personalEmail}
                       onChange={e => setPersonalEmail(e.target.value)}
                       readOnly={
-                        profile.personalEmail && profile.role !== "admin"
-                          ? true
-                          : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -296,7 +350,10 @@ const UserAccountDetails = ({ profile }) => {
                       value={universityEmail}
                       onChange={e => setUniversityEmail(e.target.value)}
                       readOnly={
-                        profile && profile.role !== "admin" ? true : false
+                        (auth && auth.role !== "student") ||
+                        (auth && auth.role !== "coordinator")
+                          ? false
+                          : true
                       }
                     />
                   </Col>
@@ -311,7 +368,10 @@ const UserAccountDetails = ({ profile }) => {
                     value={currentAddress}
                     onChange={e => setCurrentAddress(e.target.value)}
                     readOnly={
-                      profile && profile.role !== "admin" ? true : false
+                      (auth && auth.role !== "student") ||
+                      (auth && auth.role !== "coordinator")
+                        ? false
+                        : true
                     }
                   />
                 </FormGroup>
@@ -324,10 +384,19 @@ const UserAccountDetails = ({ profile }) => {
                     value={permanentAddress}
                     onChange={e => setPermanentAddress(e.target.value)}
                     readOnly={
-                      profile && profile.role !== "admin" ? true : false
+                      (auth && auth.role !== "student") ||
+                      (auth && auth.role !== "coordinator")
+                        ? false
+                        : true
                     }
                   />
                 </FormGroup>
+                {(auth && auth.role === "admin") ||
+                (auth && auth.role === "faculty") ? (
+                  <Button type="button" onClick={() => updateUserFunc()}>
+                    Update
+                  </Button>
+                ) : null}
               </Form>
             </Col>
           </Row>

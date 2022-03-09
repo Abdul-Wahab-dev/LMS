@@ -13,6 +13,7 @@ function batch(props) {
     <>
       <FormSelect
         value={props.batch}
+        defaultValue={props.batch}
         onChange={e => props.setBatch(e.target.value)}
         required
         invalid={

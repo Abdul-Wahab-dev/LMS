@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import {
   Container,
   Row,
@@ -30,7 +30,6 @@ import {
   addRemarks,
   createFYP,
   getProjectNames,
-  deleteFYP,
   deleteIdea,
   addMembersToFYPAct,
   getFYPCategory,

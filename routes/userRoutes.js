@@ -36,6 +36,11 @@ router.route("/:id").delete(authContorller.protect, authContorller.deleteUser);
 
 router.get("/:role", authContorller.protect, authContorller.getAllUser);
 router.patch(
+  "/update-user",
+  authContorller.protect,
+  authContorller.updateUserData
+);
+router.patch(
   "/changeuserrole",
   authContorller.protect,
   authContorller.changeUserRole

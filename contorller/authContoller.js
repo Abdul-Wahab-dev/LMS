@@ -168,6 +168,25 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
+// @route       GET /api/v1/users/update-user
+// @desc        update user data
+// @access      Private
+exports.updateUserData = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.body.id, req.body, {
+    new: true,
+  });
+  if (!user) {
+    return next(new AppError("User does not update", 400, undefined));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      user,
+    },
+  });
+});
+
 // @route       GET /api/v1/users
 // @desc        get users
 // @access      Private
@@ -205,7 +224,6 @@ exports.getUser = catchAsync(async (req, res, next) => {
       },
     });
   } else {
-    console.log(req.body);
     const users = await User.find(
       req.body.role === "student"
         ? {
