@@ -122,7 +122,7 @@ const Index = props => {
                     ? `${users.filter(user => user.role === "faculty").length}`
                     : "00"}
                 </h1>
-                <h3 style={{ textAlign: "center" }}>Professors</h3>
+                <h3 style={{ textAlign: "center" }}>Faculty</h3>
               </Col>
               <Col
                 md="4"
