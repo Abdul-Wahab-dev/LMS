@@ -111,7 +111,7 @@ const Index = props => {
                     ? `${users.filter(user => user.role === "student").length}`
                     : "00"}
                 </h1>
-                <h3 style={{ textAlign: "center" }}>Student</h3>
+                <h3 style={{ textAlign: "center" }}>Students</h3>
               </Col>
               <Col
                 md="4"
@@ -122,7 +122,7 @@ const Index = props => {
                     ? `${users.filter(user => user.role === "faculty").length}`
                     : "00"}
                 </h1>
-                <h3 style={{ textAlign: "center" }}>Faculty</h3>
+                <h3 style={{ textAlign: "center" }}>Faculty members</h3>
               </Col>
               <Col
                 md="4"
@@ -135,7 +135,7 @@ const Index = props => {
                       }`
                     : "00"}
                 </h1>
-                <h3 style={{ textAlign: "center" }}>Coordinator</h3>
+                <h3 style={{ textAlign: "center" }}>Coordinators</h3>
               </Col>
             </Row>
           </div>
