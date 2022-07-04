@@ -1,0 +1,255 @@
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (max-width: 600px) {
+  /* GLOBAL */
+  .d-sm-none {
+    display: none !important;
+  }
+  /* GLOBAL */
+  .page-header .page-title {
+    font-size: 20px !important;
+  }
+  .admin-user-cards {
+    margin: 10px 0 !important;
+  }
+  .admin-dashboard-cards {
+    margin: 10px 0 !important;
+  }
+}
+
+/* Full Large */
+@media only screen and (max-width: 1505px) {
+  .complain-page .card-body table,
+  .team-member-table,
+  .md-table-width {
+    width: 1200px !important;
+  }
+  .complain-page .card-body {
+    overflow-x: auto;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  .d-block-c {
+    display: block !important;
+  }
+  .d-none-c {
+    display: none !important;
+  }
+
+  .register-form-container {
+    width: 900px !important;
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
+  .complain-page .card-body table,
+  .team-member-table,
+  .md-table-width {
+    width: 1200px !important;
+  }
+  .complain-page .card-body {
+    overflow-x: auto;
+  }
+  .register-form-container {
+    width: 800px !important;
+  }
+  .example {
+    background: pink;
+  }
+  .d-xl-none-c {
+    display: none !important;
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+  /* .example {
+    background: orange;
+  } */
+  .complain-page .card-body table,
+  .team-member-table,
+  .md-table-width {
+    width: 1200px !important;
+  }
+  .complain-page .card-body {
+    overflow-x: auto;
+  }
+  .register-form-container {
+    width: 710px !important;
+  }
+  .d-lg-block-c {
+    display: block !important;
+  }
+  .d-lg-none-c {
+    display: none !important;
+  }
+
+  /* Main Nav bar */
+  .main-sidebar-show {
+    left: 0 !important;
+  }
+  .main-sidebar-hide {
+    left: -300px !important;
+  }
+  .main-navbar {
+    height: 60px !important;
+  }
+  .main-sidebar {
+    top: 60px !important;
+  }
+  /* Main Nav bar */
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  /* GLobal */
+
+  .register-form-container {
+    width: 550px !important;
+  }
+  .m-md-0 {
+    margin: 0 !important;
+  }
+  .mt-md {
+    margin-top: 10px !important;
+  }
+  .mb-md {
+    margin-bottom: 10px !important;
+  }
+  .d-md-none {
+    display: none !important;
+  }
+  .justify-content-start {
+    justify-content: flex-start !important;
+  }
+  .bottom-auto-sm {
+    bottom: auto !important;
+  }
+  /* GLobal */
+  /* User File */
+  .card-body {
+    padding: 20px !important;
+  }
+  /* User File */
+  /* Main side bar */
+  .main-sidebar-show {
+    left: 250px !important;
+    width: 250px !important;
+  }
+  .main-sidebar-hide {
+    left: -300px !important;
+  }
+  /* Main side bar */
+  /* Complain Page */
+  .complain-page .card-body {
+    overflow-x: auto;
+  }
+  .complain-page .card-body table,
+  .team-member-table,
+  .md-table-width {
+    width: 1200px !important;
+  }
+  /* Complain Page */
+  /* Page Title start */
+  .page-header .page-title {
+    font-size: 24px !important;
+  }
+  .admin-user-cards {
+    margin: 0 !important;
+  }
+  .admin-dashboard-cards {
+    margin: 0 !important;
+  }
+  /*  Page Title end */
+  /* Main Nav bar */
+  /* .nav-bar-links {
+    display: none !important;
+  } */
+  /* Main Nav bar */
+
+  /* Modal */
+  .modal-content {
+    max-height: 400px !important;
+  }
+
+  /* Modal */
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  /* GLOBAL */
+  .register-form-container {
+    width: 310px !important;
+  }
+  .d-xs-none {
+    display: none !important;
+  }
+  .p-sm-none {
+    padding: 0 !important;
+  }
+  .m-sm-none {
+    margin: 0 !important;
+  }
+  .card {
+    border-radius: 5px !important;
+  }
+  .table td,
+  .table th {
+    padding: 8px !important;
+  }
+  .add-new-post .ql-editor {
+    min-height: 200px !important;
+    height: 200px !important;
+  }
+  .add-new-post .add-new-post__editor {
+    min-height: 200px !important;
+  }
+  /* GLOBAL */
+  /* Profile Page */
+  .thumbnail-image {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  /* Profile Page */
+  /* Side Bar dashboard start */
+  .main-sidebar-left {
+    left: -200px !important;
+  }
+  /* Side Bar dashboard end*/
+  .page-header .page-title {
+    font-size: 18px !important;
+  }
+  .admin-user-cards {
+    margin: 10px 0 !important;
+    padding: 12px 25px !important;
+  }
+  .admin-dashboard-cards {
+    margin: 10px 0 !important;
+    height: 90px !important;
+    padding: 10px 20px !important;
+  }
+  .admin-dashboard-table-h {
+    height: 150px !important;
+    font: 14px !important;
+  }
+  .admin-user-cards ion-icon {
+    font-size: 44px !important;
+  }
+  .item-col-name p {
+    font-size: 20px !important;
+  }
+
+  /* Modal */
+  .modal-content {
+    max-height: 350px !important;
+  }
+
+  .justify-content-start-sm {
+    justify-content: flex-start !important;
+  }
+  /* Modal */
+}
+
+@media only screen and (max-width: 576px) {
+  .mt-sm {
+    margin-top: 10px !important;
+  }
+}
