@@ -16,13 +16,7 @@ const AnimatedSlider = (props) => {
       // nextButton={<h3>{">"}</h3>}
     >
       {props.slides.map((item, index) => (
-        <div
-          key={item._id}
-          className="slider-content"
-          style={{
-            background: `url(https://deefile.s3.amazonaws.com/${item.fileName}) no-repeat center center`,
-          }}
-        >
+        <div key={item._id} className="slider-content">
           <div className="inner">
             <h1>{item.title}</h1>
             <p>{item.body}</p>
