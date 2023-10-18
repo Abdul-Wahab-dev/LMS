@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const morgan = require("morgan");
 const userRouter = require("./routes/userRoutes");
 const complainRouter = require("./routes/complainRoutes");
@@ -17,7 +18,7 @@ const programAndBatch = require("./routes/programAndBatchRoutes");
 const quote = require("./routes/quoteRoutes");
 
 const path = require("path");
-
+app.use(cors());
 const globalErrorHandler = require("./contorller/errorController");
 // middleware
 app.use(express.json());
