@@ -9,14 +9,14 @@ import {
   SET_TEAM_LOADING,
   GET_TEAM_ASSIGNMENTS
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         CREATE /api/v1/team
 // @desc          create team
 // @access        Private
 export const createTeam = team => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/team", team)
     .then(res => {
       if (res) {
@@ -42,7 +42,7 @@ export const createTeam = team => dispatch => {
 // @desc          get teams names
 // @access        Private
 export const getTeamsNames = () => dispatch => {
-  axios
+  axiosInstance
     .get("/api/v1/team/teamnames")
     .then(res => {
       if (res) {
@@ -68,7 +68,7 @@ export const getTeamsNames = () => dispatch => {
 // @access        Private
 export const getTeams = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/team")
     .then(res => {
       if (res) {
@@ -95,7 +95,7 @@ export const getTeams = () => dispatch => {
 // @access        Private
 export const deleteTeam = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/team/${id}`)
     .then(res => {
       if (res) {
@@ -122,7 +122,7 @@ export const deleteTeam = id => dispatch => {
 // @access        Private
 export const getMember = team => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(`/api/v1/team/members/${team.teamName}/${team.batch}`)
     .then(res => {
       if (res) {
@@ -148,7 +148,7 @@ export const getMember = team => dispatch => {
 // @access        Private
 export const addMember = (member, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post(`/api/v1/team/member`, member)
     .then(res => {
       if (res) {
@@ -173,7 +173,7 @@ export const addMember = (member, clearState) => dispatch => {
 // @access        Private
 export const getTeamAssignments = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/team/assignment")
     .then(res => {
       if (res) {
@@ -215,7 +215,7 @@ export const createTeamAssignment = (
   };
 
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/team/assignment", formData, config)
     .then(res => {
       if (res) {
@@ -240,7 +240,7 @@ export const createTeamAssignment = (
 // @access        Private
 export const deleteAssignment = assignment => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(
       `/api/v1/team/assignment/${assignment.teamID}/${assignment.assignmentID}`
     )
@@ -266,7 +266,7 @@ export const deleteAssignment = assignment => dispatch => {
 // @access        Private
 export const deleteMember = member => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/team/deletemember/${member.teamID}/${member.memberID}`)
     .then(res => {
       if (res) {

@@ -10,11 +10,11 @@ import {
   SET_PROGRAM_LOADING
 } from "./types";
 
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 
 export const createProgram = (program, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/programandbatch/program", program)
     .then(res => {
       dispatch({
@@ -34,7 +34,7 @@ export const createProgram = (program, clearState) => dispatch => {
 
 export const getPrograms = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/programandbatch/program")
     .then(res => {
       dispatch({
@@ -53,7 +53,7 @@ export const getPrograms = () => dispatch => {
 
 export const deleteProgram = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/programandbatch/program/${id}`)
     .then(res => {
       dispatch({
@@ -72,7 +72,7 @@ export const deleteProgram = id => dispatch => {
 
 export const createBatch = (batch, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/programandbatch/batch", batch)
     .then(res => {
       dispatch({
@@ -92,7 +92,7 @@ export const createBatch = (batch, clearState) => dispatch => {
 
 export const getBatchs = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/programandbatch/batch")
     .then(res => {
       dispatch({
@@ -111,7 +111,7 @@ export const getBatchs = () => dispatch => {
 
 export const deleteBatch = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/programandbatch/batch/${id}`)
     .then(res => {
       dispatch({

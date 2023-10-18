@@ -8,7 +8,7 @@ import {
   DELETE_INTERNSHIP
 } from "../actions/types";
 
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         POST /api/v1/internship
 // @desc          create internship
@@ -16,7 +16,7 @@ import { logoutUser } from "./authActions";
 
 export const createInternship = (internship, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/internship", internship)
     .then(res => {
       if (res) {
@@ -44,7 +44,7 @@ export const createInternship = (internship, clearState) => dispatch => {
 // @access        Private
 export const getInternships = internship => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(
       `/api/v1/internship/${internship.program}/${internship.batch}/${internship.enrollmentNo}`
     )
@@ -73,7 +73,7 @@ export const getInternships = internship => dispatch => {
 // @access        Private
 export const deleteInternships = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/internship/${id}`)
     .then(res => {
       if (res) {
@@ -100,7 +100,7 @@ export const deleteInternships = id => dispatch => {
 // @access        Private
 export const updateInternship = (internship, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/internship/${internship.id}`, internship)
     .then(res => {
       if (res) {

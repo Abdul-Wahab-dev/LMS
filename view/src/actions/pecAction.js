@@ -11,14 +11,14 @@ import {
   DELETE_PEC_DOC_TYPE,
   CLEAR_PEC_LOADING
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         CREATE /api/v1/pec/doctype
 // @desc          create pec document type
 // @access        Private
 
 export const createPECDocType = (data, clearState) => dispatch => {
-  axios.post("/api/v1/pec/doctype", data).then(res => {
+  axiosInstance.post("/api/v1/pec/doctype", data).then(res => {
     dispatch({
       type: CREATE_PEC_DOC_TYPE,
       payload: res.data.data.pecType
@@ -31,7 +31,7 @@ export const createPECDocType = (data, clearState) => dispatch => {
 // @access        Private
 
 export const getPECDocType = () => dispatch => {
-  axios.get("/api/v1/pec/doctype").then(res => {
+  axiosInstance.get("/api/v1/pec/doctype").then(res => {
     dispatch({
       type: GET_PEC_DOC_TYPE,
       payload: res.data.data.pecType
@@ -43,7 +43,7 @@ export const getPECDocType = () => dispatch => {
 // @access        Private
 
 export const deletePECDocType = id => dispatch => {
-  axios.delete(`/api/v1/pec/doctype/${id}`).then(res => {
+  axiosInstance.delete(`/api/v1/pec/doctype/${id}`).then(res => {
     dispatch({
       type: DELETE_PEC_DOC_TYPE,
       payload: res.data.data.pecType
@@ -64,7 +64,7 @@ export const createPecDocs = (doc, file, clearState) => dispatch => {
     }
   };
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/pec", formData, config)
     .then(res => {
       if (res) {
@@ -104,7 +104,7 @@ export const addPECWork = (doc, file, clearState) => dispatch => {
   };
 
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/pec/addwork", formData, config)
     .then(res => {
       if (res) {
@@ -133,7 +133,7 @@ export const addPECWork = (doc, file, clearState) => dispatch => {
 // @access        Private
 export const addPECRemarks = (doc, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/pec/addremarks", doc)
     .then(res => {
       if (res) {
@@ -162,7 +162,7 @@ export const addPECRemarks = (doc, clearState) => dispatch => {
 // @access        Private
 export const getDocuments = type => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(`/api/v1/pec/${type}`)
     .then(res => {
       if (res) {
@@ -190,7 +190,7 @@ export const getDocuments = type => dispatch => {
 // @access        Private
 export const deletePECDocument = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/pec/${id}`)
     .then(res => {
       if (res) {
@@ -217,7 +217,7 @@ export const deletePECDocument = id => dispatch => {
 // @desc          get pec members
 // @access        Private
 export const pecMembersList = () => dispatch => {
-  axios
+  axiosInstance
     .get("/api/v1/pec/pecDocsMembers")
     .then(res => {
       dispatch({

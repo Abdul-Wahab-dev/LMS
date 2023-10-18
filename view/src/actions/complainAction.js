@@ -4,32 +4,32 @@ import {
   UPDATE_COMPLAIN,
   DELETE_COMPLAIN,
   CLEAR_COMPLAIN_LOADING,
-  SET_COMPLAIN_LOADING,
+  SET_COMPLAIN_LOADING
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         GET /api/v1/complains
 // @desc          get complains
 // @access        Private
 
-export const getComplains = () => (dispatch) => {
+export const getComplains = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/complains")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GETS_COMPLAINS,
-        payload: res.data.data.complains,
+        payload: res.data.data.complains
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -37,24 +37,24 @@ export const getComplains = () => (dispatch) => {
 // @desc          get complains
 // @access        Private
 
-export const getComplainsForAdmin = () => (dispatch) => {
+export const getComplainsForAdmin = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/complains/getComplains")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GETS_COMPLAINS,
-        payload: res.data.data.complains,
+        payload: res.data.data.complains
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -63,22 +63,22 @@ export const getComplainsForAdmin = () => (dispatch) => {
 // @desc          Create new complain
 // @access        Private
 
-export const createComplain = (complain, clearState) => (dispatch) => {
+export const createComplain = (complain, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/complains", complain)
-    .then((res) => {
+    .then(res => {
       clearState();
       dispatch(getComplains());
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -86,27 +86,27 @@ export const createComplain = (complain, clearState) => (dispatch) => {
 // @route         PATCH /api/v1/complains/:id
 // @desc          reply to complain
 // @access        Private
-export const complainReply = (complain, clearState, setData) => (dispatch) => {
+export const complainReply = (complain, clearState, setData) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/complains/${complain.id}`, { reply: complain.reply })
-    .then((res) => {
+    .then(res => {
       clearState();
       dispatch({
         type: UPDATE_COMPLAIN,
-        payload: res.data.data.complain,
+        payload: res.data.data.complain
       });
 
       setData(res.data.data.complain);
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -114,24 +114,24 @@ export const complainReply = (complain, clearState, setData) => (dispatch) => {
 // @route         Patch /api/v1/complains
 // @desc          change the complain status
 // @access        Private
-export const setComplainStatus = (complain) => (dispatch) => {
+export const setComplainStatus = complain => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/complains", complain)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: UPDATE_COMPLAIN,
-        payload: res.data.data.complain,
+        payload: res.data.data.complain
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -139,38 +139,38 @@ export const setComplainStatus = (complain) => (dispatch) => {
 // @route         DELETE /api/v1/complains/:id
 // @desc          delete complain
 // @access        Private
-export const deleteComplain = (id) => (dispatch) => {
+export const deleteComplain = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/complains/${id}`)
-    .then((res) => {
+    .then(res => {
       if (res) {
         dispatch(clearLoading());
         dispatch({
           type: DELETE_COMPLAIN,
-          payload: res.data.data.complain,
+          payload: res.data.data.complain
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
 const setLoading = () => {
   return {
-    type: SET_COMPLAIN_LOADING,
+    type: SET_COMPLAIN_LOADING
   };
 };
 
 const clearLoading = () => {
   return {
-    type: CLEAR_COMPLAIN_LOADING,
+    type: CLEAR_COMPLAIN_LOADING
   };
 };

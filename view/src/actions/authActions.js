@@ -1,4 +1,4 @@
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import setAuthToken from "../utils/setAuthToken";
 import jwt_decode from "jwt-decode";
 
@@ -16,28 +16,28 @@ import {
   UPDATE_PERMISSION,
   CLEAR_ERRORS,
   GET_USER_DESIGNATIONS,
-  UPDATE_USER,
+  UPDATE_USER
 } from "./types";
 
 // @route   POST /api/v1/users/signup
 // @desc    create new user
 // @access  Public
 
-export const createMultipleUsers = (users, clearState) => (dispatch) => {
+export const createMultipleUsers = (users, clearState) => dispatch => {
   dispatch(setLoading());
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
-  axios
+  axiosInstance
     .post("/api/v1/users/create-multiple-users", { users: users })
-    .then((res) => {
+    .then(res => {
       dispatch(clearLoading());
       clearState();
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
       dispatch(clearLoading());
     });
@@ -46,26 +46,26 @@ export const createMultipleUsers = (users, clearState) => (dispatch) => {
 // @route   POST /api/v1/users/signup
 // @desc    create new user
 // @access  Public
-export const registerUser = (userData, file, clearState) => (dispatch) => {
+export const registerUser = (userData, file, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/users/signup", userData)
-    .then((res) => {
+    .then(res => {
       clearState();
       dispatch({
-        type: CLEAR_USER_LOADING,
+        type: CLEAR_USER_LOADING
       });
     })
-    .catch((err) => {
+    .catch(err => {
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
-        type: CLEAR_USER_LOADING,
+        type: CLEAR_USER_LOADING
       });
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -73,14 +73,14 @@ export const registerUser = (userData, file, clearState) => (dispatch) => {
 // @route   POST /api/v1/users/login
 // @desc    Login in to get token
 // @access  Public
-export const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData, history) => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/users/login", userData)
-    .then((res) => {
+    .then(res => {
       // Save to localStorage
 
       const { token } = res.data;
@@ -95,29 +95,29 @@ export const loginUser = (userData, history) => (dispatch) => {
       dispatch(clearLoading());
       history();
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
       // }
     });
 };
 
 // Set logged in user
-export const setCurrentUser = (decoded) => {
+export const setCurrentUser = decoded => {
   return {
     type: SET_CURRENT_USER,
-    payload: decoded,
+    payload: decoded
   };
 };
 
 // Log user out
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = () => dispatch => {
   // Remove token from localStorage
   localStorage.removeItem("jwtToken");
   // Remove auth header for future requests
@@ -126,27 +126,27 @@ export const logoutUser = () => (dispatch) => {
   dispatch(setCurrentUser({}));
 };
 
-export const getCurrentUser = () => (dispatch) => {
+export const getCurrentUser = () => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/users/current")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GET_PROFILE,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -154,54 +154,54 @@ export const getCurrentUser = () => (dispatch) => {
 // @route       GET /api/v1/users
 // @desc        get users
 // @access      Private
-export const getUsers = () => (dispatch) => {
+export const getUsers = () => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/users")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GET_USERS,
-        payload: res.data.data.users,
+        payload: res.data.data.users
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
 // @route       PATCH /api/v1/users/update-user
-export const updateUserAction = (data) => (dispatch) => {
+export const updateUserAction = data => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/users/update-user", data)
-    .then((res) => {
+    .then(res => {
       if (res) {
         dispatch({
           type: UPDATE_USER,
-          payload: res.data.data.user,
+          payload: res.data.data.user
         });
       }
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -209,27 +209,27 @@ export const updateUserAction = (data) => (dispatch) => {
 // @route       GET /api/v1/users/findUser
 // @desc        get user
 // @access      Private
-export const studentData = (data) => (dispatch) => {
+export const studentData = data => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post(`/api/v1/users/findUser`, data)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: STUDENT_DATA,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -237,24 +237,24 @@ export const studentData = (data) => (dispatch) => {
 // @route       GET /api/v1/users/:role
 // @desc        get users
 // @access      Private
-export const getAllUser = (data) => (dispatch) => {
+export const getAllUser = data => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(`/api/v1/users/${data}`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: STUDENT_DATA,
-        payload: res.data.data.users,
+        payload: res.data.data.users
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -262,27 +262,27 @@ export const getAllUser = (data) => (dispatch) => {
 // @route       POST /api/v1/users/approve
 // @desc        approve user
 // @access      Private
-export const approveUser = (user) => (dispatch) => {
+export const approveUser = user => dispatch => {
   dispatch({
-    type: CLEAR_ERRORS,
+    type: CLEAR_ERRORS
   });
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/users/approve", user)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: APPROVED_USER,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -290,25 +290,25 @@ export const approveUser = (user) => (dispatch) => {
 // @route       PATCH /api/v1/users/updatePassword
 // @desc        update password
 // @access      Private
-export const updatePassword = (data, clearState) => (dispatch) => {
+export const updatePassword = (data, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/users/updatePassword", data)
-    .then((res) => {
+    .then(res => {
       if (res) {
         clearState();
 
         dispatch(logoutUser());
       }
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -316,12 +316,12 @@ export const updatePassword = (data, clearState) => (dispatch) => {
 // @route       GET /api/v1/users/getprograms
 // @desc        get program and batch
 // @access      Private
-export const getPrograms = () => (dispatch) => {
-  axios.get("/api/v1/users/getprograms").then((res) => {
+export const getPrograms = () => dispatch => {
+  axiosInstance.get("/api/v1/users/getprograms").then(res => {
     if (res) {
       dispatch({
         type: GET_PROGRAMS,
-        payload: res.data.data.programs,
+        payload: res.data.data.programs
       });
     }
   });
@@ -330,12 +330,12 @@ export const getPrograms = () => (dispatch) => {
 // @route       GET /api/v1/users/designations
 // @desc        get designation
 // @access      Private
-export const getDesignations = () => (dispatch) => {
-  axios.get("/api/v1/users/designations").then((res) => {
+export const getDesignations = () => dispatch => {
+  axiosInstance.get("/api/v1/users/designations").then(res => {
     if (res) {
       dispatch({
         type: GET_USER_DESIGNATIONS,
-        payload: res.data.data.designations,
+        payload: res.data.data.designations
       });
     }
   });
@@ -344,28 +344,28 @@ export const getDesignations = () => (dispatch) => {
 // @route       GET /api/v1/users/permission
 // @desc        assign permissions
 // @access      Private
-export const assignPermission = (permission, clearState) => (dispatch) => {
+export const assignPermission = (permission, clearState) => dispatch => {
   dispatch(clearLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/users/permission", {
       id: permission.id,
-      permissions: permission.permissions,
+      permissions: permission.permissions
     })
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: UPDATE_PERMISSION,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
       clearState();
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -373,27 +373,27 @@ export const assignPermission = (permission, clearState) => (dispatch) => {
 // @route       GET /api/v1/users/changeuserrole
 // @desc        assign permissions
 // @access      Private
-export const changeUserRole = (data) => (dispatch) => {
+export const changeUserRole = data => dispatch => {
   dispatch(clearLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/users/changeuserrole", {
       id: data.id,
-      role: data.role,
+      role: data.role
     })
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: UPDATE_PERMISSION,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -401,36 +401,36 @@ export const changeUserRole = (data) => (dispatch) => {
 // @route       DELETE /api/v1/users/:id
 // @desc        delete User
 // @access      Private
-export const deleteUser = (id) => (dispatch) => {
+export const deleteUser = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/users/${id}`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: DELETE_USER,
-        payload: res.data.data.user,
+        payload: res.data.data.user
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
 
 const setLoading = () => {
   return {
-    type: SET_USER_LOADING,
+    type: SET_USER_LOADING
   };
 };
 
 const clearLoading = () => {
   return {
-    type: CLEAR_USER_LOADING,
+    type: CLEAR_USER_LOADING
   };
 };

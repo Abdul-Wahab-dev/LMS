@@ -5,14 +5,14 @@ import {
   SET_NEWS_LOADING,
   CLEAR_NEWS_LOADING
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         GET /api/v1/news
 // @desc          get News
 // @access        Private
 export const getNews = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/news")
     .then(res => {
       dispatch({
@@ -37,7 +37,7 @@ export const getNews = () => dispatch => {
 // @access        Private
 export const createNews = (news, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/news", news)
     .then(res => {
       clearState();
@@ -61,7 +61,7 @@ export const createNews = (news, clearState) => dispatch => {
 
 export const deleteNews = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/news/${id}`)
     .then(res => {
       if (res) {

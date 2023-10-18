@@ -7,7 +7,7 @@ import {
   SET_CSP_LOADING,
   CLEAR_CSP_LOADING
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 
 // @route         CREATE /api/v1/csp
@@ -23,7 +23,7 @@ export const createCSP = (csp, file, clearState) => dispatch => {
     }
   };
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/csp", formData, config)
     .then(res => {
       if (res) {
@@ -59,7 +59,7 @@ export const addCSPWork = (csp, file, clearState) => dispatch => {
     }
   };
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/csp/addwork", formData, config)
     .then(res => {
       if (res) {
@@ -86,7 +86,7 @@ export const addCSPWork = (csp, file, clearState) => dispatch => {
 // @desc          get CSP Members
 // @access        Private
 export const cspMembers = () => dispatch => {
-  axios
+  axiosInstance
     .get("/api/v1/csp/getCSPMembers")
     .then(res => {
       dispatch({
@@ -111,7 +111,7 @@ export const cspMembers = () => dispatch => {
 
 export const addCSPRemarks = (csp, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch("/api/v1/csp/remarks", csp)
     .then(res => {
       if (res) {
@@ -139,7 +139,7 @@ export const addCSPRemarks = (csp, clearState) => dispatch => {
 // @access        Private
 export const getCSPS = (csp, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(`/api/v1/csp/${csp.program}/${csp.batch}/${csp.enrollmentNo}`)
     .then(res => {
       if (res) {
@@ -168,7 +168,7 @@ export const getCSPS = (csp, clearState) => dispatch => {
 // @access        Private
 export const deleteCSPS = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/csp/${id}`)
     .then(res => {
       if (res) {

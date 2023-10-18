@@ -7,7 +7,7 @@ import {
   CLEAR_QUOTE_LOADING,
   GET_ERRORS
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 
 // @route         POST /api/v1/quote
@@ -15,7 +15,7 @@ import { logoutUser } from "./authActions";
 // @access        Private
 export const createQuote = (quote, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/quote", quote)
     .then(res => {
       dispatch({
@@ -40,7 +40,7 @@ export const createQuote = (quote, clearState) => dispatch => {
 // @access        Public
 export const getQuotes = quote => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/quote")
     .then(res => {
       dispatch({
@@ -64,7 +64,7 @@ export const getQuotes = quote => dispatch => {
 // @access        Private
 export const updateQuote = quote => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/quote/${quote.id}`, { display: quote.display })
     .then(res => {
       dispatch({
@@ -88,7 +88,7 @@ export const updateQuote = quote => dispatch => {
 // @access        Private
 export const deleteQuote = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/quote/${id}`)
     .then(res => {
       dispatch({

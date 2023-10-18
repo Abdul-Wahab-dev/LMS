@@ -5,14 +5,14 @@ import {
   GET_ERRORS,
   CLEAR_EVENT_LOADING,
   SET_EVENT_LOADING,
-  UPDATE_EVENT,
+  UPDATE_EVENT
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 // @route         POST /api/v1/event
 // @desc          create event
 // @access        Private
-export const createEvent = (eve, file, clearState) => (dispatch) => {
+export const createEvent = (eve, file, clearState) => dispatch => {
   // const formData = new FormData();
 
   // formData.append("fileUpload", file);
@@ -24,23 +24,23 @@ export const createEvent = (eve, file, clearState) => (dispatch) => {
   //   }
   // };
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/event", eve)
-    .then((res) => {
+    .then(res => {
       clearState();
       dispatch({
         type: CREATE_EVENT,
-        payload: res.data.data.event,
+        payload: res.data.data.event
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading);
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -48,48 +48,48 @@ export const createEvent = (eve, file, clearState) => (dispatch) => {
 // @route         get /api/v1/event/private
 // @desc          get Events
 // @access        Private
-export const getPrivateEvents = () => (dispatch) => {
+export const getPrivateEvents = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/event/private")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GET_PRIVATE_EVENTS,
-        payload: res.data.data.events,
+        payload: res.data.data.events
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading);
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
 // @route         get /api/v1/event/public
 // @desc          get Events
 // @access        Public
-export const getPublicEvents = () => (dispatch) => {
+export const getPublicEvents = () => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get("/api/v1/event/public")
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: GET_PRIVATE_EVENTS,
-        payload: res.data.data.events,
+        payload: res.data.data.events
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading);
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -97,24 +97,24 @@ export const getPublicEvents = () => (dispatch) => {
 // @route         PATCH /api/v1/event/:id
 // @desc          set to display event on Landing Page
 // @access        Private
-export const setDisplay = (eve) => (dispatch) => {
+export const setDisplay = eve => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/event/${eve.id}`, { display: eve.display })
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: UPDATE_EVENT,
-        payload: res.data.data.event,
+        payload: res.data.data.event
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
@@ -122,35 +122,35 @@ export const setDisplay = (eve) => (dispatch) => {
 // @route         DELETE /api/v1/event/:id
 // @desc          delete Event
 // @access        Private
-export const deleteEvent = (id) => (dispatch) => {
+export const deleteEvent = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/event/${id}`)
-    .then((res) => {
+    .then(res => {
       dispatch({
         type: DELETE_EVENT,
-        payload: res.data.data.event,
+        payload: res.data.data.event
       });
     })
-    .catch((err) => {
+    .catch(err => {
       dispatch(clearLoading());
       if (err.response.data.message === "jwt expired") {
         dispatch(logoutUser());
       }
       dispatch({
         type: GET_ERRORS,
-        payload: err.response.data,
+        payload: err.response.data
       });
     });
 };
 
 const setLoading = () => {
   return {
-    type: SET_EVENT_LOADING,
+    type: SET_EVENT_LOADING
   };
 };
 const clearLoading = () => {
   return {
-    type: CLEAR_EVENT_LOADING,
+    type: CLEAR_EVENT_LOADING
   };
 };

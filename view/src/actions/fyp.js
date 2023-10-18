@@ -11,7 +11,7 @@ import {
   GET_FYP_CATEGORY,
   DELETE_FYP_CATEGORY
 } from "./types";
-import axios from "axios";
+import { axiosInstance } from "../utils/axiosInstance";
 import { logoutUser } from "./authActions";
 
 // @route         CREATE /api/v1/pec/doctype
@@ -19,7 +19,7 @@ import { logoutUser } from "./authActions";
 // @access        Private
 
 export const createFYPCategory = (data, clearState) => dispatch => {
-  axios.post("/api/v1/fyp/category", data).then(res => {
+  axiosInstance.post("/api/v1/fyp/category", data).then(res => {
     dispatch({
       type: CREATE_FYP_CATEGORY,
       payload: res.data.data.category
@@ -32,7 +32,7 @@ export const createFYPCategory = (data, clearState) => dispatch => {
 // @access        Private
 
 export const getFYPCategory = () => dispatch => {
-  axios.get("/api/v1/fyp/category").then(res => {
+  axiosInstance.get("/api/v1/fyp/category").then(res => {
     dispatch({
       type: GET_FYP_CATEGORY,
       payload: res.data.data.category
@@ -44,7 +44,7 @@ export const getFYPCategory = () => dispatch => {
 // @access        Private
 
 export const deleteFYPCategory = id => dispatch => {
-  axios.delete(`/api/v1/fyp/category/${id}`).then(res => {
+  axiosInstance.delete(`/api/v1/fyp/category/${id}`).then(res => {
     dispatch({
       type: DELETE_FYP_CATEGORY,
       payload: res.data.data.category
@@ -57,7 +57,7 @@ export const deleteFYPCategory = id => dispatch => {
 // @access        Private
 export const getFyp = fyp => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .get(`/api/v1/fyp/${fyp.eventName}/${fyp.batch}`)
     .then(res => {
       dispatch({
@@ -82,7 +82,7 @@ export const getFyp = fyp => dispatch => {
 // @access        Private
 export const presentationStatusAction = fyp => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .patch(`/api/v1/fyp/presentation-status`, fyp)
     .then(res => {
       dispatch({
@@ -108,7 +108,7 @@ export const presentationStatusAction = fyp => dispatch => {
 export const addRemarks = (remarks, id, fypId, clearState) => dispatch => {
   dispatch(setLoading());
   dispatch({ type: CLEAR_ERRORS });
-  axios
+  axiosInstance
     .patch(`/api/v1/fyp/${id}/${fypId}`, remarks)
     .then(res => {
       clearState();
@@ -134,7 +134,7 @@ export const addRemarks = (remarks, id, fypId, clearState) => dispatch => {
 export const addMembersToFYPAct = (data, clearState) => dispatch => {
   dispatch(setLoading());
   dispatch({ type: CLEAR_ERRORS });
-  axios
+  axiosInstance
     .patch(`/api/v1/fyp/member`, data)
     .then(res => {
       clearState();
@@ -160,7 +160,7 @@ export const addMembersToFYPAct = (data, clearState) => dispatch => {
 // @access        Private
 
 export const deleteIdea = data => dispatch => {
-  axios
+  axiosInstance
     .patch("/api/v1/fyp/ideadelete", data)
     .then(res => {
       dispatch({
@@ -185,7 +185,7 @@ export const deleteIdea = data => dispatch => {
 // @access        Private
 export const createFYP = (fyp, clearState) => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .post("/api/v1/fyp", fyp)
     .then(res => {
       if (res) {
@@ -210,7 +210,7 @@ export const createFYP = (fyp, clearState) => dispatch => {
 // @desc          get FYP names
 // @access        Private
 export const getProjectNames = () => dispatch => {
-  axios.get("/api/v1/fyp/getnames").then(res => {
+  axiosInstance.get("/api/v1/fyp/getnames").then(res => {
     if (res) {
       dispatch({
         type: GET_NAMES,
@@ -224,7 +224,7 @@ export const getProjectNames = () => dispatch => {
 // @access        Private
 export const deleteFYP = id => dispatch => {
   dispatch(setLoading());
-  axios
+  axiosInstance
     .delete(`/api/v1/fyp/${id}`)
     .then(res => {
       if (res) {
@@ -254,7 +254,7 @@ export const assignTimeAction = (data, clearState) => async dispatch => {
     type: CLEAR_ERRORS
   });
   try {
-    await axios.put("/api/v1/fyp/assign-time", data);
+    await axiosInstance.put("/api/v1/fyp/assign-time", data);
     clearState();
   } catch (error) {
     dispatch({
@@ -272,7 +272,7 @@ export const assignTeacherAction = (data, clearState) => async dispatch => {
     type: CLEAR_ERRORS
   });
   try {
-    const res = await axios.put("/api/v1/fyp/assign-teacher", data);
+    const res = await axiosInstance.put("/api/v1/fyp/assign-teacher", data);
 
     dispatch({
       type: UPDATE_FYP,
