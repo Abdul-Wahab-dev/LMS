@@ -134,7 +134,6 @@ const Index = (props) => {
                         <CardTitle style={{ textTransform: "uppercase" }}>
                           {news.title}
                         </CardTitle>
-                        {console.log(news.body.length)}
                         <ReactQuill
                           readOnly
                           value={news.body}
@@ -196,6 +195,7 @@ const Index = (props) => {
                       color: "#fff",
                       backgroundColor: "#1976d2",
                     }}
+                    key={i}
                   >
                     <Container>
                       <h3
@@ -258,7 +258,7 @@ const Index = (props) => {
                 .filter((eve) => eve.display === true)
                 .map((eve, i) =>
                   i < 1 ? (
-                    <div className="event-popup">
+                    <div key={i} className="event-popup">
                       <Modal
                         open={eventModal}
                         toggle={() => setEventModal(!eventModal)}

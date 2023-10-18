@@ -2,7 +2,7 @@ const AppError = require("./../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
-const keys = require("../config/keys");
+
 const registerValidate = require("../validation/register");
 const loginValidate = require("../validation/login");
 
@@ -10,7 +10,7 @@ const { promisify } = require("util");
 // const APIFeatures = require("../utils/")
 
 const signToken = (payload) => {
-  return jwt.sign(payload, keys.JWT_SECRET, {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: 7200,
   });
 };
@@ -138,7 +138,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) Verification token
-  const decoded = await promisify(jwt.verify)(token, keys.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id).select(

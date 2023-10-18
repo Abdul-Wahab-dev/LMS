@@ -72,17 +72,13 @@ const UserActions = (props) => {
 
           <DropdownMenu>
             <DropdownItem
-              tag={Link}
-              // className="text-danger"
               onClick={(e) => {
                 props.setModal(true);
                 setDrop(false);
               }}
             >
-              {/* <i className="material-icons text-danger">&#xE879;</i> */}
               Change Password
             </DropdownItem>
-            {/* <DropdownItem divider={true} /> */}
 
             <DropdownItem className="text-danger" onClick={(e) => signOut(e)}>
               <i className="material-icons text-danger">&#xE879;</i> Logout

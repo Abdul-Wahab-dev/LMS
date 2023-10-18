@@ -7,15 +7,13 @@ process.on("uncaughtException", (err) => {
 
 if (process.env.NODE_ENV !== "production") {
   const dotenv = require("dotenv");
-  dotenv.config({ path: "./config.env" });
+  dotenv.config({ path: ".env" });
 }
-
-const db = require("./config/keys");
 
 // 3) connect to db
 mongoose
   .connect(
-    db.mongoURI,
+    process.env.mongoURI,
 
     {
       useNewUrlParser: true,
