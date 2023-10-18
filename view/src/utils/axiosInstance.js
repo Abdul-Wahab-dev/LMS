@@ -1,6 +1,6 @@
-import axios from "axios"
+import axios from "axios";
 
-export  const axiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_BASE_URL || "http://localhost:3000/"
-})
-
+export const axiosInstance = axios.create({
+  baseURL:
+    process.env.REACT_APP_BASE_URL || "https://lms-backend-629v.onrender.com/"
+});
