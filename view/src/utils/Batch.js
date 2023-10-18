@@ -3,7 +3,7 @@ import { FormSelect, FormFeedback } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getBatchs } from "../actions/programAndAction";
 function batch(props) {
-  const batchs = useSelector(state => state.programAndBatch.batchs);
+  const batchs = useSelector((state) => state.programAndBatch.batchs);
   // initialize useDispatch()
   const dispatch = useDispatch();
   useEffect(() => {
@@ -13,8 +13,7 @@ function batch(props) {
     <>
       <FormSelect
         value={props.batch}
-        defaultValue={props.batch}
-        onChange={e => props.setBatch(e.target.value)}
+        onChange={(e) => props.setBatch(e.target.value)}
         required
         invalid={
           props.errors &&
@@ -26,8 +25,8 @@ function batch(props) {
         {batchs.length > 0 ? (
           <>
             <option value="">Choose Batch...</option>{" "}
-            {batchs.map(batch => (
-              <option key={batch._id} value={batch.batch}>
+            {batchs.map((batch) => (
+              <option key={batch._id} value={batch.batch.toLowerCase()}>
                 {batch.batch}
               </option>
             ))}

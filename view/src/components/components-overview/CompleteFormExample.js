@@ -11,7 +11,7 @@ import {
   FormSelect,
   Button,
   Modal,
-  ModalBody
+  ModalBody,
 } from "shards-react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -51,7 +51,7 @@ const RegistrationFrom = () => {
   // initialize useDispatch
   const dispatch = useDispatch();
   // Get Errors state from store
-  const errorsFromStore = useSelector(state => state.errors);
+  const errorsFromStore = useSelector((state) => state.errors);
   // UseEffect
   useEffect(() => {
     if (errorsFromStore) {
@@ -59,7 +59,7 @@ const RegistrationFrom = () => {
     }
   }, [errorsFromStore]);
   // register
-  const registerUserFunc = e => {
+  const registerUserFunc = (e) => {
     const user = {
       role: role.toLowerCase(),
       enrollmentNo: enrollmentNo.toLowerCase(),
@@ -78,7 +78,7 @@ const RegistrationFrom = () => {
       designation: designation,
       yearofJoining: yearofJoining * 1,
       password,
-      passwordConfirm
+      passwordConfirm,
     };
     dispatch(registerUser(user, file, clearState));
   };
@@ -122,7 +122,7 @@ const RegistrationFrom = () => {
                       width: "200px",
                       height: "200px",
                       borderRadius: "50%",
-                      marginBottom: "20px"
+                      marginBottom: "20px",
                     }}
                     alt="profile"
                   />
@@ -137,7 +137,7 @@ const RegistrationFrom = () => {
                     <FormSelect
                       id="feInputState"
                       value={role}
-                      onChange={e => setRole(e.target.value)}
+                      onChange={(e) => setRole(e.target.value)}
                       required
                       invalid={
                         errors.validation && errors.validation.role && true
@@ -161,7 +161,7 @@ const RegistrationFrom = () => {
                       type="text"
                       placeholder="Enrollment"
                       value={enrollmentNo}
-                      onChange={e => setEnrollmentNo(e.target.value)}
+                      onChange={(e) => setEnrollmentNo(e.target.value)}
                       required
                       invalid={
                         errors.validation &&
@@ -184,7 +184,7 @@ const RegistrationFrom = () => {
                       type="text"
                       placeholder="Name"
                       value={name}
-                      onChange={e => setName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                       required
                       invalid={
                         errors.validation && errors.validation.name && true
@@ -203,7 +203,7 @@ const RegistrationFrom = () => {
                       type="text"
                       placeholder="FatherName"
                       value={fatherName}
-                      onChange={e => setFatherName(e.target.value)}
+                      onChange={(e) => setFatherName(e.target.value)}
                       required
                       invalid={
                         errors.validation &&
@@ -245,7 +245,7 @@ const RegistrationFrom = () => {
                           type="text"
                           placeholder="Degree Duration"
                           value={degreeDuration}
-                          onChange={e => setDegreeDuration(e.target.value)}
+                          onChange={(e) => setDegreeDuration(e.target.value)}
                           required
                           invalid={
                             errors.validation &&
@@ -278,7 +278,7 @@ const RegistrationFrom = () => {
                           type="number"
                           placeholder="Max Semester"
                           value={maxSemester}
-                          onChange={e => setMaxSemester(e.target.value)}
+                          onChange={(e) => setMaxSemester(e.target.value)}
                           required
                           invalid={
                             errors.validation &&
@@ -303,7 +303,7 @@ const RegistrationFrom = () => {
                       type="text"
                       placeholder="Mobile Number"
                       value={mobile}
-                      onChange={e => setMobile(e.target.value)}
+                      onChange={(e) => setMobile(e.target.value)}
                       required
                       invalid={
                         errors.validation && errors.validation.mobile && true
@@ -322,7 +322,7 @@ const RegistrationFrom = () => {
                         type="text"
                         placeholder="Designation"
                         value={designation}
-                        onChange={e => setDesignation(e.target.value)}
+                        onChange={(e) => setDesignation(e.target.value)}
                         required
                         invalid={
                           errors.validation &&
@@ -344,7 +344,7 @@ const RegistrationFrom = () => {
                         type="number"
                         placeholder="Phone Number"
                         value={contact}
-                        onChange={e => setContact(e.target.value)}
+                        onChange={(e) => setContact(e.target.value)}
                         required
                         invalid={
                           errors.validation && errors.validation.contact && true
@@ -366,7 +366,7 @@ const RegistrationFrom = () => {
                       type="email"
                       placeholder="Personal Email"
                       value={personalEmail}
-                      onChange={e => setPersonalEmail(e.target.value)}
+                      onChange={(e) => setPersonalEmail(e.target.value)}
                       required
                       invalid={
                         errors.validation &&
@@ -387,7 +387,7 @@ const RegistrationFrom = () => {
                       type="email"
                       placeholder="University Email"
                       value={universityEmail}
-                      onChange={e => setUniversityEmail(e.target.value)}
+                      onChange={(e) => setUniversityEmail(e.target.value)}
                     />
                   </Col>
                 </Row>
@@ -399,7 +399,7 @@ const RegistrationFrom = () => {
                       type="password"
                       placeholder="Password"
                       value={password}
-                      onChange={e => setPassword(e.target.value)}
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                       invalid={
                         errors.validation && errors.validation.password && true
@@ -418,7 +418,7 @@ const RegistrationFrom = () => {
                       type="password"
                       placeholder="ConfirmPassword"
                       value={passwordConfirm}
-                      onChange={e => setPasswordConfirm(e.target.value)}
+                      onChange={(e) => setPasswordConfirm(e.target.value)}
                       required
                       invalid={
                         errors.validation &&
@@ -440,7 +440,7 @@ const RegistrationFrom = () => {
                       <FormSelect
                         id="feInputState"
                         value={yearofJoining}
-                        onChange={e => setYearofJoining(e.target.value)}
+                        onChange={(e) => setYearofJoining(e.target.value)}
                         required
                         invalid={
                           errors.validation &&
@@ -498,7 +498,7 @@ const RegistrationFrom = () => {
                     id="feInputAddress"
                     placeholder="1234 Main St"
                     value={currentAddress}
-                    onChange={e => setCurrentAddress(e.target.value)}
+                    onChange={(e) => setCurrentAddress(e.target.value)}
                     required
                     invalid={
                       errors.validation &&
@@ -519,7 +519,7 @@ const RegistrationFrom = () => {
                     id="feInputAddress2"
                     placeholder="Apartment, Studio or Floor"
                     value={permanentAddress}
-                    onChange={e => setPermanentAddress(e.target.value)}
+                    onChange={(e) => setPermanentAddress(e.target.value)}
                     required
                     invalid={
                       errors.validation &&
@@ -533,7 +533,7 @@ const RegistrationFrom = () => {
                     </FormFeedback>
                   )}
                 </FormGroup>
-                <Button type="button" onClick={e => registerUserFunc(e)}>
+                <Button type="button" onClick={(e) => registerUserFunc(e)}>
                   Create New Account
                 </Button>
               </Form>

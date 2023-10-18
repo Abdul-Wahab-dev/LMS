@@ -6,61 +6,54 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  Collapse,
   NavItem,
-  NavLink
 } from "shards-react";
 import { logoutUser } from "../../../../actions/authActions";
 import profileThumbNail from "../../../../images/profile-thumbnail.png";
-const UserActions = props => {
+const UserActions = (props) => {
   const [drop, setDrop] = useState(false);
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
-  const signOut = e => {
+  const signOut = (e) => {
     dispatch(logoutUser());
   };
-
-  const toggleDropDown = e => {
-    if (document.getElementsByClassName("nav-drop-down")[0]) {
-      if (
-        e.target === document.getElementsByClassName("nav-drop-down")[0] ||
-        e.target === document.getElementsByClassName("dropdown-toggle")[0] ||
-        e.target ===
-          document.getElementsByClassName("user-avatar-dropdown")[0] ||
-        e.target === document.getElementsByClassName("dropdown-span")[0]
-      ) {
-        setDrop(true);
-      } else {
-        setDrop(false);
-      }
-    }
-  };
-
-  window.addEventListener("click", e => toggleDropDown(e));
   return (
     // <NavItem tag={Dropdown} caret toggle={this.toggleUserActions}>
     props.user.isAuthenticated === true ? (
       <>
-        <NavItem
-          tag={Dropdown}
+        <Link to="/" className="custom-btn dashboard-btn">
+          Home
+        </Link>
+        <Link
+          to={auth.user.role === "admin" ? "/dashboard" : "/latest-news"}
+          className="custom-btn dashboard-btn"
+        >
+          Dashboard
+        </Link>
+        <Dropdown
           caret
+          open={drop}
           // id="nav-drop-down"
           className="nav-drop-down  d-lg-none-c"
           toggle={() => setDrop(!drop)}
           // onClick={() => setDrop(true)}
+          style={{
+            padding: "8px 0",
+          }}
         >
           <DropdownToggle
             caret
-            tag={NavLink}
             className="text-nowrap px-3"
+            id="text-nowrap"
             style={{ cursor: "pointer" }}
+            nav
           >
             <img
               className="user-avatar user-avatar-dropdown rounded-circle mr-2"
               src={
                 props.user.user.profile
-                  ? `https://files-uni.s3.us-east-2.amazonaws.com/${props.user.user.profile}`
+                  ? `https://deefile.s3.amazonaws.com/${props.user.user.profile}`
                   : profileThumbNail
               }
               alt="User Avatar"
@@ -69,7 +62,7 @@ const UserActions = props => {
                 height: "45px",
                 maxWidth: "45px",
                 borderRadius: "50%",
-                margin: "0"
+                margin: "0",
               }}
             />{" "}
             <span className="d-none d-md-inline-block dropdown-span">
@@ -77,29 +70,21 @@ const UserActions = props => {
             </span>
           </DropdownToggle>
 
-          <Collapse tag={DropdownMenu} right small open={drop}>
+          <DropdownMenu>
             <DropdownItem
-              to="/"
-              // className="text-danger"
-              onClick={e => {
+              onClick={(e) => {
                 props.setModal(true);
                 setDrop(false);
               }}
             >
-              {/* <i className="material-icons text-danger">&#xE879;</i> */}
               Change Password
             </DropdownItem>
-            <DropdownItem divider={true} />
 
-            <DropdownItem
-              to="/"
-              className="text-danger"
-              onClick={e => signOut(e)}
-            >
+            <DropdownItem className="text-danger" onClick={(e) => signOut(e)}>
               <i className="material-icons text-danger">&#xE879;</i> Logout
             </DropdownItem>
-          </Collapse>
-        </NavItem>
+          </DropdownMenu>
+        </Dropdown>
         <NavItem>
           <Link
             to={auth.user.role === "admin" ? "/dashboard" : "/latest-news"}

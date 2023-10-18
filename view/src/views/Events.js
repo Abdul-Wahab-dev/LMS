@@ -6,14 +6,14 @@ import {
   CardBody,
   CardHeader,
   Card,
-  Button
+  Button,
 } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 // Actons
 import {
   getPrivateEvents,
   setDisplay,
-  deleteEvent
+  deleteEvent,
 } from "../actions/eventsAction";
 // Page Title
 import PageTitle from "../components/common/PageTitle";
@@ -26,9 +26,9 @@ const Events = () => {
   // initialize useDispatch
   const dispatch = useDispatch();
   // Get state from store
-  const privateEvents = useSelector(state => state.events.privateEvents);
-  const loading = useSelector(state => state.events.loading);
-  const user = useSelector(state => state.auth.user);
+  const privateEvents = useSelector((state) => state.events.privateEvents);
+  const loading = useSelector((state) => state.events.loading);
+  const user = useSelector((state) => state.auth.user);
 
   // UseEffect
   useEffect(() => {
@@ -50,7 +50,7 @@ const Events = () => {
         <Col>
           <Card small className="mb-4">
             <CardHeader className="border-bottom">
-              <h6 className="m-0">Complains</h6>
+              <h6 className="m-0">Events</h6>
             </CardHeader>
             <CardBody className="p-0 pb-3">
               <table className="table mb-0">

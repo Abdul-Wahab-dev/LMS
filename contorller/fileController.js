@@ -10,33 +10,34 @@ aws.config.update({
   region: keys.region,
 });
 const s3 = new aws.S3();
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: "files-uni",
-    acl: "public-read",
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key: function (req, file, cb) {
-      cb(null, "file" + "-" + Date.now() + path.extname(file.originalname));
-    },
-  }),
-}).single("fileUpload");
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: "",
+//     acl: "public-read",
+//     metadata: function (req, file, cb) {
+//       cb(null, { fieldName: file.fieldname });
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, "file" + "-" + Date.now() + path.extname(file.originalname));
+//     },
+//   }),
+// }).single("fileUpload");
 
 exports.fileUpload = (req, res, next) => {
-  upload(req, res, (err) => {
-    if (err) {
-      return res.json({
-        message: err.message,
-        error: err,
-      });
-    } else {
-      if (req.file == undefined) {
-        next();
-      } else {
-        next();
-      }
-    }
-  });
+  // upload(req, res, (err) => {
+  //   if (err) {
+  //     return res.json({
+  //       message: err.message,
+  //       error: err,
+  //     });
+  //   } else {
+  //     if (req.file == undefined) {
+  //       next();
+  //     } else {
+  //       next();
+  //     }
+  //   }
+  // });
+  next();
 };

@@ -3,7 +3,7 @@ import { FormSelect, FormFeedback } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPrograms } from "../actions/programAndAction";
 function Program(props) {
-  const programs = useSelector(state => state.programAndBatch.programs);
+  const programs = useSelector((state) => state.programAndBatch.programs);
   // initialize useDispatch()
   const dispatch = useDispatch();
   useEffect(() => {
@@ -14,7 +14,7 @@ function Program(props) {
       <FormSelect
         value={props.program}
         defaultValue={props.program}
-        onChange={e => props.setProgram(e.target.value)}
+        onChange={(e) => props.setProgram(e.target.value)}
         required
         invalid={
           props.errors &&
@@ -26,8 +26,8 @@ function Program(props) {
         {programs.length > 0 ? (
           <>
             <option value="">Choose</option>{" "}
-            {programs.map(pro => (
-              <option key={pro._id} value={pro.program}>
+            {programs.map((pro) => (
+              <option key={pro._id} value={pro.program.toLowerCase()}>
                 {pro.program}
               </option>
             ))}

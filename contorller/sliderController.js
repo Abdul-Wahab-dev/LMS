@@ -7,11 +7,8 @@ const catchAsync = require("../utils/catchAsync");
 // @access        Private
 exports.create = catchAsync(async (req, res, next) => {
   // Get Data
-  const data = JSON.parse(req.body.slide);
-  // save Filename if exist
-  data.fileName = req.file ? req.file.key : "";
-  // create assignment
-  const slide = await Slider.create(data);
+
+  const slide = await Slider.create(req.body);
 
   // send response to user
   res.status(201).json({

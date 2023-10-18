@@ -5,7 +5,7 @@ const authController = require("../contorller/authContoller");
 
 router
   .route("/")
-  .post(complainController.create)
+  .post(authController.protect, complainController.create)
   .get(authController.protect, complainController.getAllComplain)
   .patch(authController.protect, complainController.status);
 

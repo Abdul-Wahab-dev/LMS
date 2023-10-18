@@ -10,7 +10,7 @@ import {
   ModalHeader,
   FormInput,
   Button,
-  ModalBody
+  ModalBody,
 } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 // react textarea
@@ -20,7 +20,7 @@ import {
   getComplains,
   complainReply,
   setComplainStatus,
-  deleteComplain
+  deleteComplain,
 } from "../actions/complainAction";
 import { studentData } from "../actions/authActions";
 // page title
@@ -39,36 +39,36 @@ const AddNewPost = () => {
   // initialize useDispatch
   const dispatch = useDispatch();
   // Get Errors state from store
-  const Complains = useSelector(state => state.complain.complains);
-  const loading = useSelector(state => state.complain.loading);
-  const user = useSelector(state => state.auth.user);
+  const Complains = useSelector((state) => state.complain.complains);
+  const loading = useSelector((state) => state.complain.loading);
+  const user = useSelector((state) => state.auth.user);
   // UseEffect
   useEffect(() => {
     dispatch(getComplains());
     dispatch(studentData("2017-ag-8112"));
   }, []);
   // reply to complain
-  const replyComp = e => {
+  const replyComp = (e) => {
     const obj = {
       id: data._id,
       reply: [
         {
           from: {
             userId: user.enrollmentNo,
-            name: user.name
+            name: user.name,
           },
-          answer: answer.toLowerCase()
-        }
-      ]
+          answer: answer.toLowerCase(),
+        },
+      ],
     };
-    dispatch(complainReply(obj, clearState));
+    dispatch(complainReply(obj, clearState, setData));
   };
 
   // Complain Status
   const complainStatus = (id, status) => {
     const obj = {
       id,
-      status
+      status,
     };
     dispatch(setComplainStatus(obj));
   };
@@ -79,7 +79,7 @@ const AddNewPost = () => {
   };
 
   // delete Complain
-  const deleteComplainFunc = id => {
+  const deleteComplainFunc = (id) => {
     if (window.confirm("If you want to delete Complain then press OK")) {
       dispatch(deleteComplain(id));
     }
@@ -162,7 +162,7 @@ const AddNewPost = () => {
                               {complain.status !== "complete" ? (
                                 <Button
                                   type="button"
-                                  onClick={e =>
+                                  onClick={(e) =>
                                     complainStatus(complain._id, "complete")
                                   }
                                 >
@@ -171,11 +171,11 @@ const AddNewPost = () => {
                               ) : null}
 
                               {user.enrollmentNo ===
-                              complain.to.complaineeId ? (
+                              complain.from.complainerId ? (
                                 <Button
                                   type="button"
                                   className="btn btn-danger mx-2"
-                                  onClick={e =>
+                                  onClick={(e) =>
                                     deleteComplainFunc(complain._id)
                                   }
                                 >
@@ -223,7 +223,7 @@ const AddNewPost = () => {
             <ReactQuill value={data.body ? data.body : ""} readOnly />
             <h5 className="mt-3">Reply</h5>
             {data.reply
-              ? data.reply.map(reply => (
+              ? data.reply.map((reply) => (
                   <>
                     <strong key={reply._id}>
                       <small>
@@ -239,9 +239,13 @@ const AddNewPost = () => {
               placeholder="reply..."
               className="my-3"
               value={answer}
-              onChange={e => setAnswer(e.target.value)}
+              onChange={(e) => setAnswer(e.target.value)}
             />
-            <Button type="button" className="my-2" onClick={e => replyComp(e)}>
+            <Button
+              type="button"
+              className="my-2"
+              onClick={(e) => replyComp(e)}
+            >
               reply
             </Button>
           </div>

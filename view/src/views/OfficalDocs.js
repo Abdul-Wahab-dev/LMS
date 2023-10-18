@@ -6,7 +6,7 @@ import {
   CardBody,
   CardHeader,
   Card,
-  Button
+  Button,
 } from "shards-react";
 import { useDispatch, useSelector } from "react-redux";
 // custom editor
@@ -20,11 +20,11 @@ import Loader from "../utils/Loader";
 // download file on click function
 import downloadFile from "../utils/downloadFile";
 
-const OfficalDocs = props => {
+const OfficalDocs = (props) => {
   // get state from store
-  const loading = useSelector(state => state.officalDocs.loading);
-  const documents = useSelector(state => state.officalDocs.documents);
-  const auth = useSelector(state => state.auth.user);
+  const loading = useSelector((state) => state.officalDocs.loading);
+  const documents = useSelector((state) => state.officalDocs.documents);
+  const auth = useSelector((state) => state.auth.user);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // useEffect
@@ -32,7 +32,7 @@ const OfficalDocs = props => {
     dispatch(getDocuments());
   }, []);
   // convert date to local date
-  const convertToLocalDateFormat = date => {
+  const convertToLocalDateFormat = (date) => {
     const localDate = new Date(`${date}`);
     return localDate.toLocaleDateString();
   };
@@ -86,7 +86,7 @@ const OfficalDocs = props => {
                         <td>{i + 1}</td>
                         <td>{doc.title}</td>
                         <td
-                          onClick={e =>
+                          onClick={(e) =>
                             doc.fileName
                               ? downloadFile("download-file", doc.fileName)
                               : null
@@ -98,7 +98,7 @@ const OfficalDocs = props => {
                             <span
                               style={{
                                 cursor: "pointer",
-                                textDecoration: "underline"
+                                textDecoration: "underline",
                               }}
                             >
                               {" "}
@@ -113,8 +113,7 @@ const OfficalDocs = props => {
                           {doc.from.providerId}
                         </td>
                         <td>{convertToLocalDateFormat(doc.createdAt)}</td>
-                        {auth.enrollmentNo === doc.from.providerId ||
-                        auth.role === "admin" ? (
+                        {auth.role === "admin" ? (
                           <td>
                             <Button
                               className="btn btn-danger"
@@ -139,7 +138,7 @@ const OfficalDocs = props => {
           </Card>
         </Col>
       </Row>
-      {auth.role !== "student" ? (
+      {auth.role === "admin" ? (
         <>
           {" "}
           <Row noGutters className="page-header py-4">
@@ -152,7 +151,7 @@ const OfficalDocs = props => {
           </Row>
           <Row>
             <Col lg="9" md="12">
-              <Editor for="documents" title="Documnets For" />
+              <Editor for="documents" title="For" />
             </Col>
           </Row>
         </>

@@ -12,11 +12,11 @@ const Events = require("./routes/eventRoutes");
 const Internship = require("./routes/internshipRoutes");
 const CSP = require("./routes/cspRoutes");
 const PEC = require("./routes/pecDocsRoutes");
+const Events = require("./routes/eventRoutes");
 const Slider = require("./routes/sliderRoutes");
 const programAndBatch = require("./routes/programAndBatchRoutes");
 const quote = require("./routes/quoteRoutes");
 
-// const fileUploadTesting = require("./fileController");
 const path = require("path");
 
 const globalErrorHandler = require("./contorller/errorController");

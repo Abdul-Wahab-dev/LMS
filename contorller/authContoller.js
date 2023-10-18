@@ -2,7 +2,6 @@ const AppError = require("./../utils/appError");
 const catchAsync = require("../utils/catchAsync");
 const jwt = require("jsonwebtoken");
 const User = require("../model/User");
-const keys = require("../config/keys");
 const registerValidate = require("../validation/register");
 const loginValidate = require("../validation/login");
 
@@ -10,7 +9,7 @@ const { promisify } = require("util");
 // const APIFeatures = require("../utils/")
 
 const signToken = (payload) => {
-  return jwt.sign(payload, keys.JWT_SECRET, {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: 7200,
   });
 };
@@ -37,29 +36,26 @@ exports.createMultipleUsers = catchAsync(async (req, res, next) => {
 // @access      Public
 exports.signup = catchAsync(async (req, res, next) => {
   // Get Data
-  const data = JSON.parse(req.body.user);
-  const { errors, isValid } = registerValidate(data);
+
+  const { errors, isValid } = registerValidate(req.body);
   // Check Validation
   if (!isValid) {
     return next(new AppError(`Fields Required`, 400, errors));
   }
 
   // check already exist or not
-  const user = await User.findOne({ enrollmentNo: data.enrollmentNo });
+  const user = await User.findOne({ enrollmentNo: req.body.enrollmentNo });
   if (user) {
     return next(new AppError("User already exist", 409));
   }
 
-  if (data.password !== data.passwordConfirm) {
+  if (req.body.password !== req.body.passwordConfirm) {
     return next(
       new AppError("Password and Confirm Password must be same", 400)
     );
   }
-  // save Filename if exist
-  data.profile = req.file ? req.file.key : "";
-  // create assignment
 
-  const newUser = await User.create(data);
+  const newUser = await User.create(req.body);
   res.status(201).json({
     status: "success",
     message: "User successfully created!",
@@ -141,7 +137,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   // 2) Verification token
-  const decoded = await promisify(jwt.verify)(token, keys.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id).select(

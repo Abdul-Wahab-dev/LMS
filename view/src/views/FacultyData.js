@@ -13,7 +13,7 @@ import {
   FormRadio,
   FormSelect,
   Container,
-  CardBody
+  CardBody,
 } from "shards-react";
 
 // Page title
@@ -28,12 +28,12 @@ import {
   getAllUser,
   changeUserRole,
   deleteUser,
-  getDesignations
+  getDesignations,
 } from "../actions/authActions";
 // loader
 import Loader from "../utils/Loader";
 
-const FacultyData = props => {
+const FacultyData = (props) => {
   const [enrollment, setEnrollment] = useState("");
   const [data, setData] = useState({});
   const [modal, setModal] = useState(false);
@@ -50,25 +50,39 @@ const FacultyData = props => {
   const [designation, setDesignation] = useState("");
   const [designationDropDown, setDesignationDropDown] = useState(false);
 
-  const userData = useSelector(state => state.auth.studentData);
-  const auth = useSelector(state => state.auth.user);
-  const loading = useSelector(state => state.auth.loading);
-  const designations = useSelector(state => state.auth.designations);
+  const userData = useSelector((state) => state.auth.studentData);
+  const auth = useSelector((state) => state.auth.user);
+  const loading = useSelector((state) => state.auth.loading);
+  const designations = useSelector((state) => state.auth.designations);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // Get Student Data
   const searchStudent = () => {
-    dispatch(
-      studentData({
-        enrollment: enrollment.toLowerCase(),
-        program: undefined,
-        batch: undefined,
-        role: "faculty",
-        type: "multiple",
-        yearofJoining: yearofJoining * 1,
-        designation: designation
-      })
-    );
+    if (enrollment.length > 0) {
+      dispatch(
+        studentData({
+          enrollment: enrollment.toLowerCase(),
+          program: undefined,
+          batch: undefined,
+          role: "faculty",
+          type: "single",
+          yearofJoining: yearofJoining * 1,
+          designation: designation,
+        })
+      );
+    } else {
+      dispatch(
+        studentData({
+          enrollment: enrollment.toLowerCase(),
+          program: undefined,
+          batch: undefined,
+          role: "faculty",
+          type: "multiple",
+          yearofJoining: yearofJoining * 1,
+          designation: designation,
+        })
+      );
+    }
   };
   //  useEffect
   useEffect(() => {
@@ -78,7 +92,7 @@ const FacultyData = props => {
     setUsers(userData);
   }, [userData]);
   // set permission modal to true and set states
-  const handlePermissionModal = user => {
+  const handlePermissionModal = (user) => {
     setData(user);
     setPermissionModal(true);
     setCSP({ ...user.permissions.CSP });
@@ -157,31 +171,15 @@ const FacultyData = props => {
     const perObj = {
       id: data._id,
       permissions: {
-        CSP: {
-          read: CSP.read,
-          write: CSP.write
-        },
-        PEC: {
-          read: PEC.read,
-          write: PEC.write
-        },
         NEWS: {
           read: NEWS.read,
-          write: NEWS.write
-        },
-        INTERNSHIP: {
-          read: INTERNSHIP.read,
-          write: INTERNSHIP.write
+          write: NEWS.write,
         },
         FYP: {
           read: FYP.read,
-          write: FYP.write
+          write: FYP.write,
         },
-        TEAM: {
-          read: TEAM.read,
-          write: TEAM.write
-        }
-      }
+      },
     };
     dispatch(assignPermission(perObj, clearState));
   };
@@ -218,9 +216,13 @@ const FacultyData = props => {
           >
             <FormRadio
               checked={searchBy === "enrollment"}
-              onChange={e => setSearchBy("enrollment")}
+              onChange={(e) => {
+                setSearchBy("enrollment");
+                setDesignation("");
+                setYearofJoining("");
+              }}
             >
-              Enrollment
+              Username
             </FormRadio>
           </Col>
           <Col
@@ -231,7 +233,11 @@ const FacultyData = props => {
           >
             <FormRadio
               checked={searchBy === "designation"}
-              onChange={e => setSearchBy("designation")}
+              onChange={(e) => {
+                setSearchBy("designation");
+                setEnrollment("");
+                setYearofJoining("");
+              }}
             >
               Designation
             </FormRadio>
@@ -244,7 +250,11 @@ const FacultyData = props => {
           >
             <FormRadio
               checked={searchBy === "yearofjoining"}
-              onChange={e => setSearchBy("yearofjoining")}
+              onChange={(e) => {
+                setSearchBy("yearofjoining");
+                setEnrollment("");
+                setDesignation("");
+              }}
             >
               Joining Year
             </FormRadio>
@@ -256,7 +266,7 @@ const FacultyData = props => {
               <FormSelect
                 id="feInputState"
                 value={yearofJoining}
-                onChange={e => setYearofJoining(e.target.value)}
+                onChange={(e) => setYearofJoining(e.target.value)}
               >
                 <option value="">Choose...</option>
                 <option value="1990">1990</option>
@@ -299,9 +309,9 @@ const FacultyData = props => {
               <FormInput
                 id="feEnrollment"
                 type="text"
-                placeholder="Enrollment No"
+                placeholder="username"
                 value={enrollment}
-                onChange={e => setEnrollment(e.target.value)}
+                onChange={(e) => setEnrollment(e.target.value)}
               />
             ) : null}
             {searchBy === "designation" ? (
@@ -312,7 +322,7 @@ const FacultyData = props => {
                   type="text"
                   placeholder="Designation"
                   value={designation}
-                  onChange={e => setDesignation(e.target.value)}
+                  onChange={(e) => setDesignation(e.target.value)}
                   onFocus={() => setDesignationDropDown(true)}
                 />
                 {/* <input  onFocusOut /> */}
@@ -320,26 +330,27 @@ const FacultyData = props => {
                 designation.length > 0 &&
                 designationDropDown === true &&
                 designations.filter(
-                  design => design.designation.indexOf(designation) !== -1
+                  (design) => design.designation.indexOf(designation) !== -1
                 ).length > 0 ? (
                   <div className="user-filter-div">
                     {designations
                       .filter(
-                        design => design.designation.indexOf(designation) !== -1
+                        (design) =>
+                          design.designation.indexOf(designation) !== -1
                       )
                       .filter(
                         (design, i, arrayDesignations) =>
                           arrayDesignations.findIndex(
-                            designs =>
+                            (designs) =>
                               designs.designation === design.designation
                           ) === i
                       )
-                      .map(design => (
+                      .map((design) => (
                         <p
                           key={design._id}
                           style={{
                             margin: "5px 0 0 0",
-                            cursor: "pointer"
+                            cursor: "pointer",
                           }}
                           // onBlur={() => }
                           onClick={() => {
@@ -418,9 +429,9 @@ const FacultyData = props => {
               </tr>
             </thead>
             <tbody>
-              {users.filter(user => user.role === "faculty").length > 0 ? (
+              {users.filter((user) => user.role === "faculty").length > 0 ? (
                 users
-                  .filter(user => user.role === "faculty")
+                  .filter((user) => user.role === "faculty")
                   .map((user, i) => (
                     <tr key={user._id}>
                       <td>{i + 1}</td>
@@ -464,7 +475,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "admin"
+                                      role: "admin",
                                     })
                                   )
                                 }
@@ -477,7 +488,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "coordinator"
+                                      role: "coordinator",
                                     })
                                   )
                                 }
@@ -494,7 +505,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "admin"
+                                      role: "admin",
                                     })
                                   )
                                 }
@@ -507,7 +518,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "faculty"
+                                      role: "faculty",
                                     })
                                   )
                                 }
@@ -524,7 +535,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "faculty"
+                                      role: "faculty",
                                     })
                                   )
                                 }
@@ -537,7 +548,7 @@ const FacultyData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "coordinator"
+                                      role: "coordinator",
                                     })
                                   )
                                 }
@@ -578,57 +589,13 @@ const FacultyData = props => {
           </Row>
           <Row className="pt-2">
             <Col md="6">
-              <h5>CSP Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={CSP.read}
-                onChange={e => handleCheckBox("CSP", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={CSP.write}
-                onChange={e => handleCheckBox("CSP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>PEC Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={PEC.read}
-                onChange={e => handleCheckBox("PEC", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={PEC.write}
-                onChange={e => handleCheckBox("PEC", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
               <h5>News Block</h5>
             </Col>
             <Col md="3">
               {" "}
               <FormCheckbox
                 checked={NEWS.read}
-                onChange={e => handleCheckBox("NEWS", "read")}
+                onChange={(e) => handleCheckBox("NEWS", "read")}
               >
                 read
               </FormCheckbox>
@@ -636,43 +603,22 @@ const FacultyData = props => {
             <Col md="3">
               <FormCheckbox
                 checked={NEWS.write}
-                onChange={e => handleCheckBox("NEWS", "write")}
+                onChange={(e) => handleCheckBox("NEWS", "write")}
               >
                 write
               </FormCheckbox>
             </Col>
           </Row>
+
           <Row className="pt-2">
             <Col md="6">
-              <h5>Internship Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={INTERNSHIP.read}
-                onChange={e => handleCheckBox("INTERNSHIP", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={INTERNSHIP.write}
-                onChange={e => handleCheckBox("INTERNSHIP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>FYP Coordinator Block</h5>
+              <h5>FYP Block</h5>
             </Col>
             <Col md="3">
               {" "}
               <FormCheckbox
                 checked={FYP.read}
-                onChange={e => handleCheckBox("FYP", "read")}
+                onChange={(e) => handleCheckBox("FYP", "read")}
               >
                 read
               </FormCheckbox>
@@ -680,29 +626,7 @@ const FacultyData = props => {
             <Col md="3">
               <FormCheckbox
                 checked={FYP.write}
-                onChange={e => handleCheckBox("FYP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>Team Creation</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={FYP.read}
-                onChange={e => handleCheckBox("TEAM", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={FYP.write}
-                onChange={e => handleCheckBox("TEAM", "write")}
+                onChange={(e) => handleCheckBox("FYP", "write")}
               >
                 write
               </FormCheckbox>

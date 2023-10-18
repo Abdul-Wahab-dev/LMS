@@ -6,19 +6,19 @@ import profileThumbNail from "../images/profile-thumbnail.png";
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 4
+    items: 4,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 3
+    items: 3,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
+    items: 1,
+  },
 };
 
-const ItemsSlider = props => {
+const ItemsSlider = (props) => {
   return (
     <Carousel
       autoPlay={true}
@@ -28,12 +28,12 @@ const ItemsSlider = props => {
     >
       {props.users
         .filter(
-          user =>
+          (user) =>
             user.role !== "student" &&
             user.role !== "admin" &&
             user.approvedUser === true
         )
-        .map(user => (
+        .map((user) => (
           <div
             className="d-flex justify-content-center align-items-center flex-column"
             key={user._id}
@@ -45,14 +45,13 @@ const ItemsSlider = props => {
                 borderRadius: "50%",
                 background: `url(${
                   user.profile
-                    ? "https://files-uni.s3.us-east-2.amazonaws.com/" +
-                      user.profile
+                    ? "https://deefile.s3.amazonaws.com/" + user.profile
                     : profileThumbNail
                 })`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
-                marginBottom: "10px"
+                marginBottom: "10px",
               }}
             ></div>
             <p className="m-0" style={{ textAlign: "center" }}>

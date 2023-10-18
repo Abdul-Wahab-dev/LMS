@@ -6,10 +6,6 @@ import complainsReducer from "./complainReducer";
 import officalDocsReducer from "./officalDocsReducer";
 import assignmentReducer from "./assignmentReducer";
 import fypReducer from "./fypReducer";
-import teamReducer from "./teamReducer";
-import internshipReducer from "./internshipReducer";
-import cspReducer from "./cspReducer";
-import pecReducer from "./pecReducer";
 import eventReducer from "./eventReducer";
 import sliderReducer from "./sliderReducer";
 import programAndBatchReducer from "./programAndBatchReducer";
@@ -23,12 +19,8 @@ export default combineReducers({
   officalDocs: officalDocsReducer,
   assignment: assignmentReducer,
   fyp: fypReducer,
-  team: teamReducer,
-  internship: internshipReducer,
-  csp: cspReducer,
-  pec: pecReducer,
   events: eventReducer,
   slider: sliderReducer,
   programAndBatch: programAndBatchReducer,
-  quote: quoteReducer
+  quote: quoteReducer,
 });

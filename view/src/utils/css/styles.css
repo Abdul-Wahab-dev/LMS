@@ -164,6 +164,10 @@ header section a {
 
 .slider-content {
   text-align: center;
+  background-image: url("../../images/landing_page.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100% !important;
+  background-position: center !important;
 }
 
 .slider-content .inner {

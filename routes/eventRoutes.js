@@ -1,16 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const eventController = require("../contorller/eventController");
-const fileController = require("../contorller/fileController");
 const authController = require("../contorller/authContoller");
 
 router
   .route("/")
-  .post(
-    authController.protect,
-    fileController.fileUpload,
-    eventController.create
-  )
+  .post(authController.protect, eventController.create)
   .get(eventController.getEvent);
 
 router.get(

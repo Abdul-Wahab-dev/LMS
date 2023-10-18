@@ -3,10 +3,9 @@ import classNames from "classnames";
 import { Col } from "shards-react";
 import { useSelector, useDispatch } from "react-redux";
 import { Nav, NavItem, NavLink } from "shards-react";
-import { NavLink as RouteNavLink } from "react-router-dom";
 import { logoutUser } from "../../../actions/authActions";
 
-const SimpleSideBar = props => {
+const SimpleSideBar = (props) => {
   const classes = classNames(
     "main-sidebar",
     "px-0",
@@ -20,7 +19,7 @@ const SimpleSideBar = props => {
 
   // initialize useDispatch
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   return (
     <Col
       tag="aside"
@@ -32,11 +31,7 @@ const SimpleSideBar = props => {
       <div className="nav-wrapper">
         <Nav className="nav--no-borders flex-column">
           <NavItem>
-            <NavLink
-              tag={RouteNavLink}
-              to={"/"}
-              className="d-flex align-items-center"
-            >
+            <NavLink to={"/"} className="d-flex align-items-center">
               <ion-icon name="person-circle"></ion-icon>
               <span>Home</span>
             </NavLink>
@@ -110,7 +105,6 @@ const SimpleSideBar = props => {
           </NavItem>
           <NavItem>
             <NavLink
-              tag={RouteNavLink}
               to={"/user-register"}
               className="d-flex align-items-center"
             >
@@ -121,7 +115,6 @@ const SimpleSideBar = props => {
           {isAuthenticated === true ? (
             <NavItem>
               <NavLink
-                tag={RouteNavLink}
                 to={"/user-login"}
                 className="d-flex align-items-center"
                 onClick={() => dispatch(logoutUser())}

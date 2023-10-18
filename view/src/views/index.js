@@ -12,7 +12,7 @@ import {
   CardTitle,
   CardBody,
   Modal,
-  ModalBody
+  ModalBody,
 } from "shards-react";
 // images
 import sectionTop from "../images/page-top-62x41.png";
@@ -25,17 +25,13 @@ import { getPublicEvents } from "../actions/eventsAction";
 import { getQuotes } from "../actions/quoteAction";
 // component
 import MainFooter from "../components/layout/MainFooter";
-const Index = props => {
+const Index = (props) => {
   const [eventModal, setEventModal] = useState(true);
-  const [activeUserClass, setActiveUserClass] = useState(
-    "currently-active-user"
-  );
-  // get state from store
-  const slides = useSelector(state => state.slider.slides);
-  const users = useSelector(state => state.auth.users);
-  const news = useSelector(state => state.news.news);
-  const events = useSelector(state => state.events.privateEvents);
-  const quotes = useSelector(state => state.quote.quotes);
+  const slides = useSelector((state) => state.slider.slides);
+  const users = useSelector((state) => state.auth.users);
+  const news = useSelector((state) => state.news.news);
+  const events = useSelector((state) => state.events.privateEvents);
+  const quotes = useSelector((state) => state.quote.quotes);
   // initialize useDispatch()
   const dispatch = useDispatch();
   // useEffect
@@ -46,19 +42,9 @@ const Index = props => {
     dispatch(getPublicEvents());
     dispatch(getQuotes());
   }, []);
-  useEffect(() => {
-    setInterval(() => {
-      setActiveUserClass("currently-active-user-effect currently-active-user");
-      setTimeout(() => {
-        setActiveUserClass("currently-active-user");
-      }, 4000);
-    }, 10000);
-    // if (auth.isAuthenticated) {
 
-    // }
-  }, []);
   // get formate date
-  const getFullyFormateDate = fullDate => {
+  const getFullyFormateDate = (fullDate) => {
     const date = new Date(fullDate);
     const day = date.getDate();
     const month = date.getMonth();
@@ -68,25 +54,6 @@ const Index = props => {
   return (
     <>
       <div className="position-relative" style={{ position: "relative" }}>
-        <div className={activeUserClass}>
-          <div>
-            <div style={{ lineHeight: "14px" }}>
-              <span>Engr. Maryam Iqbal</span>
-              <br />
-              <small>Supervisor</small>
-            </div>
-            <div style={{ lineHeight: "14px", marginTop: "10px" }}>
-              <span>Bilal Waris</span>
-              <br />
-              <small>Developer</small>
-            </div>
-            <div style={{ lineHeight: "14px", marginTop: "10px" }}>
-              <span>Farzeen Tariq</span>
-              <br />
-              <small>Developer</small>
-            </div>
-          </div>
-        </div>
         {slides.length > 0 ? (
           <AnimatedSlider slides={slides} />
         ) : (
@@ -108,7 +75,9 @@ const Index = props => {
               >
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
-                    ? `${users.filter(user => user.role === "student").length}`
+                    ? `${
+                        users.filter((user) => user.role === "student").length
+                      }`
                     : "00"}
                 </h1>
                 <h3 style={{ textAlign: "center" }}>Students</h3>
@@ -119,7 +88,9 @@ const Index = props => {
               >
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
-                    ? `${users.filter(user => user.role === "faculty").length}`
+                    ? `${
+                        users.filter((user) => user.role === "faculty").length
+                      }`
                     : "00"}
                 </h1>
                 <h3 style={{ textAlign: "center" }}>Faculty members</h3>
@@ -131,7 +102,8 @@ const Index = props => {
                 <h1 style={{ textAlign: "center", margin: "0" }}>
                   {users.length > 0
                     ? `${
-                        users.filter(user => user.role === "coordinator").length
+                        users.filter((user) => user.role === "coordinator")
+                          .length
                       }`
                     : "00"}
                 </h1>
@@ -151,7 +123,7 @@ const Index = props => {
           <div className="my-4 py-4">
             <Row>
               {news.length > 0 ? (
-                news.map(news => (
+                news.map((news) => (
                   <Col
                     key={news._id}
                     md="4"
@@ -159,17 +131,12 @@ const Index = props => {
                   >
                     <Card style={{ width: "300px" }}>
                       <CardBody>
-                        <CardTitle>{news.title}</CardTitle>
+                        <CardTitle style={{ textTransform: "uppercase" }}>
+                          {news.title}
+                        </CardTitle>
                         <ReactQuill
                           readOnly
-                          value={
-                            news.body.length > 105
-                              ? `${news.body.substring(
-                                  0,
-                                  100
-                                )}... \n LOGIN TO READ MORE`
-                              : news.body
-                          }
+                          value={news.body}
                           toolbar={false}
                         />
                         <span
@@ -216,9 +183,9 @@ const Index = props => {
         <div className="d-flex justify-content-center align-item-center my-4 py-4">
           <img src={sectionBottom} alt="section-top" />
         </div>
-        {quotes.filter(quote => quote.display === true).length > 0
+        {quotes.filter((quote) => quote.display === true).length > 0
           ? quotes
-              .filter(quote => quote.display === true)
+              .filter((quote) => quote.display === true)
               .map((quote, i) =>
                 i < 1 ? (
                   <div
@@ -226,15 +193,16 @@ const Index = props => {
                     style={{
                       textAlign: "center",
                       color: "#fff",
-                      backgroundColor: "#1976d2"
+                      backgroundColor: "#1976d2",
                     }}
+                    key={i}
                   >
                     <Container>
                       <h3
                         style={{
                           color: "#fff",
                           padding: "30px 0",
-                          margin: "0"
+                          margin: "0",
                         }}
                       >
                         {" "}
@@ -285,12 +253,12 @@ const Index = props => {
               </Row>
             )}
           </div>
-          {events.filter(eve => eve.display === true).length > 0
+          {events.filter((eve) => eve.display === true).length > 0
             ? events
-                .filter(eve => eve.display === true)
+                .filter((eve) => eve.display === true)
                 .map((eve, i) =>
                   i < 1 ? (
-                    <div className="event-popup">
+                    <div key={i} className="event-popup">
                       <Modal
                         open={eventModal}
                         toggle={() => setEventModal(!eventModal)}
@@ -300,7 +268,7 @@ const Index = props => {
                           <div className="d-flex flex-column justify-content-center align-items-center">
                             {eve.fileName ? (
                               <img
-                                src={`https://files-uni.s3.us-east-2.amazonaws.com/${eve.fileName}`}
+                                src={`https://deefile.s3.amazonaws.com/${eve.fileName}`}
                                 alt="event-img"
                                 width="75%"
                               />

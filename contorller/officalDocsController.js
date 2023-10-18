@@ -1,18 +1,20 @@
 const OfficalDocs = require("../model/OfficalDous");
 const AppError = require("./../utils/appError");
 const catchAsync = require("../utils/catchAsync");
-const complainValidator = require("../validation/complain");
+const DocumnentValidator = require("../validation/officalDoc");
 
 // @route         CREATE /api/v1/officalDocs
 // @desc          create offical document
 // @access        Private
 exports.create = catchAsync(async (req, res, next) => {
-  // convert data to object formate
-  const data = JSON.parse(req.body.doc);
   // save fileName if exist
-  data.fileName = req.file ? req.file.key : "";
+  const { errors, isValid } = DocumnentValidator(req.body);
+  // Check Validation if in-valid then throw error
+  if (!isValid) {
+    return next(new AppError("fields required", 400, errors));
+  }
 
-  const OfficalDoc = await OfficalDocs.create(data);
+  const OfficalDoc = await OfficalDocs.create(req.body);
   // send response to user
   res.status(201).json({
     status: "success",
@@ -31,6 +33,7 @@ exports.getDocs = catchAsync(async (req, res, next) => {
     $or: [
       { "from.providerId": req.user.enrollmentNo },
       { $and: [{ "to.id": "" }, { documentFor: req.user.role }] },
+      { $and: [{ "to.id": "" }, { documentFor: "all" }] },
       { "to.id": req.user.enrollmentNo },
     ],
   });

@@ -12,16 +12,16 @@ export default () => {
   const [modal, setModal] = useState(false);
 
   // get State from store
-  const user = useSelector(state => state.auth);
-  const errorsFromStore = useSelector(state => state.errors);
+  const user = useSelector((state) => state.auth);
+  const errorsFromStore = useSelector((state) => state.errors);
   // initialize useDispatch
   const dispatch = useDispatch();
   // Update Password
-  const updatePasswordFunc = e => {
+  const updatePasswordFunc = (e) => {
     const obj = {
       passwordCurrent,
       password,
-      passwordConfirm
+      passwordConfirm,
     };
     dispatch(updatePassword(obj, clearState));
   };
@@ -33,7 +33,11 @@ export default () => {
   };
   return (
     <div>
-      <Nav navbar className="flex-row">
+      <Nav
+        navbar
+        className="flex-row"
+        style={{ gap: "10px", alignItems: "center" }}
+      >
         <UserActions user={user} setModal={setModal} />
       </Nav>
       <Modal
@@ -56,7 +60,7 @@ export default () => {
                 placeholder="Your Password"
                 required
                 value={passwordCurrent}
-                onChange={e => setPasswordCurrent(e.target.value)}
+                onChange={(e) => setPasswordCurrent(e.target.value)}
               />
             </div>
             <div className="mb-1 w-75">
@@ -67,7 +71,7 @@ export default () => {
                 placeholder="New Password"
                 required
                 value={password}
-                onChange={e => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="mb-1 w-75">
@@ -77,14 +81,14 @@ export default () => {
                 type="password"
                 placeholder="Confirm Password"
                 value={passwordConfirm}
-                onChange={e => setPasswordConfirm(e.target.value)}
+                onChange={(e) => setPasswordConfirm(e.target.value)}
                 required
               />
             </div>
             <Button
               type="button"
               className="btn mt-2"
-              onClick={e => updatePasswordFunc(e)}
+              onClick={(e) => updatePasswordFunc(e)}
             >
               Update Password
             </Button>

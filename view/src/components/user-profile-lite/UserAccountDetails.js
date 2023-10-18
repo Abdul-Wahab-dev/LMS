@@ -10,7 +10,7 @@ import {
   Form,
   FormGroup,
   FormInput,
-  Button
+  Button,
 } from "shards-react";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -45,7 +45,7 @@ const UserAccountDetails = ({ profile }) => {
   }, []);
 
   // get state from store
-  const auth = useSelector(state => state.auth.user);
+  const auth = useSelector((state) => state.auth.user);
   useEffect(() => {
     if (profile.role) {
       setRole(profile.role ? profile.role : "");
@@ -86,7 +86,7 @@ const UserAccountDetails = ({ profile }) => {
       personalEmail: personalEmail.toLowerCase(),
       universityEmail: universityEmail.toLowerCase(),
       permanentAddress: permanentAddress,
-      currentAddress: currentAddress
+      currentAddress: currentAddress,
     };
     dispatch(updateUserAction(user));
   };
@@ -101,7 +101,7 @@ const UserAccountDetails = ({ profile }) => {
             <img
               src={
                 profile.profile
-                  ? `https://files-uni.s3.us-east-2.amazonaws.com/${profile.profile}`
+                  ? `https://deefile.s3.amazonaws.com/${profile.profile}`
                   : profileThumbNail
               }
               alt="user-profile"
@@ -109,7 +109,7 @@ const UserAccountDetails = ({ profile }) => {
                 width: "200px",
                 height: "200px",
                 borderRadius: "50%",
-                marginBottom: "20px"
+                marginBottom: "20px",
               }}
               className="thumbnail-image"
             />
@@ -126,7 +126,7 @@ const UserAccountDetails = ({ profile }) => {
                       placeholder="Role"
                       value={role}
                       readOnly={true}
-                      onChange={e => setRole(e.target.value)}
+                      onChange={(e) => setRole(e.target.value)}
                     />
                   </Col>
                   <Col md="6">
@@ -143,7 +143,7 @@ const UserAccountDetails = ({ profile }) => {
                           : true
                       }
                       // readOnly={true}
-                      onChange={e => setEnrollmentNo(e.target.value)}
+                      onChange={(e) => setEnrollmentNo(e.target.value)}
                     />
                   </Col>
                 </Row>
@@ -155,7 +155,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="text"
                       placeholder="Name"
                       value={name}
-                      onChange={e => setName(e.target.value)}
+                      onChange={(e) => setName(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -171,7 +171,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="text"
                       placeholder="FatherName"
                       value={fatherName}
-                      onChange={e => setFatherName(e.target.value)}
+                      onChange={(e) => setFatherName(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -187,22 +187,6 @@ const UserAccountDetails = ({ profile }) => {
                       <Col md="6" className="form-group">
                         <label htmlFor="feProgram">Program</label>
                         <Program program={program} setProgram={setProgram} />
-                        {/* <FormInput
-                          id="feProgram"
-                          type="text"
-                          placeholder="Program"
-                          value={program}
-                          onChange={e => setProgram(e.target.value)}
-                          readOnly={
-                            auth &&
-                            auth.role !== "student" &&
-                            auth &&
-                            auth.role !== "coordinator"
-                              ? false
-                              : true
-                          }
-                          
-                        /> */}
                       </Col>
                       <Col md="6">
                         <label htmlFor="feDegreeDuration">
@@ -213,7 +197,7 @@ const UserAccountDetails = ({ profile }) => {
                           type="text"
                           placeholder="Degree Duration"
                           value={degreeDuration}
-                          onChange={e => setDegreeDuration(e.target.value)}
+                          onChange={(e) => setDegreeDuration(e.target.value)}
                           readOnly={
                             (auth && auth.role !== "student") ||
                             (auth && auth.role !== "coordinator")
@@ -248,7 +232,7 @@ const UserAccountDetails = ({ profile }) => {
                           type="number"
                           placeholder="Max Semester"
                           value={maxSemester}
-                          onChange={e => setMaxSemester(e.target.value)}
+                          onChange={(e) => setMaxSemester(e.target.value)}
                           readOnly={
                             (auth && auth.role !== "student") ||
                             (auth && auth.role !== "coordinator")
@@ -260,35 +244,6 @@ const UserAccountDetails = ({ profile }) => {
                     </Row>
                   </>
                 ) : null}
-                {/* <Row form>
-                  <Col md="6" className="form-group">
-                    <label htmlFor="feProgram">Program</label>
-                    <FormInput
-                      id="feProgram"
-                      type="text"
-                      placeholder="Program"
-                      value={program}
-                      onChange={e => setProgram(e.target.value)}
-                      readOnly={
-                        profile && profile.role !== "admin" ? true : false
-                      }
-                      // readOnly={true}
-                    />
-                  </Col>
-                  <Col md="6">
-                    <label htmlFor="feDegreeDuration">Degree Duration</label>
-                    <FormInput
-                      id="feDegreeDuration"
-                      type="text"
-                      placeholder="Degree Duration"
-                      value={degreeDuration}
-                      onChange={e => setDegreeDuration(e.target.value)}
-                      readOnly={
-                        profile && profile.role !== "admin" ? true : false
-                      }
-                    />
-                  </Col>
-                </Row> */}
 
                 <Row form>
                   <Col md="6" className="form-group">
@@ -298,7 +253,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="text"
                       placeholder="Mobile Number"
                       value={mobile}
-                      onChange={e => setMobile(e.target.value)}
+                      onChange={(e) => setMobile(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -314,7 +269,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="number"
                       placeholder="Phone Number"
                       value={contact}
-                      onChange={e => setContact(e.target.value)}
+                      onChange={(e) => setContact(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -332,7 +287,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="email"
                       placeholder="Personal Email"
                       value={personalEmail}
-                      onChange={e => setPersonalEmail(e.target.value)}
+                      onChange={(e) => setPersonalEmail(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -348,7 +303,7 @@ const UserAccountDetails = ({ profile }) => {
                       type="email"
                       placeholder="University Email"
                       value={universityEmail}
-                      onChange={e => setUniversityEmail(e.target.value)}
+                      onChange={(e) => setUniversityEmail(e.target.value)}
                       readOnly={
                         (auth && auth.role !== "student") ||
                         (auth && auth.role !== "coordinator")
@@ -366,7 +321,7 @@ const UserAccountDetails = ({ profile }) => {
                     id="feInputAddress"
                     placeholder="1234 Main St"
                     value={currentAddress}
-                    onChange={e => setCurrentAddress(e.target.value)}
+                    onChange={(e) => setCurrentAddress(e.target.value)}
                     readOnly={
                       (auth && auth.role !== "student") ||
                       (auth && auth.role !== "coordinator")
@@ -382,7 +337,7 @@ const UserAccountDetails = ({ profile }) => {
                     id="feInputAddress2"
                     placeholder="Apartment, Studio or Floor"
                     value={permanentAddress}
-                    onChange={e => setPermanentAddress(e.target.value)}
+                    onChange={(e) => setPermanentAddress(e.target.value)}
                     readOnly={
                       (auth && auth.role !== "student") ||
                       (auth && auth.role !== "coordinator")
@@ -392,7 +347,8 @@ const UserAccountDetails = ({ profile }) => {
                   />
                 </FormGroup>
                 {(auth && auth.role === "admin") ||
-                (auth && auth.role === "faculty") ? (
+                auth.role === "faculty" ||
+                auth.role === "coordinator" ? (
                   <Button type="button" onClick={() => updateUserFunc()}>
                     Update
                   </Button>
@@ -410,11 +366,11 @@ UserAccountDetails.propTypes = {
   /**
    * The component's title.
    */
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 UserAccountDetails.defaultProps = {
-  title: "Account Details"
+  title: "Account Details",
 };
 
 export default UserAccountDetails;

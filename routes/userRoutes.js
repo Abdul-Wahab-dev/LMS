@@ -1,7 +1,6 @@
 const express = require("express");
 const passport = require("passport");
 const router = express.Router();
-const fileController = require("../contorller/fileController");
 const authContorller = require("../contorller/authContoller");
 
 router.patch(
@@ -9,7 +8,7 @@ router.patch(
   authContorller.protect,
   authContorller.updatePassword
 );
-router.post("/signup", fileController.fileUpload, authContorller.signup);
+router.post("/signup", authContorller.signup);
 router.post("/login", authContorller.login);
 
 router.post(

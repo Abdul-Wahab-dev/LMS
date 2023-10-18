@@ -11,7 +11,7 @@ import {
   FormCheckbox,
   ModalBody,
   Container,
-  CardBody
+  CardBody,
 } from "shards-react";
 // Page Title
 import PageTitle from "../components/common/PageTitle";
@@ -23,12 +23,12 @@ import {
   assignPermission,
   getAllUser,
   changeUserRole,
-  deleteUser
+  deleteUser,
 } from "../actions/authActions";
 // loader
 import Loader from "../utils/Loader";
 
-const CoorData = props => {
+const CoorData = (props) => {
   const [enrollment, setEnrollment] = useState("");
   const [data, setData] = useState({});
   const [modal, setModal] = useState(false);
@@ -42,29 +42,31 @@ const CoorData = props => {
 
   const [permissionModal, setPermissionModal] = useState(false);
 
-  const userData = useSelector(state => state.auth.studentData);
-  const loading = useSelector(state => state.auth.loading);
-  const auth = useSelector(state => state.auth.user);
+  const userData = useSelector((state) => state.auth.studentData);
+  const loading = useSelector((state) => state.auth.loading);
+  const auth = useSelector((state) => state.auth.user);
   // initialize useDispatch
   const dispatch = useDispatch();
   // Get Student Data
-  const searchStudent = () => {
-    dispatch(
-      studentData({
-        enrollment: enrollment.toLowerCase(),
-        program: "null",
-        batch: "null",
-        role: "coordinator",
-        type: "multiple"
-      })
-    );
+  const searchStudent = (type) => {
+    if (enrollment.length > 0 && type === "single") {
+      dispatch(
+        studentData({
+          enrollment: enrollment.toLowerCase(),
+          program: "null",
+          batch: "null",
+          role: "coordinator",
+          type: "single",
+        })
+      );
+    }
   };
 
   useEffect(() => {
     setUsers(userData);
   }, [userData]);
   // set permission modal to true and set states
-  const handlePermissionModal = user => {
+  const handlePermissionModal = (user) => {
     setData(user);
     setPermissionModal(true);
     setCSP({ ...user.permissions.CSP });
@@ -143,33 +145,20 @@ const CoorData = props => {
     const perObj = {
       id: data._id,
       permissions: {
-        CSP: {
-          read: CSP.read,
-          write: CSP.write
-        },
-        PEC: {
-          read: PEC.read,
-          write: PEC.write
-        },
         NEWS: {
           read: NEWS.read,
-          write: NEWS.write
-        },
-        INTERNSHIP: {
-          read: INTERNSHIP.read,
-          write: INTERNSHIP.write
+          write: NEWS.write,
         },
         FYP: {
           read: FYP.read,
-          write: FYP.write
+          write: FYP.write,
         },
-        TEAM: {
-          read: FYP.read,
-          write: FYP.write
-        }
-      }
+      },
     };
-    dispatch(assignPermission(perObj));
+    dispatch(assignPermission(perObj, clearState));
+  };
+  const clearState = () => {
+    setPermissionModal(false);
   };
   return (
     <Container fluid className="main-content-container p-4 complain-page">
@@ -187,13 +176,13 @@ const CoorData = props => {
             <FormInput
               id="feEnrollment"
               type="text"
-              placeholder="Enrollment No"
+              placeholder="username"
               value={enrollment}
-              onChange={e => setEnrollment(e.target.value)}
+              onChange={(e) => setEnrollment(e.target.value)}
             />
           </Col>
           <Col sm="2" className="mt-sm">
-            <Button size="md" onClick={() => searchStudent()}>
+            <Button size="md" onClick={() => searchStudent("single")}>
               Search
             </Button>
           </Col>
@@ -246,14 +235,14 @@ const CoorData = props => {
             </thead>
             <tbody>
               {users.filter(
-                user =>
+                (user) =>
                   user.role !== "student" &&
                   user.role !== "faculty" &&
                   user.role !== "admin"
               ).length > 0 ? (
                 users
                   .filter(
-                    user =>
+                    (user) =>
                       user.role !== "student" &&
                       user.role !== "faculty" &&
                       user.role !== "admin"
@@ -304,7 +293,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "admin"
+                                      role: "admin",
                                     })
                                   )
                                 }
@@ -317,7 +306,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "coordinator"
+                                      role: "coordinator",
                                     })
                                   )
                                 }
@@ -334,7 +323,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "admin"
+                                      role: "admin",
                                     })
                                   )
                                 }
@@ -347,7 +336,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "faculty"
+                                      role: "faculty",
                                     })
                                   )
                                 }
@@ -364,7 +353,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "faculty"
+                                      role: "faculty",
                                     })
                                   )
                                 }
@@ -377,7 +366,7 @@ const CoorData = props => {
                                   dispatch(
                                     changeUserRole({
                                       id: user._id,
-                                      role: "coordinator"
+                                      role: "coordinator",
                                     })
                                   )
                                 }
@@ -415,57 +404,13 @@ const CoorData = props => {
           </Row>
           <Row className="pt-2">
             <Col md="6">
-              <h5>CSP Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={CSP.read}
-                onChange={e => handleCheckBox("CSP", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={CSP.write}
-                onChange={e => handleCheckBox("CSP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>PEC Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={PEC.read}
-                onChange={e => handleCheckBox("PEC", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={PEC.write}
-                onChange={e => handleCheckBox("PEC", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
               <h5>News Block</h5>
             </Col>
             <Col md="3">
               {" "}
               <FormCheckbox
                 checked={NEWS.read}
-                onChange={e => handleCheckBox("NEWS", "read")}
+                onChange={(e) => handleCheckBox("NEWS", "read")}
               >
                 read
               </FormCheckbox>
@@ -473,43 +418,22 @@ const CoorData = props => {
             <Col md="3">
               <FormCheckbox
                 checked={NEWS.write}
-                onChange={e => handleCheckBox("NEWS", "write")}
+                onChange={(e) => handleCheckBox("NEWS", "write")}
               >
                 write
               </FormCheckbox>
             </Col>
           </Row>
+
           <Row className="pt-2">
             <Col md="6">
-              <h5>Internship Coordinator Block</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={INTERNSHIP.read}
-                onChange={e => handleCheckBox("INTERNSHIP", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={INTERNSHIP.write}
-                onChange={e => handleCheckBox("INTERNSHIP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>FYP Coordinator Block</h5>
+              <h5>FYP Block</h5>
             </Col>
             <Col md="3">
               {" "}
               <FormCheckbox
                 checked={FYP.read}
-                onChange={e => handleCheckBox("FYP", "read")}
+                onChange={(e) => handleCheckBox("FYP", "read")}
               >
                 read
               </FormCheckbox>
@@ -517,29 +441,7 @@ const CoorData = props => {
             <Col md="3">
               <FormCheckbox
                 checked={FYP.write}
-                onChange={e => handleCheckBox("FYP", "write")}
-              >
-                write
-              </FormCheckbox>
-            </Col>
-          </Row>
-          <Row className="pt-2">
-            <Col md="6">
-              <h5>Team Creation</h5>
-            </Col>
-            <Col md="3">
-              {" "}
-              <FormCheckbox
-                checked={FYP.read}
-                onChange={e => handleCheckBox("TEAM", "read")}
-              >
-                read
-              </FormCheckbox>
-            </Col>
-            <Col md="3">
-              <FormCheckbox
-                checked={FYP.write}
-                onChange={e => handleCheckBox("TEAM", "write")}
+                onChange={(e) => handleCheckBox("FYP", "write")}
               >
                 write
               </FormCheckbox>

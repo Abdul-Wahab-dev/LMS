@@ -5,11 +5,7 @@ const catchAsync = require("../utils/catchAsync");
 // @desc          create event
 // @access        Private
 exports.create = catchAsync(async (req, res, next) => {
-  // convert data to Object form
-  const data = JSON.parse(req.body.event);
-  // save fileName if file exist
-  data.fileName = req.file ? req.file.key : "";
-  const eve = await Events.create(data);
+  const eve = await Events.create(req.body);
   if (!eve) {
     return res.status(400).json({
       status: "fail",

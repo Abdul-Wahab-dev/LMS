@@ -11,7 +11,7 @@ import {
   DELETE_USER,
   UPDATE_USER,
   GET_PROGRAMS,
-  GET_USER_DESIGNATIONS
+  GET_USER_DESIGNATIONS,
 } from "../actions/types";
 
 const initialState = {
@@ -22,7 +22,7 @@ const initialState = {
   studentData: [],
   programs: [],
   loading: false,
-  designations: []
+  designations: [],
 };
 
 export default function(state = initialState, action) {
@@ -30,83 +30,83 @@ export default function(state = initialState, action) {
     case SET_USER_LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case CLEAR_USER_LOADING:
       return {
         ...state,
-        loading: false
+        loading: false,
       };
     case GET_USER_DESIGNATIONS:
       return {
         ...state,
-        designations: action.payload
+        designations: action.payload,
       };
 
     case UPDATE_USER:
       return {
         ...state,
-        studentData: state.studentData.map(student =>
+        studentData: state.studentData.map((student) =>
           student._id === action.payload._id ? action.payload : student
         ),
-        loading: false
+        loading: false,
       };
     case SET_CURRENT_USER:
       return {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload,
-        loading: false
+        loading: false,
       };
     case GET_PROFILE:
       return {
         ...state,
         profile: action.payload,
-        loading: false
+        loading: false,
       };
     case GET_USERS:
       return {
         ...state,
         users: action.payload,
-        loading: false
+        loading: false,
       };
     case STUDENT_DATA:
       return {
         ...state,
         studentData: action.payload,
-        loading: false
+        loading: false,
       };
     case UPDATE_PERMISSION:
       return {
         ...state,
         loading: false,
-        studentData: state.studentData.map(data =>
+        studentData: state.studentData.map((data) =>
           data._id === action.payload._id ? action.payload : data
-        )
+        ),
       };
     case DELETE_USER:
       return {
         ...state,
         loading: false,
         studentData: state.studentData.filter(
-          user => user._id !== action.payload._id
+          (user) => user._id !== action.payload._id
         ),
-        users: state.users.filter(user => user._id !== action.payload._id)
+        users: state.users.filter((user) => user._id !== action.payload._id),
       };
     case GET_PROGRAMS:
       return {
         ...state,
 
         loading: false,
-        programs: action.payload
+        programs: action.payload,
       };
     case APPROVED_USER:
       return {
         ...state,
-        users: state.users.map(user =>
+        users: state.users.map((user) =>
           user._id === action.payload._id ? action.payload : user
         ),
-        loading: false
+        loading: false,
       };
     default:
       return state;

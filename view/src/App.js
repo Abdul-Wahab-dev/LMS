@@ -2,7 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Row, Col } from "shards-react";
 import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
+
 // components
 // import Error from "./views/Errors";
 import PreLoader from "./utils/preLoader";
@@ -19,8 +19,6 @@ import "./assets/mediaQuery.css";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
-// import { pecMembersList } from "./actions/pecAction";
-// import { cspMembers } from "./actions/cspAction";
 import store from "./store";
 // component
 const Index = lazy(() => import("./views/index"));
@@ -46,14 +44,14 @@ if (localStorage.jwtToken) {
   }
 }
 
-const App = props => {
+const App = (props) => {
   // const dispatch = useDispatch();
 
   // useEffect(() => {
   // dispatch(pecMembersList());
   // dispatch(cspMembers());
   // }, []);
-  const auth = useSelector(state => state.auth);
+  const auth = useSelector((state) => state.auth);
   return (
     <div>
       <Suspense fallback={<PreLoader />}>

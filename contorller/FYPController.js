@@ -49,21 +49,36 @@ exports.deleteCategory = catchAsync(async (req, res, next) => {
 // @desc          create FYP
 // @access        Private
 exports.create = catchAsync(async (req, res, next) => {
-  // input validator
-  const { errors, isValid } = fypValidator(req.body);
+  if (
+    req.user.role === "admin" ||
+    (req.user &&
+      req.user.permissions &&
+      req.user.permissions.FYP &&
+      req.user.permissions.FYP.write === true)
+  ) {
+    // input validator
+    const { errors, isValid } = fypValidator(req.body);
 
-  // Check Validation
-  if (!isValid) {
-    return next(new AppError("fields required", 400, errors));
+    // Check Validation
+    if (!isValid) {
+      return next(new AppError("fields required", 400, errors));
+    }
+    const project = await FYP.create(req.body);
+    // send response to user
+    return res.status(201).json({
+      status: "success",
+      data: {
+        fyp: project,
+      },
+    });
+  } else {
+    res.status(404).json({
+      status: "Fail",
+      errors: {
+        message: "You do have permission",
+      },
+    });
   }
-  const project = await FYP.create(req.body);
-  // send response to user
-  res.status(201).json({
-    status: "success",
-    data: {
-      fyp: project,
-    },
-  });
 });
 
 // @route         GET /api/v1/fyp/:eventName?/:batch?
@@ -164,7 +179,10 @@ exports.addRemarks = catchAsync(async (req, res, next) => {
     const teacherPermission = fyp[0].projects.teacher.filter(
       (teach) => teach.enrollmentNo === req.user.enrollmentNo
     );
-    if (teacherPermission.length > 0) {
+    if (
+      teacherPermission.length > 0 ||
+      fyp[0].projects.supervisor.enrollmentNo === req.user.enrollmentNo
+    ) {
       if (fyp[0].projects.status === "complete") {
         let project;
         project = await FYP.findOneAndUpdate(
@@ -262,18 +280,33 @@ exports.addMember = catchAsync(async (req, res, next) => {
 // @desc          delete Project Idea
 // @access        Private
 exports.deleteIdea = catchAsync(async (req, res, next) => {
-  const project = await FYP.findOneAndUpdate(
-    { _id: req.body.id },
-    { $pull: { projects: { _id: req.body.projectId } } },
-    { safe: true, multi: true, new: true }
-  );
-  // send response to user
-  res.status(200).json({
-    status: "success",
-    data: {
-      project,
-    },
-  });
+  if (
+    req.user.role === "admin" ||
+    (req.user &&
+      req.user.permissions &&
+      req.user.permissions.FYP &&
+      req.user.permissions.FYP.write === true)
+  ) {
+    const project = await FYP.findOneAndUpdate(
+      { _id: req.body.id },
+      { $pull: { projects: { _id: req.body.projectId } } },
+      { safe: true, multi: true, new: true }
+    );
+    // send response to user
+    return res.status(200).json({
+      status: "success",
+      data: {
+        project,
+      },
+    });
+  } else {
+    res.status(404).json({
+      status: "fail",
+      errors: {
+        message: "You do not have permission",
+      },
+    });
+  }
 });
 // @route         GET /api/v1/fyp/getnames
 // @desc          get FYP names

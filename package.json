@@ -1,5 +1,5 @@
 {
-  "name": "LMS",
+  "name": "lms",
   "version": "1.0.0",
   "description": "Create a market place where freelancers can earn money by completing the client’s tasks",
   "main": "server.js",
