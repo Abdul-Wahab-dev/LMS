@@ -40,14 +40,14 @@ app.use("/api/v1/slider", Slider);
 app.use("/api/v1/programandbatch", programAndBatch);
 app.use("/api/v1/quote", quote);
 
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("view/build"));
+// if (process.env.NODE_ENV === "production") {
+//   // Set static folder
+//   app.use(express.static("view/build"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "view", "build", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "view", "build", "index.html"));
+//   });
+// }
 
 app.get("/getFileFromLocalStorage", (req, res) => {
   res.sendFile(
